@@ -19,8 +19,31 @@ class ExecutionResult:
     error: str = ""
 
 
-def _run_in_process(code: str, stdin: str, result_dict: dict):
+def _set_memory_limit(max_mb: int):
+    """Set memory limit for current process using resource.setrlimit."""
+    try:
+        import resource
+        limit_bytes = max_mb * 1024 * 1024
+        candidates = [resource.RLIMIT_AS, resource.RLIMIT_DATA]
+        # RLIMIT_RSS is more effective on macOS
+        if hasattr(resource, "RLIMIT_RSS"):
+            candidates.append(resource.RLIMIT_RSS)
+        for res in candidates:
+            try:
+                resource.setrlimit(res, (limit_bytes, limit_bytes))
+                # Verify the limit actually took effect
+                soft, _ = resource.getrlimit(res)
+                if soft == limit_bytes:
+                    return
+            except (ValueError, OSError):
+                continue
+    except ImportError:
+        pass  # Windows — no resource module
+
+
+def _run_in_process(code: str, stdin: str, result_dict: dict, max_memory_mb: int = 512):
     """Target function for subprocess execution."""
+    _set_memory_limit(max_memory_mb)
     old_stdin = sys.stdin
     old_stdout = sys.stdout
     old_stderr = sys.stderr
@@ -44,8 +67,10 @@ def _run_in_process(code: str, stdin: str, result_dict: dict):
         sys.stderr = old_stderr
 
 
-def execute_code(code: str, stdin: str = "", timeout: float = 5.0) -> ExecutionResult:
-    """Execute Python code in a separate process with timeout."""
+def execute_code(
+    code: str, stdin: str = "", timeout: float = 5.0, max_memory_mb: int = 512
+) -> ExecutionResult:
+    """Execute Python code in a separate process with timeout and memory limit."""
     if not code or not code.strip():
         return ExecutionResult(returncode=1, error="Empty code")
 
@@ -56,7 +81,9 @@ def execute_code(code: str, stdin: str = "", timeout: float = 5.0) -> ExecutionR
     result_dict["returncode"] = -1
     result_dict["error"] = ""
 
-    proc = multiprocessing.Process(target=_run_in_process, args=(code, stdin, result_dict))
+    proc = multiprocessing.Process(
+        target=_run_in_process, args=(code, stdin, result_dict, max_memory_mb)
+    )
     proc.start()
     proc.join(timeout=timeout)
 
@@ -77,17 +104,19 @@ def execute_code(code: str, stdin: str = "", timeout: float = 5.0) -> ExecutionR
 
 
 def run_test_case(
-    code: str, input_str: str, expected_output: str, timeout: float = 5.0
+    code: str, input_str: str, expected_output: str,
+    timeout: float = 5.0, max_memory_mb: int = 512
 ) -> bool:
     """Run code with given input and check if output matches expected."""
-    result = execute_code(code, stdin=input_str, timeout=timeout)
+    result = execute_code(code, stdin=input_str, timeout=timeout, max_memory_mb=max_memory_mb)
     if result.timed_out or result.returncode != 0:
         return False
     return result.stdout.strip() == expected_output.strip()
 
 
 def run_all_tests(
-    code: str, test_cases: list[dict], timeout: float = 5.0
+    code: str, test_cases: list[dict], timeout: float = 5.0,
+    max_memory_mb: int = 512
 ) -> tuple[bool, int, int]:
     """Run code against all test cases. Returns (all_pass, passed, total)."""
     if not test_cases:
@@ -97,6 +126,6 @@ def run_all_tests(
     for tc in test_cases:
         inp = tc.get("input", "")
         out = tc.get("output", "")
-        if run_test_case(code, inp, out, timeout=timeout):
+        if run_test_case(code, inp, out, timeout=timeout, max_memory_mb=max_memory_mb):
             passed += 1
     return passed == total, passed, total

@@ -27,13 +27,12 @@ def compute_score(
     code = extract_code_from_response(solution_str)
     r_quality = compute_quality_score(code) if code else 0.0
 
-    # Calibration reward (-1 to 0, normalized to 0 to 1)
-    r_cal = 0.0
+    # Calibration: neutral (0.5) when no confidence provided
+    r_cal_norm = 0.5
     if extra_info and "confidence_text" in extra_info:
         confidence = extract_confidence(extra_info["confidence_text"])
-        outcome = r_test  # use test result as outcome
+        outcome = r_test
         r_cal = compute_calibration_penalty(confidence, outcome)
-    # Normalize calibration from [-1, 0] to [0, 1]
-    r_cal_norm = r_cal + 1.0
+        r_cal_norm = r_cal + 1.0  # [-1, 0] → [0, 1]
 
     return 0.5 * r_test + 0.3 * r_quality + 0.2 * r_cal_norm

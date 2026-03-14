@@ -8,19 +8,22 @@ def find_degradation_onset(
     base: float | None = None,
     direction: str = "decrease",
     threshold: float = 0.1,
+    window: int = 3,
 ) -> int | None:
-    """Find the first index where metric degrades beyond threshold from baseline.
+    """Find the first index where metric degrades beyond threshold from baseline,
+    confirmed by `window` consecutive points all exceeding the threshold.
 
     Args:
         series: Time series of metric values.
         base: Baseline value (defaults to first value).
         direction: "decrease" (quality drop) or "increase" (ECE rise).
         threshold: Fractional change threshold.
+        window: Number of consecutive points required to confirm degradation.
 
     Returns:
-        Index of first degradation point, or None if no degradation.
+        Index of first degradation point in the confirmed window, or None.
     """
-    if not series:
+    if not series or len(series) < window:
         return None
 
     if base is None:
@@ -29,13 +32,14 @@ def find_degradation_onset(
     if base == 0:
         return None
 
-    for i, val in enumerate(series):
+    def _is_degraded(val: float) -> bool:
         if direction == "decrease":
-            if (base - val) / abs(base) >= threshold:
-                return i
-        else:  # increase
-            if (val - base) / abs(base) >= threshold:
-                return i
+            return (base - val) / abs(base) >= threshold
+        return (val - base) / abs(base) >= threshold
+
+    for i in range(len(series) - window + 1):
+        if all(_is_degraded(series[i + j]) for j in range(window)):
+            return i
 
     return None
 

@@ -24,15 +24,16 @@ class TestMultiObjective:
         code = "```python\nprint('wrong')\n```"
         gt = self._gt([{"input": "3", "output": "6"}])
         score = compute_score("taco", code, gt)
-        # r_test=0.0, cal not provided → cal_norm=1.0
-        # 0.5*0 + 0.3*quality + 0.2*1.0 = 0.3*quality + 0.2
+        # r_test=0.0, cal not provided → cal_norm=0.5 (neutral)
+        # 0.5*0 + 0.3*quality + 0.2*0.5 = 0.3*quality + 0.1
         assert score < 0.5
 
     def test_no_confidence(self):
         code = "```python\nn = int(input())\nprint(n * 2)\n```"
         gt = self._gt([{"input": "3", "output": "6"}])
         score = compute_score("taco", code, gt)
-        # no extra_info → cal_norm=1.0
+        # no extra_info → cal_norm=0.5 (neutral)
+        # 0.5*1.0 + 0.3*quality + 0.2*0.5 = 0.6 + 0.3*quality
         assert score >= 0.5
 
     def test_overconfident_wrong(self):
@@ -68,4 +69,5 @@ class TestMultiObjective:
     def test_empty_solution(self):
         gt = self._gt([{"input": "1", "output": "2"}])
         score = compute_score("taco", "", gt)
-        assert score <= 0.5  # r_test=0, r_quality=0
+        # r_test=0, r_quality=0, cal_norm=0.5 → 0.2*0.5 = 0.1
+        assert score <= 0.5

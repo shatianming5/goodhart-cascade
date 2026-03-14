@@ -68,7 +68,7 @@ def merge_all_checkpoints(results_dir: str | Path) -> list[dict]:
             "step": step,
             "ece": cal.get("ece_logprob", cal.get("ece", 0.0)),
             "pass_rate": cal.get("pass_rate", 0.0),
-            "quality_score": qual.get("pylint_score", 0.0),
+            "quality": qual.get("pylint_score", 0.0),
             "shortcut_rate": temp.get("overall_shortcut_rate", 0.0),
         }
 

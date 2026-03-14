@@ -53,3 +53,12 @@ class TestExtractConfidence:
 
     def test_lowercase(self):
         assert extract_confidence("CONFIDENCE: 0.9") == pytest.approx(0.9)
+
+    def test_bare_one(self):
+        assert extract_confidence("1.0") == pytest.approx(1.0)
+
+    def test_bare_zero(self):
+        assert extract_confidence("0.0") == pytest.approx(0.0)
+
+    def test_bare_mid(self):
+        assert extract_confidence("0.65") == pytest.approx(0.65)

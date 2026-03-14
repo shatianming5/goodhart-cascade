@@ -57,18 +57,27 @@ class CalibrationEvaluator:
     def evaluate_sampling(self, generate_fn: Any) -> dict:
         """Evaluate calibration using multi-sample method.
 
-        generate_fn(prompt) -> response_str
-        Confidence = fraction of samples that produce correct code.
+        generate_fn(prompt, return_logprobs=True) -> (response, logprobs_dict)
+        Confidence = logprob P(Yes), outcome = empirical pass rate from N samples.
         """
         results = []
 
         for prob in self.problems:
-            prompt = self._make_code_prompt(prob)
+            # Get logprob-based confidence
+            cal_prompt = self._make_calibration_prompt(prob)
+            try:
+                _, logprobs = generate_fn(cal_prompt, return_logprobs=True)
+                confidence = self._extract_logprob_confidence(logprobs)
+            except Exception:
+                confidence = 0.5
+
+            # Sample N times for empirical pass rate
+            code_prompt = self._make_code_prompt(prob)
             pass_count = 0
 
             for _ in range(self.n_samples):
                 try:
-                    response = generate_fn(prompt)
+                    response = generate_fn(code_prompt)
                     if isinstance(response, tuple):
                         response = response[0]
                 except Exception:
@@ -82,9 +91,8 @@ class CalibrationEvaluator:
                     pass_count += 1
 
             empirical_pass_rate = pass_count / self.n_samples
-            # For sampling method, confidence IS the pass rate
             results.append({
-                "confidence": empirical_pass_rate,
+                "confidence": confidence,
                 "pass_rate": empirical_pass_rate,
                 "difficulty": prob.get("difficulty", "unknown"),
             })
@@ -142,11 +150,38 @@ class CalibrationEvaluator:
         parts += ["", "Provide your solution in a Python code block."]
         return "\n".join(parts)
 
-    def _extract_logprob_confidence(self, logprobs: dict) -> float:
-        """Extract P(Yes) from logprobs dict."""
-        yes_lp = logprobs.get("Yes", logprobs.get("yes", -10.0))
-        no_lp = logprobs.get("No", logprobs.get("no", -10.0))
+    def _extract_logprob_confidence(self, logprobs: dict | list) -> float:
+        """Extract P(Yes) from logprobs.
 
+        Supports two formats:
+        1. Flat dict: {"Yes": -0.2, "No": -1.6, ...}
+        2. Positional list: [{"Yes": -0.2, "No": -1.6}, {"token": -x}, ...]
+           Scans up to 5 token positions for Yes/No.
+        """
+        YES_TOKENS = ("Yes", "yes", "YES", " Yes", " yes")
+        NO_TOKENS = ("No", "no", "NO", " No", " no")
+
+        if isinstance(logprobs, list):
+            # Positional format: scan first 5 positions
+            for pos_dict in logprobs[:5]:
+                if not isinstance(pos_dict, dict):
+                    continue
+                yes_lp = max((pos_dict.get(t, -100.0) for t in YES_TOKENS), default=-100.0)
+                no_lp = max((pos_dict.get(t, -100.0) for t in NO_TOKENS), default=-100.0)
+                if yes_lp > -50.0 or no_lp > -50.0:
+                    return self._softmax_yes(yes_lp, no_lp)
+            return 0.5
+        else:
+            # Flat dict format
+            yes_lp = max((logprobs.get(t, -100.0) for t in YES_TOKENS), default=-100.0)
+            no_lp = max((logprobs.get(t, -100.0) for t in NO_TOKENS), default=-100.0)
+            if yes_lp < -50.0 and no_lp < -50.0:
+                return 0.5
+            return self._softmax_yes(yes_lp, no_lp)
+
+    @staticmethod
+    def _softmax_yes(yes_lp: float, no_lp: float) -> float:
+        """Compute P(Yes) via softmax of log-probabilities."""
         yes_p = math.exp(yes_lp)
         no_p = math.exp(no_lp)
         total = yes_p + no_p

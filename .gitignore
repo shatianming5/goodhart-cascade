@@ -6,7 +6,9 @@ dist/
 build/
 .venv/
 *.png
-data/
+/data/
 outputs/
 eval_results/
 analysis_output/
+**/__pycache__/
+.playwright-mcp/

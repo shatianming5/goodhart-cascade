@@ -87,11 +87,39 @@ class TestCalibrationEvaluator:
         assert result["pass_rate"] == 0.0
         assert result["mean_confidence"] > 0.9  # overconfident
 
-    def test_extract_logprob_confidence(self):
-        problems = make_problems()[:1]
-        evaluator = CalibrationEvaluator(problems)
-
+    def test_extract_logprob_flat_dict(self):
+        evaluator = CalibrationEvaluator(make_problems()[:1])
         conf = evaluator._extract_logprob_confidence(
             {"Yes": math.log(0.7), "No": math.log(0.3)}
         )
         assert conf == pytest.approx(0.7, abs=0.01)
+
+    def test_extract_logprob_lowercase(self):
+        evaluator = CalibrationEvaluator(make_problems()[:1])
+        conf = evaluator._extract_logprob_confidence(
+            {"yes": math.log(0.6), "no": math.log(0.4)}
+        )
+        assert conf == pytest.approx(0.6, abs=0.01)
+
+    def test_extract_logprob_positional_list(self):
+        """vLLM-style positional logprobs: Yes/No may appear at position > 0."""
+        evaluator = CalibrationEvaluator(make_problems()[:1])
+        logprobs = [
+            {"I": -0.5, "The": -1.0},  # position 0: no Yes/No
+            {"Yes": math.log(0.8), "No": math.log(0.2)},  # position 1
+        ]
+        conf = evaluator._extract_logprob_confidence(logprobs)
+        assert conf == pytest.approx(0.8, abs=0.01)
+
+    def test_extract_logprob_no_yes_no_tokens(self):
+        evaluator = CalibrationEvaluator(make_problems()[:1])
+        conf = evaluator._extract_logprob_confidence({"hello": -1.0, "world": -2.0})
+        assert conf == 0.5
+
+    def test_extract_logprob_space_prefix(self):
+        """Tokens like ' Yes' with leading space."""
+        evaluator = CalibrationEvaluator(make_problems()[:1])
+        conf = evaluator._extract_logprob_confidence(
+            {" Yes": math.log(0.9), " No": math.log(0.1)}
+        )
+        assert conf == pytest.approx(0.9, abs=0.01)

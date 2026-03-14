@@ -47,7 +47,9 @@ class EvalSandbox:
             self._cache[key] = result
             return result
 
-        all_pass, passed, total = run_all_tests(code, test_cases, timeout=self.timeout)
+        all_pass, passed, total = run_all_tests(
+            code, test_cases, timeout=self.timeout, max_memory_mb=self.max_memory_mb
+        )
         result = EvalResult(all_pass=all_pass, passed=passed, total=total)
         self._cache[key] = result
         return result

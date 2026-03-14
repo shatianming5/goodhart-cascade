@@ -1,0 +1,62 @@
+# GRPO training with multi-objective reward (test + quality + calibration)
+# verl YAML configuration
+
+data:
+  train_files: data/taco_train.parquet
+  val_files: data/taco_val.parquet
+  prompt_key: prompt
+  max_prompt_length: 1024
+  max_response_length: 2048
+  train_batch_size: 256
+  shuffle: true
+  seed: 42
+
+actor_rollout_ref:
+  model:
+    path: Qwen/Qwen2.5-Coder-32B-Instruct
+    trust_remote_code: true
+    override_config:
+      attn_implementation: flash_attention_2
+  actor:
+    optim:
+      lr: 1.0e-6
+      warmup_steps: 100
+    checkpoint:
+      save_contents: ['model', 'optimizer', 'extra']
+  rollout:
+    name: vllm
+    temperature: 0.7
+    top_p: 0.95
+    n: 8
+    do_sample: true
+    response_length: ${data.max_response_length}
+    val_kwargs:
+      temperature: 0
+      do_sample: false
+  ref:
+    log_prob_micro_batch_size_per_gpu: 4
+
+algorithm:
+  adv_estimator: grpo
+  gamma: 1.0
+  lam: 1.0
+  use_kl_in_reward: false
+  kl_ctrl:
+    type: fixed
+    kl_coef: 0.05
+
+custom_reward_function:
+  path: src/goodhart/rewards/multi_objective.py
+  name: compute_score
+
+trainer:
+  total_epochs: 4
+  project_name: goodhart_cascade
+  experiment_name: multi_obj_32b
+  logger: ['console', 'wandb']
+  nnodes: 1
+  n_gpus_per_node: 4
+  save_freq: 5
+  test_freq: 10
+  default_local_dir: checkpoints/${trainer.project_name}/${trainer.experiment_name}
+  resume_mode: auto

@@ -80,15 +80,35 @@ class CodeQualityEvaluator:
             return 0.0
 
     def _cognitive_complexity(self, tree: ast.AST) -> float:
-        """Simplified cognitive complexity: count nesting depth * branching."""
+        """Cognitive complexity with nesting depth weighting.
+
+        Each control flow structure adds (1 + nesting_depth) to the score.
+        Boolean operators in conditions add 1 per extra operand.
+        """
+        return float(self._cog_score(tree, depth=0))
+
+    def _cog_score(self, node: ast.AST, depth: int) -> int:
+        """Recursively compute cognitive complexity."""
         score = 0
-        for node in ast.walk(tree):
-            if isinstance(node, (ast.If, ast.For, ast.While, ast.ExceptHandler)):
-                # Approximate nesting level
-                score += 1
-            if isinstance(node, (ast.BoolOp,)):
-                score += len(node.values) - 1
-        return float(score)
+        nesting_types = (ast.If, ast.For, ast.While, ast.Try)
+
+        children = list(ast.iter_child_nodes(node))
+        for child in children:
+            if isinstance(child, nesting_types):
+                # Increment: 1 base + nesting depth
+                score += 1 + depth
+                # Recurse into body at increased depth
+                score += self._cog_score(child, depth + 1)
+            elif isinstance(child, ast.BoolOp):
+                # Boolean operators add 1 per extra operand (no nesting increase)
+                score += len(child.values) - 1
+                score += self._cog_score(child, depth)
+            elif isinstance(child, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+                # Nested functions/classes reset nesting depth
+                score += self._cog_score(child, 0)
+            else:
+                score += self._cog_score(child, depth)
+        return score
 
     def _count_loc(self, code: str) -> int:
         lines = [l for l in code.splitlines() if l.strip() and not l.strip().startswith("#")]
@@ -124,11 +144,10 @@ class CodeQualityEvaluator:
                 all_args = args.args + args.posonlyargs + args.kwonlyargs
                 total_args += len(all_args)
                 annotated_args += sum(1 for a in all_args if a.annotation is not None)
-                # Count return annotation
-                if total_args > 0:
-                    total_args += 1
-                    if node.returns is not None:
-                        annotated_args += 1
+                # Count return annotation (always, regardless of parameter count)
+                total_args += 1
+                if node.returns is not None:
+                    annotated_args += 1
 
         if total_args == 0:
             return 0.0

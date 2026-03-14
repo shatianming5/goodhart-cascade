@@ -6,7 +6,7 @@ import warnings
 
 
 def detect_changepoints(
-    series: list[float], min_size: int = 3, n_bkps: int = 2
+    series: list[float], min_size: int = 3
 ) -> list[int]:
     """Detect changepoints in a time series using ruptures (Pelt).
 
@@ -42,8 +42,13 @@ def granger_causality(
     results = {}
 
     min_len = min(len(v) for v in series_dict.values())
-    if min_len < maxlag + 3:
+    # After differencing length becomes min_len-1.
+    # statsmodels requires n > 2*maxlag+1 for Granger test
+    if min_len <= 2 * maxlag + 2:
         return {}
+
+    # First-order differencing for stationarity (Granger requires stationary series)
+    diffed = {k: np.diff(v[:min_len]).tolist() for k, v in series_dict.items()}
 
     for cause in keys:
         for effect in keys:
@@ -54,8 +59,8 @@ def granger_causality(
                 from statsmodels.tsa.stattools import grangercausalitytests
 
                 data = np.column_stack([
-                    series_dict[effect][:min_len],
-                    series_dict[cause][:min_len],
+                    diffed[effect],
+                    diffed[cause],
                 ])
 
                 with warnings.catch_warnings():
