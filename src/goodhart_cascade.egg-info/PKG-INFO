@@ -1,0 +1,21 @@
+Metadata-Version: 2.4
+Name: goodhart-cascade
+Version: 0.1.0
+Requires-Python: >=3.10
+Requires-Dist: torch>=2.1
+Requires-Dist: transformers>=4.40
+Requires-Dist: datasets
+Requires-Dist: numpy
+Requires-Dist: pylint
+Requires-Dist: radon
+Requires-Dist: ruptures
+Requires-Dist: statsmodels
+Requires-Dist: matplotlib
+Requires-Dist: openai>=1.0
+Provides-Extra: train
+Requires-Dist: verl>=0.2; extra == "train"
+Requires-Dist: vllm>=0.6; extra == "train"
+Provides-Extra: dev
+Requires-Dist: pytest; extra == "dev"
+Requires-Dist: pytest-cov; extra == "dev"
+Requires-Dist: ruff; extra == "dev"
