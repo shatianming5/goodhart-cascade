@@ -6,9 +6,25 @@ dist/
 build/
 .venv/
 *.png
-/data/
+**/__pycache__/
+.playwright-mcp/
+
+# Data (large files)
+/data/taco_train.json
+/data/taco_cache/
+/data/passrate_shards/
+/data/trl_*.json
+
+# Outputs & logs
 outputs/
 eval_results/
 analysis_output/
-**/__pycache__/
-.playwright-mcp/
+logs/
+
+# Root-level temp files
+/ds_zero2.json
+/error.txt
+/input.txt
+/output.txt
+/launch_train.sh
+/train_grpo_trl.py

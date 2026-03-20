@@ -3,17 +3,21 @@
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 
 import pyarrow as pa
 import pyarrow.parquet as pq
+
+# Use HuggingFace mirror for China
+os.environ.setdefault("HF_ENDPOINT", "https://hf-mirror.com")
 
 
 def load_taco(split: str = "train"):
     """Load TACO dataset from HuggingFace."""
     from datasets import load_dataset
 
-    return load_dataset("BAAI/TACO", split=split, trust_remote_code=True)
+    return load_dataset("BAAI/TACO", split=split)
 
 
 def parse_input_output(raw_io: str) -> list[dict]:

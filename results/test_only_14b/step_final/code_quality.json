@@ -1,0 +1,11 @@
+{
+  "pylint_score": 4.235715599583196,
+  "cyclomatic_complexity": 4.985,
+  "cognitive_complexity": 11.72,
+  "duplication_ratio": 0.03801080030863022,
+  "lines_of_code": 24.57,
+  "comment_ratio": 0.21115273832937004,
+  "type_hint_ratio": 0.0,
+  "error_handling_ratio": 0.01,
+  "n_samples": 100
+}

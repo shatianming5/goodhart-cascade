@@ -1,0 +1,8 @@
+{
+  "method": "logprob",
+  "ece": 0.7580952287853833,
+  "overconfidence_rate": 0.9318181818181818,
+  "mean_confidence": 0.8180952287853838,
+  "pass_rate": 0.06,
+  "n_problems": 100
+}
