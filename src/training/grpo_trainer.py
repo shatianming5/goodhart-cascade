@@ -19,7 +19,8 @@ from tqdm import tqdm
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from vllm import LLM, SamplingParams
 
-from src.rewards.reward_functions import compute_reward
+from src.rewards.reward_functions import compute_reward, compute_rewards_batch
+from src.rewards.all_metrics import compute_all_metrics
 
 
 @dataclass
@@ -375,18 +376,14 @@ class GRPOTrainer:
         # Generate rollouts
         all_codes = self._generate_rollouts(prompts)
 
-        # Compute rewards
+        # Compute rewards (batch for speed)
         rewards = []
         reward_details = []
         for item, codes in zip(batch, all_codes):
-            group_rewards = []
-            group_details = []
-            for code in codes:
-                scores = compute_reward(
-                    code, item["test_cases"], self.config.reward_weights
-                )
-                group_rewards.append(scores["total"])
-                group_details.append(scores)
+            group_details = compute_rewards_batch(
+                codes, item["test_cases"], self.config.reward_weights
+            )
+            group_rewards = [d["total"] for d in group_details]
             rewards.append(group_rewards)
             reward_details.append(group_details)
 
@@ -454,7 +451,7 @@ class GRPOTrainer:
         avg_reward = sum(flat_rewards) / len(flat_rewards) if flat_rewards else 0
         pass_rate = sum(1 for r in flat_rewards if r > 0.5) / len(flat_rewards) if flat_rewards else 0
 
-        # Per-component reward averages
+        # Per-component reward averages (all dimensions, not just reward ones)
         component_avgs = {}
         for component in self.config.reward_weights:
             vals = [
@@ -466,6 +463,39 @@ class GRPOTrainer:
             if vals:
                 component_avgs[f"reward_{component}"] = sum(vals) / len(vals)
 
+        # Log ALL quality dimensions for theory verification
+        # Sample a few codes from this batch to compute full metrics
+        all_dim_avgs = {}
+        sample_codes = [codes[0] for codes in all_codes if codes][:4]  # first code from first 4 prompts
+        if sample_codes:
+            all_dims = ["test", "pylint", "complexity", "comment", "duplication",
+                        "type_hint", "avg_func_length", "magic_numbers",
+                        "nesting_depth", "dead_code", "naming_length"]
+            for dim in all_dims:
+                vals = []
+                for code in sample_codes:
+                    try:
+                        m = compute_all_metrics(code)
+                        if dim in m:
+                            vals.append(m[dim])
+                    except Exception:
+                        pass
+                if vals:
+                    all_dim_avgs[f"dim_{dim}"] = sum(vals) / len(vals)
+
+        # Write per-rollout logs for theory verification
+        rollout_log_path = os.path.join(self.config.output_dir, "rollout_logs.jsonl")
+        with open(rollout_log_path, "a") as f:
+            for prompt_idx, (codes, details) in enumerate(zip(all_codes, reward_details)):
+                for rollout_idx, (code, detail) in enumerate(zip(codes, details)):
+                    entry = {
+                        "step": step,
+                        "prompt_idx": prompt_idx,
+                        "rollout_idx": rollout_idx,
+                        **detail,
+                    }
+                    f.write(json.dumps(entry) + "\n")
+
         metrics = {
             "step": step,
             "loss": total_loss / max(n_updates, 1),
@@ -475,6 +505,7 @@ class GRPOTrainer:
             "n_updates": n_updates,
             "lr": self.scheduler.get_last_lr()[0],
             **component_avgs,
+            **all_dim_avgs,
         }
         return metrics
 

@@ -1,16 +1,14 @@
-experiment_name: R5_all
-description: "All constraints - quantify alignment tax"
+experiment_name: 1.5B_R3
+description: "1.5B test + pylint + complexity"
 
 model:
-  name: Qwen/Qwen3-Coder-7B
+  name: Qwen/Qwen2.5-Coder-1.5B
   trust_remote_code: true
 
 reward:
-  test: 0.4
-  pylint: 0.15
-  complexity: 0.15
-  comment: 0.15
-  duplication: 0.15
+  test: 0.6
+  pylint: 0.2
+  complexity: 0.2
 
 training:
   total_steps: 1000
@@ -23,17 +21,16 @@ training:
   clip_range: 0.2
   gamma: 1.0
   generation_max_length: 2048
+  temperature: 0.7
 
 checkpointing:
   save_every: 100
-  output_dir: results/R5_all
+  output_dir: results/1.5B_R3
 
 vllm:
   tensor_parallel_size: 1
   gpu_memory_utilization: 0.85
   max_model_len: 4096
 
-evaluation:
-  mbpp_size: 100
-  classeval_size: 50
-  eval_every: 100
+logging:
+  log_all_dims: true

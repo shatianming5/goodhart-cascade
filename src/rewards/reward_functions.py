@@ -50,40 +50,45 @@ def reward_pylint(code: str) -> float:
             [
                 sys.executable, "-m", "pylint",
                 tmp_path,
-                "--disable=C0114,C0115,C0116",  # Don't penalize missing docstrings initially
-                "--output-format=json",
+                "--disable=C0114,C0115,C0116",
+                "--score=y",
             ],
             capture_output=True,
             text=True,
-            timeout=30,
+            timeout=15,
         )
         os.unlink(tmp_path)
 
-        # Parse score from pylint output
-        # Pylint JSON output is a list of messages; score is in stderr
-        stderr = result.stderr
-        score_match = re.search(r"rated at ([\d.]+)/10", stderr)
+        # Parse score from stdout or stderr
+        combined = result.stdout + result.stderr
+        score_match = re.search(r"rated at ([\d.-]+)/10", combined)
         if score_match:
             score = float(score_match.group(1))
             return max(0.0, min(score / 10.0, 1.0))
 
-        # Alternative: run with text output to get score
-        result2 = subprocess.run(
-            [sys.executable, "-m", "pylint", tmp_path if os.path.exists(tmp_path) else f.name,
-             "--disable=C0114,C0115,C0116"],
-            capture_output=True, text=True, timeout=30,
-        )
-        score_match = re.search(r"rated at ([\d.-]+)/10", result2.stdout + result2.stderr)
-        if score_match:
-            return max(0.0, min(float(score_match.group(1)) / 10.0, 1.0))
-
-        return 0.5  # Default if parsing fails
+        return 0.5
     except Exception:
         try:
             os.unlink(tmp_path)
         except Exception:
             pass
         return 0.0
+
+
+def reward_pylint_batch(codes: list[str]) -> list[float]:
+    """Batch pylint evaluation using concurrent subprocesses for speed."""
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+
+    with ThreadPoolExecutor(max_workers=8) as executor:
+        futures = {executor.submit(reward_pylint, c): i for i, c in enumerate(codes)}
+        results = [0.0] * len(codes)
+        for future in as_completed(futures):
+            idx = futures[future]
+            try:
+                results[idx] = future.result()
+            except Exception:
+                results[idx] = 0.0
+    return results
 
 
 # ---------------------------------------------------------------------------
@@ -290,6 +295,49 @@ def compute_reward(
     scores["total"] = total
 
     return scores
+
+
+def compute_rewards_batch(
+    codes: list[str],
+    test_cases: dict,
+    weights: dict[str, float],
+    timeout: int = 10,
+) -> list[dict[str, float]]:
+    """
+    Batch reward computation with parallelized pylint calls.
+    Much faster than calling compute_reward one-by-one.
+    """
+    from concurrent.futures import ThreadPoolExecutor
+
+    n = len(codes)
+    all_scores = [{"total": 0.0} for _ in range(n)]
+
+    # Test reward: run sequentially (uses signal.alarm, not thread-safe)
+    if "test" in weights:
+        for i, code in enumerate(codes):
+            all_scores[i]["test"] = reward_test(code, test_cases, timeout)
+
+    # Pylint: run in parallel threads (subprocess-based, safe to parallelize)
+    if "pylint" in weights:
+        pylint_scores = reward_pylint_batch(codes)
+        for i, s in enumerate(pylint_scores):
+            all_scores[i]["pylint"] = s
+
+    # Fast, CPU-only metrics: can compute sequentially without issue
+    for i, code in enumerate(codes):
+        if "complexity" in weights:
+            all_scores[i]["complexity"] = reward_complexity(code)
+        if "comment" in weights:
+            all_scores[i]["comment"] = reward_comment(code)
+        if "duplication" in weights:
+            all_scores[i]["duplication"] = reward_duplication(code)
+
+    # Compute totals
+    for i in range(n):
+        total = sum(weights.get(k, 0) * all_scores[i].get(k, 0) for k in weights)
+        all_scores[i]["total"] = total
+
+    return all_scores
 
 
 # ---------------------------------------------------------------------------

@@ -1,9 +1,13 @@
-experiment_name: R2_test_pylint
-description: "Test + Pylint - observe gaming escape from Pylint-unmeasured dimensions"
+experiment_name: 14B_R2
+description: "14B LoRA verification of R2 - confirm escape directions scale"
 
 model:
-  name: Qwen/Qwen3-Coder-7B
+  name: Qwen/Qwen2.5-Coder-14B
   trust_remote_code: true
+  use_lora: true
+  lora_rank: 128
+  lora_alpha: 256
+  lora_target_modules: ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"]
 
 reward:
   test: 0.7
@@ -23,7 +27,7 @@ training:
 
 checkpointing:
   save_every: 100
-  output_dir: results/R2_test_pylint
+  output_dir: results/14B_R2
 
 vllm:
   tensor_parallel_size: 1
@@ -34,3 +38,6 @@ evaluation:
   mbpp_size: 100
   classeval_size: 50
   eval_every: 100
+
+logging:
+  log_all_dims: true

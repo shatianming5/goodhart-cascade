@@ -1,12 +1,14 @@
-experiment_name: R1_test_only
-description: "Test-only baseline - observe full rise-and-fall arc"
+experiment_name: 7B_R3
+description: "Test + Pylint + Complexity - observe gaming escape to comments and duplication"
 
 model:
-  name: Qwen/Qwen3-Coder-7B
+  name: Qwen/Qwen2.5-Coder-7B
   trust_remote_code: true
 
 reward:
-  test: 1.0
+  test: 0.6
+  pylint: 0.2
+  complexity: 0.2
 
 training:
   total_steps: 1000
@@ -22,7 +24,7 @@ training:
 
 checkpointing:
   save_every: 100
-  output_dir: results/R1_test_only
+  output_dir: results/7B_R3
 
 vllm:
   tensor_parallel_size: 1
@@ -33,3 +35,6 @@ evaluation:
   mbpp_size: 100
   classeval_size: 50
   eval_every: 100
+
+logging:
+  log_all_dims: true

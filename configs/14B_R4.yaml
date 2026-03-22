@@ -1,8 +1,8 @@
-experiment_name: R1_14b_verify
-description: "14B LoRA verification of R1 - confirm escape directions scale"
+experiment_name: 14B_R4
+description: "14B LoRA test + pylint + complexity + comment"
 
 model:
-  name: Qwen/Qwen3-Coder-14B
+  name: Qwen/Qwen2.5-Coder-14B
   trust_remote_code: true
   use_lora: true
   lora_rank: 128
@@ -10,7 +10,10 @@ model:
   lora_target_modules: ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"]
 
 reward:
-  test: 1.0
+  test: 0.5
+  pylint: 0.2
+  complexity: 0.15
+  comment: 0.15
 
 training:
   total_steps: 1000
@@ -23,17 +26,16 @@ training:
   clip_range: 0.2
   gamma: 1.0
   generation_max_length: 2048
+  temperature: 0.7
 
 checkpointing:
   save_every: 100
-  output_dir: results/R1_14b_verify
+  output_dir: results/14B_R4
 
 vllm:
   tensor_parallel_size: 1
   gpu_memory_utilization: 0.85
   max_model_len: 4096
 
-evaluation:
-  mbpp_size: 100
-  classeval_size: 50
-  eval_every: 100
+logging:
+  log_all_dims: true

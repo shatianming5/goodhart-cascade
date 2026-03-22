@@ -13,7 +13,7 @@ echo "Step 1: Filter TACO dataset for sweet spot"
 echo "============================================"
 
 python -m src.data.filter_sweet_spot \
-    --model Qwen/Qwen3-Coder-7B \
+    --model Qwen/Qwen2.5-Coder-7B \
     --k 8 \
     --low 0.10 \
     --high 0.50 \

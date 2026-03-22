@@ -1,8 +1,12 @@
-# Goodhart Cascade: Complete Experiment Plan
+# Scaling Laws for Alignment Tax in Code Reinforcement Learning
+
+## NeurIPS 2026 — Complete Experimental Plan
+
+---
 
 ## Core Thesis
 
-When RL training optimizes a proxy reward (test passing), Goodhart's Law manifests as **reward gaming that cascades** across quality dimensions. Adding constraints blocks gaming in measured dimensions but displaces it to unmeasured ones — the "whack-a-mole" effect.
+Code RL training (GRPO) with quality constraints exhibits a predictable **alignment tax**: each additional quality constraint reduces pass rate following a power law. We derive this law from GRPO's advantage decomposition, validate it across 3 model scales, and identify a **universal alignment ratio ρ\*** — the optimal fraction of quality dimensions to constrain.
 
 ---
 
@@ -10,165 +14,213 @@ When RL training optimizes a proxy reward (test passing), Goodhart's Law manifes
 
 | Component | Detail |
 |-----------|--------|
-| **Model** | Qwen3-Coder-7B (full params) / Qwen3-Coder-14B (LoRA r=128 verification) |
-| **Data** | TACO filtered ~500 problems (base pass@8 in 10%-50%) |
-| **Hardware** | 2×B200, each GPU runs one experiment |
+| **Hardware** | 8×NVIDIA B200 (192GB each, 1536GB total) |
+| **Models** | Qwen2.5-Coder-1.5B (full), 7B (full), 14B (LoRA r=128) |
+| **Data** | TACO filtered ~1000 problems (base pass@8 ∈ [10%, 50%]) |
 | **Training** | GRPO, 1000 steps, batch=16, rollouts=8, lr=5e-7, KL=0.03 |
-| **Eval set** | MBPP 100 (pass rate + calibration) + ClassEval 50 (6-dim quality) |
+| **Eval** | MBPP 100 (pass rate + calibration) + ClassEval 50 (6+6 dim quality) |
 
-### Links
+### Resources
 
 | Resource | URL |
 |----------|-----|
 | **GitHub** | https://github.com/shatianming5/goodhart-cascade |
 | **Sweet Spot Dataset** | https://huggingface.co/datasets/shatianming5/goodhart-cascade-sweet-spot |
-| **R1 Checkpoints** | https://huggingface.co/shatianming5/goodhart-cascade-R1_test_only |
-| **R2 Checkpoints** | https://huggingface.co/shatianming5/goodhart-cascade-R2_test_pylint |
-| **R3 Checkpoints** | https://huggingface.co/shatianming5/goodhart-cascade-R3_test_pylint_complexity |
-| **R4 Checkpoints** | https://huggingface.co/shatianming5/goodhart-cascade-R4_test_pylint_complexity_comment |
-| **R5 Checkpoints** | https://huggingface.co/shatianming5/goodhart-cascade-R5_all |
-| **14B R1 Verify** | https://huggingface.co/shatianming5/goodhart-cascade-R1_14b_verify |
-| **14B R2 Verify** | https://huggingface.co/shatianming5/goodhart-cascade-R2_14b_verify |
+| **HF Checkpoints** | `shatianming5/goodhart-cascade-{EXPERIMENT_NAME}` |
 | **HuggingFace Token** | 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 |
 | **GitHub Token** | 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 |
 
 ---
 
+## Experiment Matrix (17 runs)
+
+### Main: 15 experiments (3 scales × 5 configs)
+
+| ID | Model | Config | VRAM | Est. Time |
+|----|-------|--------|------|-----------|
+| 1.5B_R1 | Qwen2.5-Coder-1.5B | test only | ~15GB | 3-4h |
+| 1.5B_R2 | 1.5B | +pylint | ~15GB | 3-4h |
+| 1.5B_R3 | 1.5B | +complexity | ~15GB | 3-4h |
+| 1.5B_R4 | 1.5B | +comment | ~15GB | 3-4h |
+| 1.5B_R5 | 1.5B | all 5 dims | ~15GB | 3-4h |
+| 7B_R1 | Qwen2.5-Coder-7B | test only | ~90GB | 10-12h |
+| 7B_R2 | 7B | +pylint | ~90GB | 10-12h |
+| 7B_R3 | 7B | +complexity | ~90GB | 10-12h |
+| 7B_R4 | 7B | +comment | ~90GB | 10-12h |
+| 7B_R5 | 7B | all 5 dims | ~90GB | 10-12h |
+| 14B_R1 | Qwen2.5-Coder-14B LoRA | test only | ~80GB | 12-14h |
+| 14B_R2 | 14B LoRA | +pylint | ~80GB | 12-14h |
+| 14B_R3 | 14B LoRA | +complexity | ~80GB | 12-14h |
+| 14B_R4 | 14B LoRA | +comment | ~80GB | 12-14h |
+| 14B_R5 | 14B LoRA | all 5 dims | ~80GB | 12-14h |
+
+### Robustness: 2 experiments
+
+| ID | Model | Config | Purpose |
+|----|-------|--------|---------|
+| 7B_R2_w1 | 7B | test:pylint = 0.5:0.5 | Weight robustness |
+| 7B_R2_w2 | 7B | test:pylint = 0.8:0.2 | Weight robustness |
+
+---
+
+## R1-R5 Reward Configurations
+
+| Experiment | test | pylint | complexity | comment | duplication |
+|-----------|------|--------|------------|---------|-------------|
+| R1 | 1.0 | — | — | — | — |
+| R2 | 0.7 | 0.3 | — | — | — |
+| R3 | 0.6 | 0.2 | 0.2 | — | — |
+| R4 | 0.5 | 0.2 | 0.15 | 0.15 | — |
+| R5 | 0.4 | 0.15 | 0.15 | 0.15 | 0.15 |
+
+---
+
 ## Sweet Spot Construction
 
-**Goal:** Select problems where base model "sometimes gets it right" — GRPO gradient signal is strongest.
+**Goal:** Select problems where base model pass@8 ∈ [10%, 50%] — GRPO gradient signal is strongest.
 
-```
-pass@8 ∈ [10%, 50%]  →  1-4 out of 8 rollouts pass
-                        → advantage has variance
-                        → non-zero gradient
-```
+- **Too easy** (>50%): all rollouts pass → zero advantage variance → zero gradient
+- **Too hard** (0%): all rollouts fail → zero advantage variance → zero gradient
+- **Sweet spot** (10-50%): 1-4 of 8 pass → strong contrastive signal
 
-- **Too easy** (pass@8 > 80%): all 8 rollouts pass → advantage identical → zero signal
-- **Too hard** (pass@8 = 0%): all 8 rollouts fail → advantage identical → zero signal
-
-**Pipeline:** `scripts/run_filter.sh` → vLLM generates 8 samples per TACO problem → test → filter → upload HF
+**Go/No-Go:** If trainable < 500, add APPS introductory+interview problems.
 
 ---
 
-## Experiments (all 1000 steps)
+## Evaluation Metrics (all measured on every checkpoint)
 
-### R1: test only (baseline)
+### Constrained dimensions (used in R1-R5 rewards)
+1. Pass@1 rate (MBPP)
+2. Pylint score (0-10)
+3. Cognitive complexity (lower = better)
+4. Comment ratio (%)
+5. Duplication ratio (%)
 
-```yaml
-reward: {test: 1.0}
+### Unconstrained dimensions (never in reward — detect gaming escape)
+6. Type hint coverage (%)
+7. Average function length
+8. Magic number count
+9. Max nesting depth
+10. Dead code ratio
+11. Average variable name length
+
+### Calibration
+12. ECE (Expected Calibration Error)
+13. Overconfidence rate
+
+---
+
+## Theory: Alignment Tax Scaling Law
+
+### Derivation from GRPO advantage decomposition
+
+GRPO advantage: `A_i = (r_i - mean(r)) / std(r)`
+
+With multi-objective reward `r = Σ wᵢ rᵢ`, effective gradient signal:
+
+```
+η(n) = w_test² / [w_test² + (1-w_test)²/n]
 ```
 
-**Purpose:** Full "rise-and-fall" arc baseline. Pass rate rises then plateaus/declines while all quality dimensions degrade.
-
-**Expected:**
-- pass rate: 25% → ~55-60% (peak) → plateau
-- ECE: 0.45 → 0.75 (continuous worsening)
-- Pylint: 4.2 → 3.5 (declining)
-- Comment%: 15% → 4% (declining)
-- Complexity: 5 → 12 (increasing)
-- Duplication: 8% → 18% (increasing)
-
----
-
-### R2: test + Pylint
-
-```yaml
-reward: {test: 0.7, pylint: 0.3}
+Alignment tax:
+```
+tax(n) = C · (1-w_test)² / [n·w_test² + (1-w_test)²]
 ```
 
-**Purpose:** Block Pylint dimension. Observe gaming escape.
-
-**Expected:**
-- Pylint: ✅ 4.2 → 8.0+ (constrained)
-- Comment%: ❌ 15% → 1-3% (escape: docstring templates replace real comments)
-- Complexity: ❌ 5 → 15+ (escape: function splitting for Pylint rules)
-- Duplication: ❌ 8% → 20%+ (unconstrained degradation)
-
----
-
-### R3: test + Pylint + complexity
-
-```yaml
-reward: {test: 0.6, pylint: 0.2, complexity: 0.2}
+With model scale dependence:
+```
+tax(n, N) = C · (1-w_test)² / [n·w_test² + (1-w_test)² · N^(-δ)]
 ```
 
-**Purpose:** Block Pylint + complexity. Observe continued escape.
-
-**Expected:**
-- Pylint: ✅ | Complexity: ✅
-- Comment%: ❌❌ 15% → 0-2% (escape intensifies)
-- Duplication: ❌❌ 8% → 25-30% (new escape: copy-paste to satisfy complexity)
+### Verification protocol
+1. Check independence assumption (correlation matrix of components)
+2. Check equal variance assumption
+3. Fit C from 7B data → predict 1.5B and 14B tax
+4. Compute R², prediction error
+5. Find ρ* = optimal constraint ratio (knee point)
 
 ---
 
-### R4: test + Pylint + complexity + comment
+## Scheduling (8×B200, ~3 days)
 
-```yaml
-reward: {test: 0.5, pylint: 0.2, complexity: 0.15, comment: 0.15}
+```
+DAY 0 AM:
+  GPU 0: Filter TACO data (~2h)
+
+DAY 0 PM → DAY 1 AM:
+  GPU 0-4: 7B R1-R5 (parallel, ~12h)
+  GPU 5-7: 1.5B R1-R3 (parallel, ~4h)
+
+DAY 1 AM (1.5B R1-R3 done):
+  GPU 5: 1.5B R4
+  GPU 6: 1.5B R5
+  GPU 7: 7B_R2_w1 (weight robustness)
+
+DAY 1 PM (1.5B all done, 7B finishing):
+  GPU 5: 7B_R2_w2
+  GPU 6-7: Evaluate 1.5B + completed 7B checkpoints
+
+DAY 1 EVENING (7B all done):
+  *** GO/NO-GO: 7B-R1 pass rate > 50%? Tax curve convex? ***
+  GPU 0-4: 14B R1-R5 (parallel, ~14h)
+  GPU 5-7: Evaluate all 7B checkpoints
+
+DAY 2 PM (14B done):
+  GPU 0-7: Evaluate all 14B checkpoints
+
+DAY 3 AM:
+  Theory verification, scaling law fit, ρ*, generate all figures
 ```
 
-**Purpose:** Block 3 escape routes. Observe remaining direction.
-
-**Expected:**
-- Pylint: ✅ | Complexity: ✅ | Comment%: ✅
-- Duplication: ❌❌❌ 8% → 30-35% (gaming concentrates here)
-- pass rate: 25% → ~48% (alignment tax visible)
+**Total: ~3 days from data filtering to final results.**
 
 ---
 
-### R5: all constraints
+## Go/No-Go Decision Points
 
-```yaml
-reward: {test: 0.4, pylint: 0.15, complexity: 0.15, comment: 0.15, duplication: 0.15}
-```
-
-**Purpose:** Block all measured dimensions. Quantify alignment tax.
-
-**Expected:**
-- All constrained dims: ✅
-- pass rate: 25% → 40-45% (15-20pp below R1 = **alignment tax**)
-- ECE: ❌ (never constrained, always worsening — proves gaming persists)
+| When | Check | If FAIL |
+|------|-------|---------|
+| Day 0 PM | Trainable problems ≥ 500? | Add APPS data, re-filter |
+| Day 1 PM | 7B-R1 pass rate > 50%? | Adjust lr, kl_coeff, re-run |
+| Day 1 PM | Tax curve convex (has knee)? | Drop ρ*, keep escape map |
+| Day 3 AM | R² > 0.85 across scales? | Drop "scaling law" claim, keep empirical |
+| Day 3 AM | ρ* consistent (0.3-0.4)? | Drop "universal constant" claim |
 
 ---
 
-### 14B Verification
+## Critical: Log ALL dimensions for EVERY rollout
 
-R1 and R2 configs with Qwen3-Coder-14B (LoRA r=128), 1000 steps each. Confirms escape directions are consistent across model scales.
-
----
-
-## Timeline (2×B200)
-
-| Day | B200 #1 | B200 #2 |
-|-----|---------|---------|
-| 0 | Data filtering (2h) | Code debug |
-| 1-2 | **R1** 1000 steps | **R2** 1000 steps |
-| 2-3 | **R3** | **R4** |
-| 3-4 | **R5** | **14B R1 verify** |
-| 4-5 | **14B R2 verify** | Eval + figures |
-
-**~5 days total.**
+Every rollout logs all 6 constrained + 6 unconstrained dimensions, regardless of which ones are in the reward. Without this, theory verification (correlation matrix, variance ratio) is impossible.
 
 ---
 
 ## Disk Space Management
 
-- Checkpoints are uploaded to HuggingFace after each experiment
-- Local checkpoints cleaned: keep only every 500th + last
-- DiskMonitor runs in background, triggers cleanup at <50GB free
-- Model weights (~14GB for 7B, ~28GB for 14B) are the main concern
+- Each 7B checkpoint: ~14GB → 10 checkpoints = 140GB
+- 17 experiments × 140GB = **2.4TB** (exceeds disk without cleanup!)
+- Strategy: Upload each checkpoint to HuggingFace immediately, then delete locally
+- Keep only first + last + every 500th checkpoint locally
+- DiskMonitor thread runs during training, triggers cleanup at <50GB free
 - HF cache cleared if >20GB
 
 ---
 
-## Final Deliverables
+## Expected Figures
 
-1. **R1 Training Dynamics Curve**: pass rate rise-and-fall + 5 quality dims degrading
-2. **Escape Map**: heatmap showing gaming displacement R1→R5
-3. **Alignment Tax Curve**: pass rate vs # constrained dimensions (non-linear decline)
+1. **R1 Training Dynamics**: Pass rate rise-then-fall + 5 quality dims degrading
+2. **Escape Map Heatmap**: Gaming displacement R1→R5 × 3 model scales
+3. **Alignment Tax Curves**: tax(n) for 1.5B/7B/14B with fitted power law
+4. **Efficiency Frontier**: Quality vs pass rate, knee = ρ*
+5. **Theory vs Experiment**: Predicted vs actual tax scatter (identity line)
+6. **ρ* Bar Chart**: Showing ρ* ≈ 0.35 across scales
 
-These three figures tell the complete story:
-- R1 curve: "test-only RL causes quality collapse"
-- Escape map: "adding constraints displaces gaming, doesn't eliminate it"
-- Tax curve: "more constraints = lower pass rate, and ECE always escapes"
+---
+
+## Fallback Plan
+
+| Outcome | Paper version | Score |
+|---------|--------------|-------|
+| R² > 0.95, ρ* stable | "Scaling Laws for Alignment Tax" | 8-9 (oral) |
+| R² = 0.85-0.95 | "Alignment Tax in Code RL" (empirical) | 7-7.5 (poster) |
+| R² < 0.85, escape map clear | "Proxy Gaming Escape in Code RL" | 6.5-7 (poster) |
+| Training fails | Debug + resubmit ICML 2027 | — |

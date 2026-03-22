@@ -18,18 +18,38 @@ import tempfile
 import traceback
 from typing import Any
 
+# TACO has some test cases with huge integers
+sys.set_int_max_str_digits(100000)
+
 import yaml
 from datasets import Dataset, load_dataset
 from tqdm import tqdm
 from vllm import LLM, SamplingParams
 
 
-def load_taco_dataset(split: str = "train", max_samples: int | None = None) -> list[dict]:
-    """Load TACO dataset from HuggingFace."""
+def load_taco_dataset(split: str = "all", max_samples: int | None = None) -> list[dict]:
+    """Load TACO dataset from HuggingFace (all splits combined by default)."""
     print(f"Loading TACO dataset (split={split})...")
-    ds = load_dataset("BAAI/TACO", split=split, trust_remote_code=True)
+
+    # TACO uses a loading script that newer datasets doesn't support,
+    # so load directly from parquet files
+    data_files = {
+        "train": "hf://datasets/BAAI/TACO/ALL/train-*.parquet",
+        "test": "hf://datasets/BAAI/TACO/ALL/test-*.parquet",
+    }
+    all_ds = load_dataset("parquet", data_files=data_files)
+
+    if split == "all":
+        # Combine train + test for maximum coverage
+        from datasets import concatenate_datasets
+        ds = concatenate_datasets([all_ds["train"], all_ds["test"]])
+        print(f"Combined train ({len(all_ds['train'])}) + test ({len(all_ds['test'])}) = {len(ds)} problems")
+    else:
+        ds = all_ds[split]
+
     if max_samples:
         ds = ds.select(range(min(max_samples, len(ds))))
+
     problems = []
     for item in ds:
         test_cases = item.get("input_output", "")
@@ -40,13 +60,26 @@ def load_taco_dataset(split: str = "train", max_samples: int | None = None) -> l
                 continue
         if not test_cases:
             continue
+
+        # Skip interactive problems (can't auto-test)
+        question = item.get("question", "")
+        if "interactive" in question.lower()[:200]:
+            continue
+
+        # Need both inputs and outputs for testing
+        inputs = test_cases.get("inputs", [])
+        outputs = test_cases.get("outputs", [])
+        fn_name = test_cases.get("fn_name", "")
+        if not fn_name and (not inputs or not outputs):
+            continue
+
         problems.append({
-            "prompt": item.get("question", ""),
+            "prompt": question,
             "starter_code": item.get("starter_code", ""),
             "test_cases": test_cases,
-            "difficulty": item.get("difficulty", ""),
-            "tags": item.get("tags", ""),
-            "source": item.get("source", ""),
+            "difficulty": str(item.get("difficulty", "")),
+            "tags": str(item.get("tags", "")),
+            "source": str(item.get("source", "")),
         })
     print(f"Loaded {len(problems)} problems with valid test cases")
     return problems
@@ -206,8 +239,21 @@ def compute_pass_at_k(codes: list[str], test_cases: dict, k: int = 8) -> float:
     return n_pass / k
 
 
+def _incremental_save(data: list[dict], path: str):
+    """Save partial results to avoid losing progress on crash."""
+    save_data = []
+    for item in data:
+        d = dict(item)
+        if isinstance(d.get("test_cases"), dict):
+            d["test_cases_json"] = json.dumps(d["test_cases"])
+        save_data.append(d)
+    with open(path, "w") as f:
+        json.dump(save_data, f, ensure_ascii=False)
+    print(f"  [incremental save] {len(save_data)} problems saved to {path}")
+
+
 def filter_sweet_spot(
-    model_name: str = "Qwen/Qwen3-Coder-7B",
+    model_name: str = "Qwen/Qwen2.5-Coder-7B",
     k: int = 8,
     low: float = 0.10,
     high: float = 0.50,
@@ -227,55 +273,109 @@ def filter_sweet_spot(
     problems = load_taco_dataset(max_samples=max_problems)
     print(f"Total problems to evaluate: {len(problems)}")
 
-    # Initialize vLLM
-    print(f"Loading model {model_name} with vLLM...")
-    llm = LLM(
-        model=model_name,
-        trust_remote_code=True,
-        tensor_parallel_size=tensor_parallel_size,
-        gpu_memory_utilization=gpu_memory_utilization,
-        max_model_len=4096,
-    )
+    # Build prompts, truncate very long ones to avoid OOM
+    prompts = []
+    valid_problems = []
+    for p in problems:
+        prompt = build_code_prompt(p)
+        # Skip prompts that are too long (>6000 chars ~ >1500 tokens)
+        if len(prompt) > 6000:
+            continue
+        prompts.append(prompt)
+        valid_problems.append(p)
+    problems = valid_problems
+    print(f"After length filter: {len(problems)} problems")
 
     sampling_params = SamplingParams(
         n=k,
-        temperature=0.8,
+        temperature=0.7,
         top_p=0.95,
         max_tokens=2048,
         stop=["```\n", "\n\n\n"],
     )
 
-    # Build prompts
-    prompts = [build_code_prompt(p) for p in problems]
-
-    # Batch generate
-    print(f"Generating {k} samples per problem ({len(problems)} problems)...")
-    outputs = llm.generate(prompts, sampling_params)
-
-    # Filter
+    # Process in batches with vLLM restart on failure
+    BATCH_SIZE = 128
     sweet_spot = []
-    stats = {"total": len(problems), "too_easy": 0, "too_hard": 0, "sweet": 0}
+    stats = {"total": len(problems), "too_easy": 0, "too_hard": 0, "sweet": 0, "error": 0}
+    llm = None
 
-    print("Running tests and filtering...")
-    for i, (problem, output) in enumerate(tqdm(zip(problems, outputs), total=len(problems))):
-        codes = [extract_code(o.text) for o in output.outputs]
-        pass_rate = compute_pass_at_k(codes, problem["test_cases"], k=k)
+    def init_vllm():
+        nonlocal llm
+        import gc
+        import torch
+        if llm is not None:
+            del llm
+            gc.collect()
+            torch.cuda.empty_cache()
+        print(f"  (Re)loading vLLM model {model_name}...")
+        return LLM(
+            model=model_name,
+            trust_remote_code=True,
+            tensor_parallel_size=tensor_parallel_size,
+            gpu_memory_utilization=gpu_memory_utilization,
+            max_model_len=4096,
+        )
 
-        problem["pass_at_k"] = pass_rate
-        problem["k"] = k
-        problem["n_pass"] = int(pass_rate * k)
+    llm = init_vllm()
 
-        if pass_rate > high:
-            stats["too_easy"] += 1
-        elif pass_rate < low:
-            stats["too_hard"] += 1
-        else:
-            stats["sweet"] += 1
-            sweet_spot.append(problem)
+    print(f"Generating {k} samples per problem ({len(problems)} problems) in batches of {BATCH_SIZE}...")
 
-        if (i + 1) % 100 == 0:
-            print(f"  [{i+1}/{len(problems)}] sweet={stats['sweet']}, "
-                  f"easy={stats['too_easy']}, hard={stats['too_hard']}")
+    batch_idx = 0
+    for batch_start in range(0, len(problems), BATCH_SIZE):
+        batch_end = min(batch_start + BATCH_SIZE, len(problems))
+        batch_prompts = prompts[batch_start:batch_end]
+        batch_problems = problems[batch_start:batch_end]
+        batch_idx += 1
+
+        print(f"\n  Batch {batch_idx}: problems {batch_start}-{batch_end}...")
+
+        try:
+            outputs = llm.generate(batch_prompts, sampling_params)
+        except Exception as e:
+            print(f"  ERROR in batch {batch_idx}: {e}")
+            print(f"  Reinitializing vLLM and retrying with smaller sub-batches...")
+            llm = init_vllm()
+            # Retry in smaller chunks
+            outputs = []
+            SUB_BATCH = 32
+            for sb_start in range(0, len(batch_prompts), SUB_BATCH):
+                sb_end = min(sb_start + SUB_BATCH, len(batch_prompts))
+                try:
+                    sb_outputs = llm.generate(batch_prompts[sb_start:sb_end], sampling_params)
+                    outputs.extend(sb_outputs)
+                except Exception as e2:
+                    print(f"    Sub-batch {sb_start}-{sb_end} failed: {e2}")
+                    # Mark these as errors
+                    stats["error"] += sb_end - sb_start
+                    continue
+            if len(outputs) != len(batch_prompts):
+                # Partial results - only process what we got
+                batch_problems = batch_problems[:len(outputs)]
+
+        print(f"  Running tests...")
+        for i, (problem, output) in enumerate(zip(batch_problems, outputs)):
+            codes = [extract_code(o.text) for o in output.outputs]
+            pass_rate = compute_pass_at_k(codes, problem["test_cases"], k=k)
+
+            problem["pass_at_k"] = pass_rate
+            problem["k"] = k
+            problem["n_pass"] = int(pass_rate * k)
+
+            if pass_rate > high:
+                stats["too_easy"] += 1
+            elif pass_rate < low:
+                stats["too_hard"] += 1
+            else:
+                stats["sweet"] += 1
+                sweet_spot.append(problem)
+
+        print(f"  [{batch_end}/{len(problems)}] sweet={stats['sweet']}, "
+              f"easy={stats['too_easy']}, hard={stats['too_hard']}, err={stats['error']}")
+
+        # Incremental save every 10 batches
+        if batch_idx % 10 == 0 and sweet_spot:
+            _incremental_save(sweet_spot, output_path + ".partial")
 
     print(f"\nFiltering complete:")
     print(f"  Total: {stats['total']}")
@@ -340,7 +440,7 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(description="Filter TACO for sweet spot problems")
-    parser.add_argument("--model", default="Qwen/Qwen3-Coder-7B")
+    parser.add_argument("--model", default="Qwen/Qwen2.5-Coder-7B")
     parser.add_argument("--k", type=int, default=8)
     parser.add_argument("--low", type=float, default=0.10)
     parser.add_argument("--high", type=float, default=0.50)

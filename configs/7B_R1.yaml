@@ -1,15 +1,12 @@
-experiment_name: R4_test_pylint_complexity_comment
-description: "Test + Pylint + Complexity + Comment - observe final escape directions"
+experiment_name: 7B_R1
+description: "Test-only baseline - observe full rise-and-fall arc"
 
 model:
-  name: Qwen/Qwen3-Coder-7B
+  name: Qwen/Qwen2.5-Coder-7B
   trust_remote_code: true
 
 reward:
-  test: 0.5
-  pylint: 0.2
-  complexity: 0.15
-  comment: 0.15
+  test: 1.0
 
 training:
   total_steps: 1000
@@ -25,7 +22,7 @@ training:
 
 checkpointing:
   save_every: 100
-  output_dir: results/R4_test_pylint_complexity_comment
+  output_dir: results/7B_R1
 
 vllm:
   tensor_parallel_size: 1
@@ -36,3 +33,6 @@ evaluation:
   mbpp_size: 100
   classeval_size: 50
   eval_every: 100
+
+logging:
+  log_all_dims: true
