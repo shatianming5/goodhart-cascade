@@ -1,4 +1,4 @@
-# Model weights (uploaded to HuggingFace instead)
+# Model weights
 *.bin
 *.safetensors
 *.pt
@@ -6,16 +6,25 @@
 *.onnx
 *.msgpack
 
-# Checkpoints (uploaded to HuggingFace instead)
+# Large data files (upload to HuggingFace)
+data/sweet_spot_*.json
+data/sweet_spot_*.partial
+data/*.tar.gz
+data/*.zip
+
+# Results (upload to HuggingFace)
 results/*/checkpoint-*/
-
-# Keep config and logs in results
-!results/**/config.yaml
-!results/**/training_log.json
-!results/**/eval_results.json
-
-# Temp policy dirs
 results/**/_tmp_policy/
+results/*/rollout_logs.jsonl
+results/*.log
+
+# Temp test files
+*.txt
+cached
+output*
+*.out
+graph4.*
+haiku1.*
 
 # Python
 __pycache__/
@@ -24,9 +33,8 @@ __pycache__/
 *.egg-info/
 dist/
 build/
-.eggs/
 
-# Environment
+# Env
 .env
 .venv/
 venv/
@@ -35,15 +43,10 @@ venv/
 .idea/
 .vscode/
 *.swp
-*.swo
 
 # OS
 .DS_Store
 Thumbs.db
 
-# HuggingFace cache
+# HF cache
 .cache/
-
-# Large data files (keep JSON metadata)
-data/*.tar.gz
-data/*.zip

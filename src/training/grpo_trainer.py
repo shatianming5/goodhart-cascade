@@ -198,7 +198,7 @@ class GRPOTrainer:
             self.config.model_name,
             trust_remote_code=self.config.trust_remote_code,
             torch_dtype=torch.bfloat16,
-            attn_implementation="flash_attention_2",
+            attn_implementation="sdpa",
         )
 
         if self.config.use_lora:
@@ -220,7 +220,7 @@ class GRPOTrainer:
             self.config.model_name,
             trust_remote_code=self.config.trust_remote_code,
             torch_dtype=torch.bfloat16,
-            attn_implementation="flash_attention_2",
+            attn_implementation="sdpa",
         ).to(self.device)
         self.ref_model.eval()
         for p in self.ref_model.parameters():
@@ -269,9 +269,9 @@ class GRPOTrainer:
 
     def _generate_rollouts(self, prompts: list[str]) -> list[list[str]]:
         """Generate K rollouts per prompt using vLLM."""
-        # Initialize vLLM for generation (we reload each time to free GPU mem)
-        # In practice, you'd want to keep this alive or use a separate GPU
+        # Move BOTH models to CPU to free GPU for vLLM
         self.policy_model.cpu()
+        self.ref_model.cpu()
         torch.cuda.empty_cache()
 
         # Save current policy weights for vLLM
@@ -283,7 +283,7 @@ class GRPOTrainer:
             model=tmp_model_dir,
             trust_remote_code=True,
             tensor_parallel_size=self.config.tensor_parallel_size,
-            gpu_memory_utilization=self.config.gpu_memory_utilization,
+            gpu_memory_utilization=0.70,  # Lower to leave room for model reload
             max_model_len=self.config.max_model_len,
         )
 
@@ -308,8 +308,9 @@ class GRPOTrainer:
         torch.cuda.empty_cache()
         gc.collect()
 
-        # Move policy back to GPU
+        # Move both models back to GPU
         self.policy_model.to(self.device)
+        self.ref_model.to(self.device)
 
         return all_codes
 

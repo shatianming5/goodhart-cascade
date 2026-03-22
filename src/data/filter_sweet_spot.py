@@ -212,66 +212,101 @@ def _indent(code: str, spaces: int) -> str:
     return "\n".join(prefix + line for line in code.split("\n"))
 
 
-def _test_one_code(args):
-    """Worker for parallel test execution."""
-    code, test_cases, timeout = args
-    return run_all_tests(code, test_cases, timeout)
-
-
-def compute_pass_at_k(
-    codes: list[str], test_cases: dict, k: int = 8,
-    low: float = 0.0, high: float = 1.0,
-) -> float:
+def compute_batch_pass_at_k(
+    batch_codes: list[list[str]],
+    batch_test_cases: list[dict],
+    k: int = 8,
+    low: float = 0.0,
+    high: float = 1.0,
+    max_workers: int = 32,
+) -> list[float]:
     """
-    Compute pass@k with parallel execution and early termination.
+    Compute pass@k for an ENTIRE BATCH using raw subprocess.Popen.
 
-    - Runs tests in parallel using ProcessPoolExecutor
-    - Terminates early when result is guaranteed outside [low, high]
+    Launches up to max_workers test scripts simultaneously as separate OS processes.
+    No ProcessPoolExecutor (avoids CUDA fork issues).
+    128 problems × 8 codes = 1024 tasks, up to 32 running concurrently.
     """
-    from concurrent.futures import ProcessPoolExecutor, as_completed
+    import subprocess
+    import time
 
-    n = min(len(codes), k)
-    timeout_per_test = 2  # reduced from 5s
+    timeout = 2
 
-    # Try parallel first
-    try:
-        with ProcessPoolExecutor(max_workers=min(n, 4)) as pool:
-            futures = {
-                pool.submit(_test_one_code, (code, test_cases, timeout_per_test)): i
-                for i, code in enumerate(codes[:n])
-            }
-            n_pass = 0
-            n_done = 0
-            for future in as_completed(futures, timeout=timeout_per_test * n + 5):
-                n_done += 1
+    # Build all test scripts and write to temp files
+    tasks = []  # (prob_idx, code_idx, script_path)
+    for prob_idx, (codes, test_cases) in enumerate(zip(batch_codes, batch_test_cases)):
+        fn_name = test_cases.get("fn_name", "")
+        inputs = test_cases.get("inputs", [])
+        outputs = test_cases.get("outputs", [])
+
+        for code_idx, code in enumerate(codes[:k]):
+            if fn_name:
+                script = _build_fn_test_script(code, fn_name, inputs, outputs)
+            else:
+                script = _build_stdio_test_script(code, inputs, outputs)
+
+            tmp_path = f"/tmp/_test_{prob_idx}_{code_idx}.py"
+            with open(tmp_path, "w") as f:
+                f.write(script)
+            tasks.append((prob_idx, code_idx, tmp_path))
+
+    # Launch in waves of max_workers
+    results = {}  # (prob_idx, code_idx) -> bool
+
+    i = 0
+    while i < len(tasks):
+        # Launch a wave
+        wave = tasks[i:i + max_workers]
+        procs = []
+        for prob_idx, code_idx, script_path in wave:
+            proc = subprocess.Popen(
+                [sys.executable, script_path],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.DEVNULL,
+                start_new_session=True,
+            )
+            procs.append((prob_idx, code_idx, script_path, proc))
+
+        # Wait for wave with timeout
+        deadline = time.time() + timeout + 1
+        for prob_idx, code_idx, script_path, proc in procs:
+            remaining = max(0.1, deadline - time.time())
+            try:
+                proc.wait(timeout=remaining)
+                stdout = proc.stdout.read().decode().strip() if proc.stdout else ""
+                results[(prob_idx, code_idx)] = (proc.returncode == 0 and stdout == "PASS")
+            except subprocess.TimeoutExpired:
                 try:
-                    if future.result(timeout=1):
-                        n_pass += 1
+                    os.killpg(os.getpgid(proc.pid), 9)
+                except Exception:
+                    proc.kill()
+                results[(prob_idx, code_idx)] = False
+            finally:
+                try:
+                    proc.stdout.close()
                 except Exception:
                     pass
 
-                # Early termination
-                n_remaining = n - n_done
-                # Already too many passes -> too easy
-                if n_pass / n > high:
-                    return n_pass / n
-                # Even if all remaining pass, still below low -> too hard
-                if (n_pass + n_remaining) / n < low:
-                    return n_pass / n
+        # Cleanup temp files
+        for _, _, script_path, _ in procs:
+            try:
+                os.unlink(script_path)
+            except Exception:
+                pass
 
-    except Exception:
-        # Fallback to sequential
-        n_pass = 0
-        for i, code in enumerate(codes[:n]):
-            if run_all_tests(code, test_cases, timeout_per_test):
-                n_pass += 1
-            n_remaining = n - (i + 1)
-            if (n_pass + n_remaining) / n < low:
-                break
-            if n_pass / n > high:
-                break
+        i += max_workers
 
-    return n_pass / n
+    # Aggregate per problem
+    pass_rates = []
+    for prob_idx in range(len(batch_codes)):
+        n = min(len(batch_codes[prob_idx]), k)
+        if n == 0:
+            pass_rates.append(0.0)
+            continue
+        n_pass = sum(1 for ci in range(n) if results.get((prob_idx, ci), False))
+        pass_rates.append(n_pass / n)
+
+    return pass_rates
 
 
 def _incremental_save(data: list[dict], path: str):
@@ -391,11 +426,23 @@ def filter_sweet_spot(
                 # Partial results - only process what we got
                 batch_problems = batch_problems[:len(outputs)]
 
-        print(f"  Running tests (parallel + early termination)...")
-        for i, (problem, output) in enumerate(zip(batch_problems, outputs)):
+        # Extract all codes for the batch
+        batch_all_codes = []
+        batch_all_test_cases = []
+        for problem, output in zip(batch_problems, outputs):
             codes = [extract_code(o.text) for o in output.outputs]
-            pass_rate = compute_pass_at_k(codes, problem["test_cases"], k=k, low=low, high=high)
+            batch_all_codes.append(codes)
+            batch_all_test_cases.append(problem["test_cases"])
 
+        # Run ALL tests for the entire batch in parallel (128×8=1024 tasks, 32 workers)
+        n_workers = min(32, len(batch_all_codes) * k)
+        print(f"  Running tests ({len(batch_all_codes)}×{k}={len(batch_all_codes)*k} tasks, {n_workers} workers)...")
+        pass_rates = compute_batch_pass_at_k(
+            batch_all_codes, batch_all_test_cases,
+            k=k, low=low, high=high, max_workers=n_workers,
+        )
+
+        for problem, pass_rate in zip(batch_problems, pass_rates):
             problem["pass_at_k"] = pass_rate
             problem["k"] = k
             problem["n_pass"] = int(pass_rate * k)

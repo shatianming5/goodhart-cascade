@@ -39,3 +39,4 @@ evaluation:
 
 logging:
   log_all_dims: true
+data_path: data/sweet_spot_7B.json

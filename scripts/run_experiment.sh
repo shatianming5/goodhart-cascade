@@ -19,6 +19,7 @@ export HF_TOKEN="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"
 
 EXPERIMENT_NAME=$(python3 -c "import yaml; print(yaml.safe_load(open('$CONFIG'))['experiment_name'])")
 OUTPUT_DIR=$(python3 -c "import yaml; print(yaml.safe_load(open('$CONFIG')).get('checkpointing',{}).get('output_dir','results/$EXPERIMENT_NAME'))")
+DATA_PATH=$(python3 -c "import yaml; print(yaml.safe_load(open('$CONFIG')).get('data_path','data/sweet_spot_7B.json'))")
 
 echo "============================================"
 echo "[$EXPERIMENT_NAME] Starting on GPU $CUDA_VISIBLE_DEVICES"
@@ -36,11 +37,11 @@ if free_gb < 100:
     print('  WARNING: Low disk space!')
 "
 
-# Train
-echo "[$EXPERIMENT_NAME] Training..."
-python3 -m src.training.grpo_trainer \
+# Train (using TRL GRPOTrainer with persistent vLLM)
+echo "[$EXPERIMENT_NAME] Training with data: $DATA_PATH"
+python3 -m src.training.trl_grpo_trainer \
     --config "$CONFIG" \
-    --data data/sweet_spot_taco.json
+    --data "$DATA_PATH"
 
 # Evaluate all checkpoints
 echo "[$EXPERIMENT_NAME] Evaluating checkpoints..."
