@@ -56,30 +56,152 @@ def load_sweet_spot_data(data_path: str) -> Dataset:
 def make_reward_fn(weights: dict[str, float]):
     """Create a reward function closure for TRL's GRPOTrainer."""
 
-    def reward_fn(completions: list[str], **kwargs) -> list[float]:
+    def reward_fn(completions, **kwargs) -> list[float]:
         """
-        TRL calls this with a list of completion strings.
-        We need to extract code and compute rewards.
+        TRL calls this with completions (list of strings or list of message dicts).
+        Batch-parallel reward computation for speed.
         """
-        prompts = kwargs.get("prompts", [None] * len(completions))
+        from concurrent.futures import ThreadPoolExecutor, as_completed
+        import subprocess, tempfile, re
+
         test_cases_list = kwargs.get("test_cases", [None] * len(completions))
 
-        rewards = []
+        # Step 1: Extract all codes
+        codes = []
+        tc_list = []
         for completion, tc_json in zip(completions, test_cases_list):
-            # Extract code from completion
-            code = _extract_code(completion)
+            try:
+                if isinstance(completion, list):
+                    text = completion[-1]["content"] if completion else ""
+                elif isinstance(completion, dict):
+                    text = completion.get("content", str(completion))
+                else:
+                    text = str(completion)
+                codes.append(_extract_code(text))
+                tc = json.loads(tc_json) if isinstance(tc_json, str) else tc_json
+                tc_list.append(tc)
+            except Exception:
+                codes.append("")
+                tc_list.append(None)
 
-            if tc_json is None:
-                rewards.append(0.0)
+        n = len(codes)
+
+        # Step 2: Parallel test execution (subprocess-based, ~32 at a time)
+        test_scores = _batch_test(codes, tc_list)
+
+        # Step 3: Parallel pylint (if in weights)
+        pylint_scores = [0.5] * n
+        if "pylint" in weights:
+            pylint_scores = _batch_pylint(codes)
+
+        # Step 4: Fast CPU metrics (complexity, comment, duplication)
+        complexity_scores = [0.5] * n
+        comment_scores = [0.5] * n
+        dup_scores = [0.5] * n
+        for i, code in enumerate(codes):
+            if not code:
                 continue
+            if "complexity" in weights:
+                from src.rewards.reward_functions import reward_complexity
+                complexity_scores[i] = reward_complexity(code)
+            if "comment" in weights:
+                from src.rewards.reward_functions import reward_comment
+                comment_scores[i] = reward_comment(code)
+            if "duplication" in weights:
+                from src.rewards.reward_functions import reward_duplication
+                dup_scores[i] = reward_duplication(code)
 
-            test_cases = json.loads(tc_json) if isinstance(tc_json, str) else tc_json
-            scores = compute_reward(code, test_cases, weights, timeout=2)
-            rewards.append(scores["total"])
+        # Step 5: Combine
+        rewards = []
+        for i in range(n):
+            total = 0.0
+            if "test" in weights:
+                total += weights["test"] * test_scores[i]
+            if "pylint" in weights:
+                total += weights["pylint"] * pylint_scores[i]
+            if "complexity" in weights:
+                total += weights["complexity"] * complexity_scores[i]
+            if "comment" in weights:
+                total += weights["comment"] * comment_scores[i]
+            if "duplication" in weights:
+                total += weights["duplication"] * dup_scores[i]
+            rewards.append(total)
 
         return rewards
 
     return reward_fn
+
+
+def _batch_test(codes: list[str], test_cases_list: list[dict | None], max_workers: int = 32) -> list[float]:
+    """Run tests for all codes in parallel using subprocess."""
+    import subprocess, tempfile, time
+    from src.data.filter_sweet_spot import _build_fn_test_script, _build_stdio_test_script
+
+    results = [0.0] * len(codes)
+    tasks = []
+
+    for i, (code, tc) in enumerate(zip(codes, test_cases_list)):
+        if not code or tc is None:
+            continue
+        fn_name = tc.get("fn_name", "")
+        inputs = tc.get("inputs", [])
+        outputs = tc.get("outputs", [])
+        if fn_name:
+            script = _build_fn_test_script(code, fn_name, inputs, outputs)
+        elif inputs and outputs:
+            script = _build_stdio_test_script(code, inputs, outputs)
+        else:
+            continue
+        tmp = f"/tmp/_rtest_{i}.py"
+        with open(tmp, "w") as f:
+            f.write(script)
+        tasks.append((i, tmp))
+
+    # Launch in waves
+    wave_size = min(max_workers, len(tasks))
+    idx = 0
+    while idx < len(tasks):
+        wave = tasks[idx:idx + wave_size]
+        procs = []
+        for i, path in wave:
+            proc = subprocess.Popen(
+                [sys.executable, path],
+                stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
+                start_new_session=True,
+            )
+            procs.append((i, path, proc))
+
+        deadline = time.time() + 3
+        for i, path, proc in procs:
+            try:
+                proc.wait(timeout=max(0.1, deadline - time.time()))
+                out = proc.stdout.read().decode().strip() if proc.stdout else ""
+                results[i] = 1.0 if (proc.returncode == 0 and out == "PASS") else 0.0
+            except subprocess.TimeoutExpired:
+                try:
+                    os.killpg(os.getpgid(proc.pid), 9)
+                except Exception:
+                    proc.kill()
+                results[i] = 0.0
+            finally:
+                try:
+                    proc.stdout.close()
+                    os.unlink(path)
+                except Exception:
+                    pass
+        idx += wave_size
+
+    return results
+
+
+def _batch_pylint(codes: list[str], max_workers: int = 16) -> list[float]:
+    """Run pylint on all codes in parallel using ThreadPoolExecutor."""
+    from concurrent.futures import ThreadPoolExecutor
+    from src.rewards.reward_functions import reward_pylint
+
+    with ThreadPoolExecutor(max_workers=max_workers) as pool:
+        results = list(pool.map(reward_pylint, codes))
+    return results
 
 
 def _extract_code(response: str) -> str:
@@ -98,7 +220,7 @@ def _extract_code(response: str) -> str:
     return response.strip()
 
 
-def train(config_path: str, data_path: str):
+def train(config_path: str, data_path: str, vllm_port: int = 8000, vllm_mode: str = "server"):
     """Main training entry point using TRL GRPOTrainer."""
     cfg = load_config(config_path)
 
@@ -144,10 +266,13 @@ def train(config_path: str, data_path: str):
         max_completion_length=train_cfg.get("generation_max_length", 2048),
         temperature=train_cfg.get("temperature", 0.7),
 
-        # vLLM - colocate mode keeps engine in same process, no server needed
+        # vLLM - each experiment gets unique server_port + group_port to avoid NCCL conflicts
         use_vllm=True,
-        vllm_mode="colocate",
-        vllm_gpu_memory_utilization=0.70,
+        vllm_mode="server",
+        vllm_server_host="0.0.0.0",
+        vllm_server_port=vllm_port,
+        vllm_group_port=51216 + vllm_port - 8000,  # unique per experiment
+        vllm_gpu_memory_utilization=0.85,
         vllm_max_model_length=cfg.get("vllm", {}).get("max_model_len", 4096),
 
         # Checkpointing
@@ -205,5 +330,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", required=True)
     parser.add_argument("--data", required=True)
+    parser.add_argument("--vllm-port", type=int, default=8000)
+    parser.add_argument("--vllm-mode", default="server", choices=["server", "colocate"])
     args = parser.parse_args()
-    train(args.config, args.data)
+    train(args.config, args.data, args.vllm_port, args.vllm_mode)
