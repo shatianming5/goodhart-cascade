@@ -257,6 +257,8 @@ def filter_sweet_spot(
     k: int = 8,
     low: float = 0.10,
     high: float = 0.50,
+    temperature: float = 0.8,
+    top_p: float = 0.95,
     max_problems: int | None = None,
     output_path: str = "data/sweet_spot_taco.json",
     gpu_memory_utilization: float = 0.85,
@@ -288,11 +290,12 @@ def filter_sweet_spot(
 
     sampling_params = SamplingParams(
         n=k,
-        temperature=0.7,
-        top_p=0.95,
+        temperature=temperature,
+        top_p=top_p,
         max_tokens=2048,
         stop=["```\n", "\n\n\n"],
     )
+    print(f"Sampling: temperature={temperature}, top_p={top_p}, k={k}, range=[{low}, {high}]")
 
     # Process in batches with vLLM restart on failure
     BATCH_SIZE = 128
@@ -444,6 +447,8 @@ if __name__ == "__main__":
     parser.add_argument("--k", type=int, default=8)
     parser.add_argument("--low", type=float, default=0.10)
     parser.add_argument("--high", type=float, default=0.50)
+    parser.add_argument("--temperature", type=float, default=0.8)
+    parser.add_argument("--top-p", type=float, default=0.95)
     parser.add_argument("--max-problems", type=int, default=None)
     parser.add_argument("--output", default="data/sweet_spot_taco.json")
     parser.add_argument("--gpu-util", type=float, default=0.85)
@@ -457,6 +462,8 @@ if __name__ == "__main__":
         k=args.k,
         low=args.low,
         high=args.high,
+        temperature=args.temperature,
+        top_p=args.top_p,
         max_problems=args.max_problems,
         output_path=args.output,
         gpu_memory_utilization=args.gpu_util,
