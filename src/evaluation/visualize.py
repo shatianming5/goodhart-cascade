@@ -221,97 +221,97 @@ def plot_alignment_tax(
 ):
     """
     Plot alignment tax vs number of constraint dimensions.
-    Shows pass rate declining as more quality constraints are added.
+    Now supports 3 model scales on the same plot.
     """
-    experiments = ["R1", "R2", "R3", "R4", "R5"]
     n_constraints = [1, 2, 3, 4, 5]
-    labels = [
-        "test",
-        "test+pylint",
-        "test+pylint\n+complexity",
-        "test+pylint\n+complexity\n+comment",
-        "all 5",
-    ]
+    labels = ["R1\ntest", "R2\n+pylint", "R3\n+complex", "R4\n+comment", "R5\nall 5"]
 
-    pass_rates = []
-    for exp in experiments:
-        if exp in results_dirs:
-            results = load_results(results_dirs[exp])
-            if results:
-                # Get peak pass rate
-                peak = max(r.get("pass_at_1", 0) for r in results)
-                pass_rates.append(peak * 100)
+    scales = {"1.5B": "green", "7B": "blue", "14B": "red"}
+
+    fig, ax = plt.subplots(figsize=(11, 7))
+
+    for scale, color in scales.items():
+        pass_rates = []
+        for r_idx in range(1, 6):
+            key = f"{scale}_R{r_idx}"
+            if key in results_dirs:
+                results = load_results(results_dirs[key])
+                if results:
+                    peak = max(r.get("pass_at_1", 0) for r in results)
+                    pass_rates.append(peak * 100)
+                else:
+                    pass_rates.append(None)
             else:
-                pass_rates.append(None)
-        else:
-            pass_rates.append(None)
+                # Try old naming
+                key2 = f"R{r_idx}"
+                if key2 in results_dirs:
+                    results = load_results(results_dirs[key2])
+                    if results:
+                        peak = max(r.get("pass_at_1", 0) for r in results)
+                        pass_rates.append(peak * 100)
+                    else:
+                        pass_rates.append(None)
+                else:
+                    pass_rates.append(None)
 
-    # Filter out None
-    valid = [(n, p, l) for n, p, l in zip(n_constraints, pass_rates, labels) if p is not None]
-    if not valid:
-        print("No results for alignment tax plot")
-        return
+        valid = [(n, p) for n, p in zip(n_constraints, pass_rates) if p is not None]
+        if not valid:
+            continue
 
-    ns, ps, ls = zip(*valid)
+        ns, ps = zip(*valid)
+        ax.plot(ns, ps, f"-o", color=color, linewidth=2.5, markersize=8,
+                label=f"{scale}", alpha=0.85)
 
-    fig, ax = plt.subplots(figsize=(10, 6))
+        for n, p in zip(ns, ps):
+            ax.annotate(f"{p:.1f}%", (n, p), textcoords="offset points",
+                        xytext=(0, 10), ha="center", fontsize=9, color=color)
 
-    ax.plot(ns, ps, "b-o", linewidth=2.5, markersize=10, markerfacecolor="red")
-
-    for n, p, l in zip(ns, ps, ls):
-        ax.annotate(
-            f"{p:.1f}%",
-            (n, p),
-            textcoords="offset points",
-            xytext=(0, 12),
-            ha="center",
-            fontsize=11,
-            fontweight="bold",
-        )
-
-    ax.set_xticks(list(ns))
-    ax.set_xticklabels(ls, fontsize=10)
+    ax.set_xticks(n_constraints)
+    ax.set_xticklabels(labels, fontsize=10)
     ax.set_xlabel("Constrained Dimensions", fontsize=12)
     ax.set_ylabel("Peak Pass@1 (%)", fontsize=12)
-    ax.set_title("Alignment Tax: Pass Rate vs Number of Quality Constraints",
+    ax.set_title("Alignment Tax Across Model Scales",
                  fontsize=14, fontweight="bold")
-
-    # Shade the alignment tax region
-    if len(ps) >= 2:
-        ax.fill_between(
-            ns, ps, [max(ps)] * len(ps),
-            alpha=0.15, color="red",
-            label=f"Alignment Tax (up to {max(ps) - min(ps):.1f}pp)"
-        )
-        ax.legend(fontsize=11)
-
+    ax.legend(fontsize=12, title="Model Scale")
     ax.grid(True, alpha=0.3)
-    ax.set_ylim(0, max(ps) * 1.2)
 
     plt.tight_layout()
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
-    plt.savefig(output_path)
+    plt.savefig(output_path, dpi=300)
     plt.close()
     print(f"Alignment tax plot saved to {output_path}")
 
 
 def generate_all_figures(base_dir: str = "results", output_dir: str = "figures"):
-    """Generate all three key figures."""
+    """Generate all figures for the paper."""
     os.makedirs(output_dir, exist_ok=True)
 
+    # Discover all experiment results
     results_dirs = {}
-    for exp in ["R1_test_only", "R2_test_pylint", "R3_test_pylint_complexity",
-                "R4_test_pylint_complexity_comment", "R5_all"]:
-        exp_dir = os.path.join(base_dir, exp)
+    for entry in os.listdir(base_dir):
+        exp_dir = os.path.join(base_dir, entry)
         if os.path.exists(os.path.join(exp_dir, "eval_results.json")):
-            short = exp.split("_")[0]
-            results_dirs[short] = exp_dir
+            results_dirs[entry] = exp_dir
 
-    if "R1" in results_dirs:
-        plot_r1_dynamics(results_dirs["R1"], os.path.join(output_dir, "r1_dynamics.png"))
+    print(f"Found results for: {list(results_dirs.keys())}")
 
+    # R1 dynamics for each scale
+    for scale in ["1.5B", "7B", "14B"]:
+        key = f"{scale}_R1"
+        if key in results_dirs:
+            plot_r1_dynamics(results_dirs[key],
+                             os.path.join(output_dir, f"r1_dynamics_{scale}.png"))
+
+    # Escape map per scale
+    for scale in ["1.5B", "7B", "14B"]:
+        scale_dirs = {f"R{i}": results_dirs[f"{scale}_R{i}"]
+                      for i in range(1, 6) if f"{scale}_R{i}" in results_dirs}
+        if len(scale_dirs) >= 2:
+            plot_escape_map(scale_dirs,
+                            os.path.join(output_dir, f"escape_map_{scale}.png"))
+
+    # Alignment tax across all scales
     if len(results_dirs) >= 2:
-        plot_escape_map(results_dirs, os.path.join(output_dir, "escape_map.png"))
         plot_alignment_tax(results_dirs, os.path.join(output_dir, "alignment_tax.png"))
 
     print(f"\nAll figures saved to {output_dir}/")
