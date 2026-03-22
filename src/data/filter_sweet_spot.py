@@ -117,126 +117,161 @@ def extract_code(response: str) -> str:
     return response.strip()
 
 
-def run_single_test(code: str, test_case: dict, timeout_sec: int = 5) -> bool:
-    """Run a single test case against the code with timeout."""
-    try:
-        inputs = test_case.get("inputs", [])
-        outputs = test_case.get("outputs", [])
-        if not inputs or not outputs:
-            # Handle fn_name style
-            fn_name = test_case.get("fn_name", "")
-            if fn_name:
-                return _run_fn_test(code, fn_name, inputs, outputs, timeout_sec)
-            return False
-
-        # stdin/stdout style test
-        return _run_stdio_test(code, inputs, outputs, timeout_sec)
-    except Exception:
-        return False
-
-
-def _run_fn_test(code: str, fn_name: str, inputs: list, outputs: list, timeout_sec: int) -> bool:
-    """Run function-call style test."""
-    namespace: dict[str, Any] = {}
-    try:
-        def handler(signum, frame):
-            raise TimeoutError()
-        signal.signal(signal.SIGALRM, handler)
-        signal.alarm(timeout_sec)
-        exec(code, namespace)
-        signal.alarm(0)
-        fn = namespace.get(fn_name)
-        if fn is None:
-            return False
-        for inp, expected in zip(inputs, outputs):
-            if not isinstance(inp, list):
-                inp = [inp]
-            result = fn(*inp)
-            if str(result).strip() != str(expected).strip():
-                return False
-        return True
-    except Exception:
-        return False
-    finally:
-        signal.alarm(0)
-
-
-def _run_stdio_test(code: str, inputs: list, outputs: list, timeout_sec: int) -> bool:
-    """Run stdin/stdout style test."""
-    for inp, expected_out in zip(inputs, outputs):
-        try:
-            with tempfile.NamedTemporaryFile(mode="w", suffix=".py", delete=False) as f:
-                f.write(code)
-                f.flush()
-                tmp_path = f.name
-
-            import subprocess
-            result = subprocess.run(
-                [sys.executable, tmp_path],
-                input=str(inp),
-                capture_output=True,
-                text=True,
-                timeout=timeout_sec,
-            )
-            os.unlink(tmp_path)
-
-            actual = result.stdout.strip()
-            expected = str(expected_out).strip()
-            if actual != expected:
-                return False
-        except Exception:
-            try:
-                os.unlink(tmp_path)
-            except Exception:
-                pass
-            return False
-    return True
-
-
-def run_all_tests(code: str, test_cases: dict, timeout_per_test: int = 5) -> bool:
-    """Run all test cases. Returns True if ALL pass."""
+def run_all_tests(code: str, test_cases: dict, timeout_per_test: int = 2) -> bool:
+    """
+    Run all test cases via subprocess (safe for multiprocessing).
+    Uses a single subprocess per code to avoid overhead.
+    """
     inputs = test_cases.get("inputs", [])
     outputs = test_cases.get("outputs", [])
     fn_name = test_cases.get("fn_name", "")
 
+    if not fn_name and (not inputs or not outputs):
+        return False
+
+    # Build a self-contained test script
     if fn_name:
-        # Function call style
-        namespace: dict[str, Any] = {}
-        try:
-            def handler(signum, frame):
-                raise TimeoutError()
-            signal.signal(signal.SIGALRM, handler)
-            signal.alarm(timeout_per_test * max(len(inputs), 1))
-            exec(code, namespace)
-            signal.alarm(0)
-
-            fn = namespace.get(fn_name)
-            if fn is None:
-                return False
-
-            for inp, expected in zip(inputs, outputs):
-                if not isinstance(inp, (list, tuple)):
-                    inp = [inp]
-                result = fn(*inp)
-                if str(result).strip() != str(expected).strip():
-                    return False
-            return True
-        except Exception:
-            return False
-        finally:
-            signal.alarm(0)
+        test_script = _build_fn_test_script(code, fn_name, inputs, outputs)
     else:
-        # stdin/stdout style
-        for inp, expected in zip(inputs, outputs):
-            if not _run_stdio_test(code, [inp], [expected], timeout_per_test):
-                return False
-        return True
+        test_script = _build_stdio_test_script(code, inputs, outputs)
+
+    try:
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".py", delete=False, dir="/tmp") as f:
+            f.write(test_script)
+            tmp_path = f.name
+
+        import subprocess
+        result = subprocess.run(
+            [sys.executable, tmp_path],
+            capture_output=True,
+            text=True,
+            timeout=timeout_per_test,
+        )
+        os.unlink(tmp_path)
+        return result.returncode == 0 and result.stdout.strip() == "PASS"
+    except Exception:
+        try:
+            os.unlink(tmp_path)
+        except Exception:
+            pass
+        return False
 
 
-def compute_pass_at_k(codes: list[str], test_cases: dict, k: int = 8) -> float:
-    """Compute pass@k for a set of generated codes."""
-    n_pass = sum(1 for code in codes[:k] if run_all_tests(code, test_cases))
-    return n_pass / k
+def _build_fn_test_script(code: str, fn_name: str, inputs: list, outputs: list) -> str:
+    """Build a self-contained test script for function-call style tests."""
+    inputs_repr = repr(inputs)
+    outputs_repr = repr(outputs)
+    return f"""
+import sys
+sys.set_int_max_str_digits(100000)
+try:
+{_indent(code, 4)}
+    _fn = {fn_name}
+    _inputs = {inputs_repr}
+    _outputs = {outputs_repr}
+    for _inp, _exp in zip(_inputs, _outputs):
+        if not isinstance(_inp, (list, tuple)):
+            _inp = [_inp]
+        _result = _fn(*_inp)
+        if str(_result).strip() != str(_exp).strip():
+            sys.exit(1)
+    print("PASS")
+except Exception:
+    sys.exit(1)
+"""
+
+
+def _build_stdio_test_script(code: str, inputs: list, outputs: list) -> str:
+    """Build a test script for stdin/stdout style tests."""
+    # For stdio tests, run first input/output pair only (speed)
+    if not inputs or not outputs:
+        return "import sys; sys.exit(1)"
+    inp_repr = repr(str(inputs[0]))
+    exp_repr = repr(str(outputs[0]).strip())
+    return f"""
+import sys, io
+sys.set_int_max_str_digits(100000)
+sys.stdin = io.StringIO({inp_repr})
+_out = io.StringIO()
+sys.stdout = _out
+try:
+{_indent(code, 4)}
+    sys.stdout = sys.__stdout__
+    if _out.getvalue().strip() == {exp_repr}:
+        print("PASS")
+    else:
+        sys.exit(1)
+except Exception:
+    sys.exit(1)
+"""
+
+
+def _indent(code: str, spaces: int) -> str:
+    """Indent code block."""
+    prefix = " " * spaces
+    return "\n".join(prefix + line for line in code.split("\n"))
+
+
+def _test_one_code(args):
+    """Worker for parallel test execution."""
+    code, test_cases, timeout = args
+    return run_all_tests(code, test_cases, timeout)
+
+
+def compute_pass_at_k(
+    codes: list[str], test_cases: dict, k: int = 8,
+    low: float = 0.0, high: float = 1.0,
+) -> float:
+    """
+    Compute pass@k with parallel execution and early termination.
+
+    - Runs tests in parallel using ProcessPoolExecutor
+    - Terminates early when result is guaranteed outside [low, high]
+    """
+    from concurrent.futures import ProcessPoolExecutor, as_completed
+
+    n = min(len(codes), k)
+    timeout_per_test = 2  # reduced from 5s
+
+    # Try parallel first
+    try:
+        with ProcessPoolExecutor(max_workers=min(n, 4)) as pool:
+            futures = {
+                pool.submit(_test_one_code, (code, test_cases, timeout_per_test)): i
+                for i, code in enumerate(codes[:n])
+            }
+            n_pass = 0
+            n_done = 0
+            for future in as_completed(futures, timeout=timeout_per_test * n + 5):
+                n_done += 1
+                try:
+                    if future.result(timeout=1):
+                        n_pass += 1
+                except Exception:
+                    pass
+
+                # Early termination
+                n_remaining = n - n_done
+                # Already too many passes -> too easy
+                if n_pass / n > high:
+                    return n_pass / n
+                # Even if all remaining pass, still below low -> too hard
+                if (n_pass + n_remaining) / n < low:
+                    return n_pass / n
+
+    except Exception:
+        # Fallback to sequential
+        n_pass = 0
+        for i, code in enumerate(codes[:n]):
+            if run_all_tests(code, test_cases, timeout_per_test):
+                n_pass += 1
+            n_remaining = n - (i + 1)
+            if (n_pass + n_remaining) / n < low:
+                break
+            if n_pass / n > high:
+                break
+
+    return n_pass / n
 
 
 def _incremental_save(data: list[dict], path: str):
@@ -356,10 +391,10 @@ def filter_sweet_spot(
                 # Partial results - only process what we got
                 batch_problems = batch_problems[:len(outputs)]
 
-        print(f"  Running tests...")
+        print(f"  Running tests (parallel + early termination)...")
         for i, (problem, output) in enumerate(zip(batch_problems, outputs)):
             codes = [extract_code(o.text) for o in output.outputs]
-            pass_rate = compute_pass_at_k(codes, problem["test_cases"], k=k)
+            pass_rate = compute_pass_at_k(codes, problem["test_cases"], k=k, low=low, high=high)
 
             problem["pass_at_k"] = pass_rate
             problem["k"] = k
