@@ -1,0 +1,37 @@
+experiment_name: R3_test_pylint_complexity
+description: "Test + Pylint + Complexity - observe gaming escape to comments and duplication"
+
+model:
+  name: Qwen/Qwen3-Coder-7B
+  trust_remote_code: true
+
+reward:
+  test: 0.6
+  pylint: 0.2
+  complexity: 0.2
+
+training:
+  total_steps: 1000
+  batch_size: 16
+  rollouts_per_prompt: 8
+  lr: 5.0e-7
+  kl_coeff: 0.03
+  warmup_steps: 100
+  max_grad_norm: 1.0
+  clip_range: 0.2
+  gamma: 1.0
+  generation_max_length: 2048
+
+checkpointing:
+  save_every: 100
+  output_dir: results/R3_test_pylint_complexity
+
+vllm:
+  tensor_parallel_size: 1
+  gpu_memory_utilization: 0.85
+  max_model_len: 4096
+
+evaluation:
+  mbpp_size: 100
+  classeval_size: 50
+  eval_every: 100
