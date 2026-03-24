@@ -256,6 +256,7 @@ def train(config_path: str, data_path: str, vllm_port: int = 8000, vllm_mode: st
         # Training
         max_steps=total_steps,
         per_device_train_batch_size=batch_size,
+        gradient_accumulation_steps=train_cfg.get("gradient_accumulation_steps", 1),
         num_generations=rollouts,
         learning_rate=train_cfg.get("lr", 5e-7),
         max_grad_norm=train_cfg.get("max_grad_norm", 1.0),

@@ -1,0 +1,20 @@
+{
+  "model_path": "results/tmp_eval_base",
+  "pass_at_1": 0.13,
+  "pass_at_k": 0.17,
+  "ece": 0.03625,
+  "n_problems": 100,
+  "pylint": 6.6646,
+  "complexity": 26.28,
+  "comment_pct": 22.75468281950827,
+  "duplication_pct": 1.285750573862909,
+  "type_hint_pct": 3.5,
+  "avg_loc": 43.66,
+  "n_samples": 50,
+  "avg_func_length": 7.733333333333333,
+  "magic_numbers": 1.48,
+  "nesting_depth": 3.48,
+  "dead_code_pct": 0.0,
+  "naming_length": 5.342780651713301,
+  "label": "base"
+}

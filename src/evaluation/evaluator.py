@@ -93,7 +93,10 @@ def extract_code(response: str) -> str:
             return parts[1].split("```")[0].strip()
     if "```" in response:
         parts = response.split("```")
-        if len(parts) > 1:
+        # If the response is just code ending with ```, take the part before it
+        if len(parts) >= 2 and parts[0].strip():
+            return parts[0].strip()
+        if len(parts) > 2:
             code = parts[1]
             if code.startswith("\n"):
                 code = code[1:]
@@ -101,16 +104,27 @@ def extract_code(response: str) -> str:
     return response.strip()
 
 
-def run_mbpp_tests(code: str, test_list: list[str]) -> bool:
-    """Run MBPP test assertions."""
+def run_mbpp_tests(code: str, test_list: list[str], timeout: int = 5) -> bool:
+    """Run MBPP test assertions with timeout protection."""
+    import signal
+
+    def _handler(signum, frame):
+        raise TimeoutError()
+
+    old = signal.signal(signal.SIGALRM, _handler)
     try:
+        signal.alarm(timeout)
         namespace = {}
         exec(code, namespace)
         for test in test_list:
             exec(test, namespace)
+        signal.alarm(0)
         return True
     except Exception:
+        signal.alarm(0)
         return False
+    finally:
+        signal.signal(signal.SIGALRM, old)
 
 
 def compute_ece(confidences: list[float], corrects: list[bool], n_bins: int = 10) -> float:
