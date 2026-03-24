@@ -1,0 +1,44 @@
+{
+  "base": {
+    "correct": 116,
+    "total": 421,
+    "rate": 0.2755344418052256,
+    "he_correct": 95,
+    "mbpp_correct": 21
+  },
+  "R1": {
+    "correct": 122,
+    "total": 421,
+    "rate": 0.28978622327790976,
+    "he_correct": 102,
+    "mbpp_correct": 20
+  },
+  "R2": {
+    "correct": 119,
+    "total": 421,
+    "rate": 0.2826603325415677,
+    "he_correct": 100,
+    "mbpp_correct": 19
+  },
+  "R3": {
+    "correct": 119,
+    "total": 421,
+    "rate": 0.2826603325415677,
+    "he_correct": 99,
+    "mbpp_correct": 20
+  },
+  "R4": {
+    "correct": 110,
+    "total": 421,
+    "rate": 0.26128266033254155,
+    "he_correct": 92,
+    "mbpp_correct": 18
+  },
+  "R5": {
+    "correct": 117,
+    "total": 421,
+    "rate": 0.27790973871733965,
+    "he_correct": 99,
+    "mbpp_correct": 18
+  }
+}
