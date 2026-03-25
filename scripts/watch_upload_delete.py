@@ -16,11 +16,11 @@ HF_TOKEN = os.environ.get("HF_TOKEN", "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")
 HF_ORG = "Tommysha"
 
 EXPERIMENTS = {
-    "14B_R1_v2": "results/14B_R1_v2",
-    "14B_R2_v2": "results/14B_R2_v2",
-    "14B_R3_v2": "results/14B_R3_v2",
-    "14B_R4_v2": "results/14B_R4_v2",
     "14B_R5_v2": "results/14B_R5_v2",
+    "1.5B_R1_v2": "results/1.5B_R1_v2",
+    "1.5B_R3_v2": "results/1.5B_R3_v2",
+    "1.5B_R4_v2": "results/1.5B_R4_v2",
+    "1.5B_R5_v2": "results/1.5B_R5_v2",
 }
 
 CHECK_INTERVAL = 30  # seconds
