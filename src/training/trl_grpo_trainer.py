@@ -291,6 +291,8 @@ def train(config_path: str, data_path: str, vllm_port: int = 8000, vllm_mode: st
     )
 
     # Load model
+    lora_cfg = cfg.get("lora", None)
+
     model = AutoModelForCausalLM.from_pretrained(
         model_name,
         trust_remote_code=True,
@@ -305,6 +307,22 @@ def train(config_path: str, data_path: str, vllm_port: int = 8000, vllm_mode: st
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
 
+    # Apply LoRA if configured
+    peft_config = None
+    if lora_cfg and lora_cfg.get("enabled", False):
+        from peft import LoraConfig
+        peft_config = LoraConfig(
+            r=lora_cfg.get("rank", 128),
+            lora_alpha=lora_cfg.get("alpha", 256),
+            target_modules=lora_cfg.get("target_modules", [
+                "q_proj", "k_proj", "v_proj", "o_proj",
+                "gate_proj", "up_proj", "down_proj",
+            ]),
+            lora_dropout=lora_cfg.get("dropout", 0.0),
+            task_type="CAUSAL_LM",
+        )
+        print(f"  LoRA enabled: r={peft_config.r}, alpha={peft_config.lora_alpha}")
+
     # Create reward function
     reward_fn = make_reward_fn(reward_weights)
 
@@ -315,6 +333,7 @@ def train(config_path: str, data_path: str, vllm_port: int = 8000, vllm_mode: st
         train_dataset=dataset,
         reward_funcs=reward_fn,
         processing_class=tokenizer,
+        peft_config=peft_config,
     )
 
     # Train!
