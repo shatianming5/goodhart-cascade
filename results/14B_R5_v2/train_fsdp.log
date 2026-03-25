@@ -1,0 +1,819 @@
+/usr/local/lib/python3.12/dist-packages/accelerate/utils/launch.py:236: UserWarning: Port `29500` is already in use. Accelerate will attempt to launch in a standalone-like mode by finding an open port automatically for this session. If this current attempt fails, or for more control in future runs, please specify a different port (e.g., `--main_process_port <your_chosen_port>`) or use `--main_process_port 0` for automatic selection in your launch command or Accelerate config file.
+  warnings.warn(
+Traceback (most recent call last):
+  File "/usr/local/bin/accelerate", line 8, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/accelerate/commands/accelerate_cli.py", line 50, in main
+    args.func(args)
+  File "/usr/local/lib/python3.12/dist-packages/accelerate/commands/launch.py", line 1392, in launch_command
+    multi_gpu_launcher(args)
+  File "/usr/local/lib/python3.12/dist-packages/accelerate/commands/launch.py", line 1001, in multi_gpu_launcher
+    current_env = prepare_multi_gpu_env(args)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/accelerate/utils/launch.py", line 307, in prepare_multi_gpu_env
+    raise ValueError("When using `--fsdp_cpu_ram_efficient_loading` set `--fsdp_sync_module_states` to `True`")
+ValueError: When using `--fsdp_cpu_ram_efficient_loading` set `--fsdp_sync_module_states` to `True`
+/usr/local/lib/python3.12/dist-packages/accelerate/utils/launch.py:236: UserWarning: Port `29500` is already in use. Accelerate will attempt to launch in a standalone-like mode by finding an open port automatically for this session. If this current attempt fails, or for more control in future runs, please specify a different port (e.g., `--main_process_port <your_chosen_port>`) or use `--main_process_port 0` for automatic selection in your launch command or Accelerate config file.
+  warnings.warn(
+/usr/local/lib/python3.12/dist-packages/trl/generation/__init__.py:22: UserWarning: TRL currently supports vLLM versions: 0.10.2, 0.11.0, 0.11.1, 0.11.2, 0.12.0. You have version 0.18.0 installed. We recommend installing a supported version to avoid compatibility issues.
+  if is_vllm_available():
+/usr/local/lib/python3.12/dist-packages/trl/generation/vllm_client.py:39: UserWarning: TRL currently supports vLLM versions: 0.10.2, 0.11.0, 0.11.1, 0.11.2, 0.12.0. You have version 0.18.0 installed. We recommend installing a supported version to avoid compatibility issues.
+  if is_vllm_available():
+/usr/local/lib/python3.12/dist-packages/trl/generation/__init__.py:22: UserWarning: TRL currently supports vLLM versions: 0.10.2, 0.11.0, 0.11.1, 0.11.2, 0.12.0. You have version 0.18.0 installed. We recommend installing a supported version to avoid compatibility issues.
+  if is_vllm_available():
+/usr/local/lib/python3.12/dist-packages/trl/generation/vllm_client.py:39: UserWarning: TRL currently supports vLLM versions: 0.10.2, 0.11.0, 0.11.1, 0.11.2, 0.12.0. You have version 0.18.0 installed. We recommend installing a supported version to avoid compatibility issues.
+  if is_vllm_available():
+/usr/local/lib/python3.12/dist-packages/trl/generation/__init__.py:22: UserWarning: TRL currently supports vLLM versions: 0.10.2, 0.11.0, 0.11.1, 0.11.2, 0.12.0. You have version 0.18.0 installed. We recommend installing a supported version to avoid compatibility issues.
+  if is_vllm_available():
+/usr/local/lib/python3.12/dist-packages/trl/generation/vllm_client.py:39: UserWarning: TRL currently supports vLLM versions: 0.10.2, 0.11.0, 0.11.1, 0.11.2, 0.12.0. You have version 0.18.0 installed. We recommend installing a supported version to avoid compatibility issues.
+  if is_vllm_available():
+/usr/local/lib/python3.12/dist-packages/trl/generation/__init__.py:22: UserWarning: TRL currently supports vLLM versions: 0.10.2, 0.11.0, 0.11.1, 0.11.2, 0.12.0. You have version 0.18.0 installed. We recommend installing a supported version to avoid compatibility issues.
+  if is_vllm_available():
+/usr/local/lib/python3.12/dist-packages/trl/generation/__init__.py:22: UserWarning: TRL currently supports vLLM versions: 0.10.2, 0.11.0, 0.11.1, 0.11.2, 0.12.0. You have version 0.18.0 installed. We recommend installing a supported version to avoid compatibility issues.
+  if is_vllm_available():
+/usr/local/lib/python3.12/dist-packages/trl/generation/vllm_client.py:39: UserWarning: TRL currently supports vLLM versions: 0.10.2, 0.11.0, 0.11.1, 0.11.2, 0.12.0. You have version 0.18.0 installed. We recommend installing a supported version to avoid compatibility issues.
+  if is_vllm_available():
+/usr/local/lib/python3.12/dist-packages/trl/generation/vllm_client.py:39: UserWarning: TRL currently supports vLLM versions: 0.10.2, 0.11.0, 0.11.1, 0.11.2, 0.12.0. You have version 0.18.0 installed. We recommend installing a supported version to avoid compatibility issues.
+  if is_vllm_available():
+/usr/local/lib/python3.12/dist-packages/trl/generation/vllm_generation.py:37: UserWarning: TRL currently supports vLLM versions: 0.10.2, 0.11.0, 0.11.1, 0.11.2, 0.12.0. You have version 0.18.0 installed. We recommend installing a supported version to avoid compatibility issues.
+  if is_vllm_available():
+/usr/local/lib/python3.12/dist-packages/trl/generation/vllm_generation.py:37: UserWarning: TRL currently supports vLLM versions: 0.10.2, 0.11.0, 0.11.1, 0.11.2, 0.12.0. You have version 0.18.0 installed. We recommend installing a supported version to avoid compatibility issues.
+  if is_vllm_available():
+/usr/local/lib/python3.12/dist-packages/trl/generation/vllm_generation.py:37: UserWarning: TRL currently supports vLLM versions: 0.10.2, 0.11.0, 0.11.1, 0.11.2, 0.12.0. You have version 0.18.0 installed. We recommend installing a supported version to avoid compatibility issues.
+  if is_vllm_available():
+/usr/local/lib/python3.12/dist-packages/trl/generation/vllm_generation.py:37: UserWarning: TRL currently supports vLLM versions: 0.10.2, 0.11.0, 0.11.1, 0.11.2, 0.12.0. You have version 0.18.0 installed. We recommend installing a supported version to avoid compatibility issues.
+  if is_vllm_available():
+/usr/local/lib/python3.12/dist-packages/trl/generation/vllm_generation.py:37: UserWarning: TRL currently supports vLLM versions: 0.10.2, 0.11.0, 0.11.1, 0.11.2, 0.12.0. You have version 0.18.0 installed. We recommend installing a supported version to avoid compatibility issues.
+  if is_vllm_available():
+============================================================
+TRL GRPO Training: 14B_R5_v2
+  Model: Qwen/Qwen2.5-Coder-14B
+  Data: data/sweet_spot_14B.json
+  Reward weights: {'test': 0.4, 'pylint': 0.15, 'complexity': 0.15, 'comment': 0.15, 'duplication': 0.15}
+  Steps: 1000
+  Output: results/14B_R5_v2
+============================================================
+============================================================
+TRL GRPO Training: 14B_R5_v2
+  Model: Qwen/Qwen2.5-Coder-14B
+  Data: data/sweet_spot_14B.json
+  Reward weights: {'test': 0.4, 'pylint': 0.15, 'complexity': 0.15, 'comment': 0.15, 'duplication': 0.15}
+  Steps: 1000
+  Output: results/14B_R5_v2
+============================================================
+============================================================
+TRL GRPO Training: 14B_R5_v2
+  Model: Qwen/Qwen2.5-Coder-14B
+  Data: data/sweet_spot_14B.json
+  Reward weights: {'test': 0.4, 'pylint': 0.15, 'complexity': 0.15, 'comment': 0.15, 'duplication': 0.15}
+  Steps: 1000
+  Output: results/14B_R5_v2
+============================================================
+============================================================
+TRL GRPO Training: 14B_R5_v2
+  Model: Qwen/Qwen2.5-Coder-14B
+  Data: data/sweet_spot_14B.json
+  Reward weights: {'test': 0.4, 'pylint': 0.15, 'complexity': 0.15, 'comment': 0.15, 'duplication': 0.15}
+  Steps: 1000
+  Output: results/14B_R5_v2
+============================================================
+============================================================
+TRL GRPO Training: 14B_R5_v2
+  Model: Qwen/Qwen2.5-Coder-14B
+  Data: data/sweet_spot_14B.json
+  Reward weights: {'test': 0.4, 'pylint': 0.15, 'complexity': 0.15, 'comment': 0.15, 'duplication': 0.15}
+  Steps: 1000
+  Output: results/14B_R5_v2
+============================================================
+Loaded 931 training problems
+Loaded 931 training problems
+Loaded 931 training problems
+Loaded 931 training problems
+Loaded 931 training problems
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]`torch_dtype` is deprecated! Use `dtype` instead!
+Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00, 167.50it/s]
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00, 166.52it/s]
+Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00, 168.64it/s]
+`torch_dtype` is deprecated! Use `dtype` instead!
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00, 170.19it/s]
+Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00, 152.69it/s]
+Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:06<00:31,  6.26s/it]Loading checkpoint shards:  17%|█▋        | 1/6 [00:06<00:32,  6.56s/it]Loading checkpoint shards:  17%|█▋        | 1/6 [00:06<00:31,  6.35s/it]Loading checkpoint shards:  17%|█▋        | 1/6 [00:06<00:31,  6.34s/it]Loading checkpoint shards:  17%|█▋        | 1/6 [00:06<00:32,  6.51s/it]Loading checkpoint shards:  33%|███▎      | 2/6 [00:12<00:24,  6.15s/it]Loading checkpoint shards:  33%|███▎      | 2/6 [00:12<00:24,  6.16s/it]Loading checkpoint shards:  33%|███▎      | 2/6 [00:12<00:25,  6.28s/it]Loading checkpoint shards:  33%|███▎      | 2/6 [00:12<00:25,  6.48s/it]Loading checkpoint shards:  33%|███▎      | 2/6 [00:13<00:26,  6.55s/it]Loading checkpoint shards:  50%|█████     | 3/6 [00:18<00:18,  6.14s/it]Loading checkpoint shards:  50%|█████     | 3/6 [00:18<00:18,  6.15s/it]Loading checkpoint shards:  50%|█████     | 3/6 [00:18<00:18,  6.32s/it]Loading checkpoint shards:  50%|█████     | 3/6 [00:19<00:19,  6.63s/it]Loading checkpoint shards:  50%|█████     | 3/6 [00:19<00:20,  6.71s/it]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:24<00:12,  6.07s/it]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:24<00:12,  6.07s/it]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:25<00:12,  6.25s/it]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:26<00:13,  6.62s/it]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:26<00:13,  6.68s/it]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:30<00:06,  6.04s/it]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:30<00:06,  6.06s/it]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:31<00:06,  6.21s/it]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:33<00:06,  6.62s/it]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:33<00:06,  6.68s/it]Loading checkpoint shards: 100%|██████████| 6/6 [00:36<00:00,  6.02s/it]Loading checkpoint shards: 100%|██████████| 6/6 [00:36<00:00,  6.07s/it]
+Loading checkpoint shards: 100%|██████████| 6/6 [00:36<00:00,  6.02s/it]Loading checkpoint shards: 100%|██████████| 6/6 [00:36<00:00,  6.07s/it]
+/usr/local/lib/python3.12/dist-packages/trl/generation/vllm_generation.py:288: UserWarning: TRL currently supports vLLM versions: 0.10.2, 0.11.0, 0.11.1, 0.11.2, 0.12.0. You have version 0.18.0 installed. We recommend installing a supported version to avoid compatibility issues.
+  if not is_vllm_available():
+/usr/local/lib/python3.12/dist-packages/trl/generation/vllm_generation.py:288: UserWarning: TRL currently supports vLLM versions: 0.10.2, 0.11.0, 0.11.1, 0.11.2, 0.12.0. You have version 0.18.0 installed. We recommend installing a supported version to avoid compatibility issues.
+  if not is_vllm_available():
+/usr/local/lib/python3.12/dist-packages/trl/generation/vllm_client.py:129: UserWarning: TRL currently supports vLLM versions: 0.10.2, 0.11.0, 0.11.1, 0.11.2, 0.12.0. You have version 0.18.0 installed. We recommend installing a supported version to avoid compatibility issues.
+  if not is_vllm_available():
+Loading checkpoint shards: 100%|██████████| 6/6 [00:37<00:00,  6.13s/it]Loading checkpoint shards: 100%|██████████| 6/6 [00:37<00:00,  6.20s/it]
+/usr/local/lib/python3.12/dist-packages/trl/generation/vllm_generation.py:288: UserWarning: TRL currently supports vLLM versions: 0.10.2, 0.11.0, 0.11.1, 0.11.2, 0.12.0. You have version 0.18.0 installed. We recommend installing a supported version to avoid compatibility issues.
+  if not is_vllm_available():
+Loading checkpoint shards: 100%|██████████| 6/6 [00:39<00:00,  6.55s/it]Loading checkpoint shards: 100%|██████████| 6/6 [00:39<00:00,  6.57s/it]
+/usr/local/lib/python3.12/dist-packages/trl/generation/vllm_generation.py:288: UserWarning: TRL currently supports vLLM versions: 0.10.2, 0.11.0, 0.11.1, 0.11.2, 0.12.0. You have version 0.18.0 installed. We recommend installing a supported version to avoid compatibility issues.
+  if not is_vllm_available():
+Loading checkpoint shards: 100%|██████████| 6/6 [00:39<00:00,  6.60s/it]Loading checkpoint shards: 100%|██████████| 6/6 [00:39<00:00,  6.62s/it]
+/usr/local/lib/python3.12/dist-packages/trl/generation/vllm_generation.py:288: UserWarning: TRL currently supports vLLM versions: 0.10.2, 0.11.0, 0.11.1, 0.11.2, 0.12.0. You have version 0.18.0 installed. We recommend installing a supported version to avoid compatibility issues.
+  if not is_vllm_available():
+[rank4]:[W325 16:45:52.292627643 TCPStore.cpp:138] [c10d] recvValueWithTimeout failed on SocketImpl(fd=45, addr=[rdagent-cc7ft-worker-0]:58384, remote=[rdagent-cc7ft-worker-0]:42557): Failed to recv, got 0 bytes. Connection was likely closed. Did the remote server shutdown or crash?
+Exception raised from recvBytes at /pytorch/torch/csrc/distributed/c10d/Utils.hpp:682 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x9d (0x70cf69f72fdd in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #1: <unknown function> + 0x6a334ed (0x70cec1b844ed in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #2: c10d::TCPStore::doWait(c10::ArrayRef<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::chrono::duration<long, std::ratio<1l, 1000l> >) + 0x16b (0x70cec1b7e19b in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #3: c10d::TCPStore::doGet(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0x2a (0x70cec1b7e62a in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #4: c10d::TCPStore::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0x112 (0x70cec1b7e7c2 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #5: c10d::PrefixStore::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0x36e (0x70cec1b172ce in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #6: c10d::ProcessGroupNCCL::broadcastUniqueNCCLID(ncclUniqueId*, bool, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int) + 0x7d4 (0x70ce7ec743d4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #7: c10d::ProcessGroupNCCL::initNCCLComm(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, c10::Device&, c10d::OpType, int, bool) + 0x81e (0x70ce7ec75bee in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #8: <unknown function> + 0x116444c (0x70ce7ec7c44c in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #9: c10d::ProcessGroupNCCL::allreduce_impl(at::Tensor&, char const*, c10d::AllreduceOptions const&) + 0xf2 (0x70ce7ec7cbe2 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #10: c10d::ProcessGroupNCCL::barrier(c10d::BarrierOptions const&) + 0x64a (0x70ce7ec8c3ea in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #11: <unknown function> + 0x69b786d (0x70cec1b0886d in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #12: <unknown function> + 0x69c1de7 (0x70cec1b12de7 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #13: <unknown function> + 0x5ddf5d5 (0x70cec0f305d5 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #14: <unknown function> + 0x69d7454 (0x70cec1b28454 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #15: <unknown function> + 0x69d94e5 (0x70cec1b2a4e5 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #16: <unknown function> + 0xf3a91a (0x70ced14f591a in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_python.so)
+frame #17: <unknown function> + 0x40e440 (0x70ced09c9440 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_python.so)
+frame #18: /usr/bin/python3() [0x581e9f]
+frame #19: _PyObject_MakeTpCall + 0x13e (0x54903e in /usr/bin/python3)
+frame #20: _PyEval_EvalFrameDefault + 0xa89 (0x5d6f09 in /usr/bin/python3)
+frame #21: _PyObject_Call_Prepend + 0x18a (0x54a88a in /usr/bin/python3)
+frame #22: /usr/bin/python3() [0x59dddf]
+frame #23: /usr/bin/python3() [0x5998a3]
+frame #24: PyObject_Call + 0x9c (0x54b11c in /usr/bin/python3)
+frame #25: _PyEval_EvalFrameDefault + 0x4c3a (0x5db0ba in /usr/bin/python3)
+frame #26: _PyObject_Call_Prepend + 0x18a (0x54a88a in /usr/bin/python3)
+frame #27: /usr/bin/python3() [0x59dddf]
+frame #28: /usr/bin/python3() [0x5998a3]
+frame #29: _PyObject_MakeTpCall + 0x13e (0x54903e in /usr/bin/python3)
+frame #30: _PyEval_EvalFrameDefault + 0xa89 (0x5d6f09 in /usr/bin/python3)
+frame #31: PyEval_EvalCode + 0x15b (0x5d543b in /usr/bin/python3)
+frame #32: /usr/bin/python3() [0x5d322c]
+frame #33: /usr/bin/python3() [0x581d1d]
+frame #34: PyObject_Vectorcall + 0x35 (0x549975 in /usr/bin/python3)
+frame #35: _PyEval_EvalFrameDefault + 0xa89 (0x5d6f09 in /usr/bin/python3)
+frame #36: /usr/bin/python3() [0x6bcb52]
+frame #37: Py_RunMain + 0x232 (0x6bc782 in /usr/bin/python3)
+frame #38: Py_BytesMain + 0x2d (0x6bc3ed in /usr/bin/python3)
+frame #39: <unknown function> + 0x2a1ca (0x70cf9d3131ca in /lib/x86_64-linux-gnu/libc.so.6)
+frame #40: __libc_start_main + 0x8b (0x70cf9d31328b in /lib/x86_64-linux-gnu/libc.so.6)
+frame #41: _start + 0x25 (0x6576c5 in /usr/bin/python3)
+
+[rank2]:[W325 16:45:52.292629004 TCPStore.cpp:138] [c10d] recvValueWithTimeout failed on SocketImpl(fd=45, addr=[rdagent-cc7ft-worker-0]:58392, remote=[rdagent-cc7ft-worker-0]:42557): Failed to recv, got 0 bytes. Connection was likely closed. Did the remote server shutdown or crash?
+Exception raised from recvBytes at /pytorch/torch/csrc/distributed/c10d/Utils.hpp:682 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x9d (0x7364b78ddfdd in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #1: <unknown function> + 0x6a334ed (0x7363dcd844ed in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #2: c10d::TCPStore::doWait(c10::ArrayRef<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::chrono::duration<long, std::ratio<1l, 1000l> >) + 0x16b (0x7363dcd7e19b in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #3: c10d::TCPStore::doGet(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0x2a (0x7363dcd7e62a in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #4: c10d::TCPStore::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0x112 (0x7363dcd7e7c2 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #5: c10d::PrefixStore::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0x36e (0x7363dcd172ce in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #6: c10d::ProcessGroupNCCL::broadcastUniqueNCCLID(ncclUniqueId*, bool, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int) + 0x7d4 (0x736399e743d4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #7: c10d::ProcessGroupNCCL::initNCCLComm(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, c10::Device&, c10d::OpType, int, bool) + 0x81e (0x736399e75bee in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #8: <unknown function> + 0x116444c (0x736399e7c44c in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #9: c10d::ProcessGroupNCCL::allreduce_impl(at::Tensor&, char const*, c10d::AllreduceOptions const&) + 0xf2 (0x736399e7cbe2 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #10: c10d::ProcessGroupNCCL::barrier(c10d::BarrierOptions const&) + 0x64a (0x736399e8c3ea in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #11: <unknown function> + 0x69b786d (0x7363dcd0886d in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #12: <unknown function> + 0x69c1de7 (0x7363dcd12de7 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #13: <unknown function> + 0x5ddf5d5 (0x7363dc1305d5 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #14: <unknown function> + 0x69d7454 (0x7363dcd28454 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #15: <unknown function> + 0x69d94e5 (0x7363dcd2a4e5 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #16: <unknown function> + 0xf3a91a (0x7363ec6f591a in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_python.so)
+frame #17: <unknown function> + 0x40e440 (0x7363ebbc9440 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_python.so)
+frame #18: /usr/bin/python3() [0x581e9f]
+frame #19: _PyObject_MakeTpCall + 0x13e (0x54903e in /usr/bin/python3)
+frame #20: _PyEval_EvalFrameDefault + 0xa89 (0x5d6f09 in /usr/bin/python3)
+frame #21: _PyObject_Call_Prepend + 0x18a (0x54a88a in /usr/bin/python3)
+frame #22: /usr/bin/python3() [0x59dddf]
+frame #23: /usr/bin/python3() [0x5998a3]
+frame #24: PyObject_Call + 0x9c (0x54b11c in /usr/bin/python3)
+frame #25: _PyEval_EvalFrameDefault + 0x4c3a (0x5db0ba in /usr/bin/python3)
+frame #26: _PyObject_Call_Prepend + 0x18a (0x54a88a in /usr/bin/python3)
+frame #27: /usr/bin/python3() [0x59dddf]
+frame #28: /usr/bin/python3() [0x5998a3]
+frame #29: _PyObject_MakeTpCall + 0x13e (0x54903e in /usr/bin/python3)
+frame #30: _PyEval_EvalFrameDefault + 0xa89 (0x5d6f09 in /usr/bin/python3)
+frame #31: PyEval_EvalCode + 0x15b (0x5d543b in /usr/bin/python3)
+frame #32: /usr/bin/python3() [0x5d322c]
+frame #33: /usr/bin/python3() [0x581d1d]
+frame #34: PyObject_Vectorcall + 0x35 (0x549975 in /usr/bin/python3)
+frame #35: _PyEval_EvalFrameDefault + 0xa89 (0x5d6f09 in /usr/bin/python3)
+frame #36: /usr/bin/python3() [0x6bcb52]
+frame #37: Py_RunMain + 0x232 (0x6bc782 in /usr/bin/python3)
+frame #38: Py_BytesMain + 0x2d (0x6bc3ed in /usr/bin/python3)
+frame #39: <unknown function> + 0x2a1ca (0x7364b85ba1ca in /lib/x86_64-linux-gnu/libc.so.6)
+frame #40: __libc_start_main + 0x8b (0x7364b85ba28b in /lib/x86_64-linux-gnu/libc.so.6)
+frame #41: _start + 0x25 (0x6576c5 in /usr/bin/python3)
+
+[rank3]:[W325 16:45:52.292625520 TCPStore.cpp:138] [c10d] recvValueWithTimeout failed on SocketImpl(fd=45, addr=[rdagent-cc7ft-worker-0]:58370, remote=[rdagent-cc7ft-worker-0]:42557): Failed to recv, got 0 bytes. Connection was likely closed. Did the remote server shutdown or crash?
+Exception raised from recvBytes at /pytorch/torch/csrc/distributed/c10d/Utils.hpp:682 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x9d (0x7c2f9bcddfdd in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #1: <unknown function> + 0x6a334ed (0x7c2ec11844ed in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #2: c10d::TCPStore::doWait(c10::ArrayRef<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::chrono::duration<long, std::ratio<1l, 1000l> >) + 0x16b (0x7c2ec117e19b in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #3: c10d::TCPStore::doGet(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0x2a (0x7c2ec117e62a in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #4: c10d::TCPStore::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0x112 (0x7c2ec117e7c2 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #5: c10d::PrefixStore::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0x36e (0x7c2ec11172ce in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #6: c10d::ProcessGroupNCCL::broadcastUniqueNCCLID(ncclUniqueId*, bool, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int) + 0x7d4 (0x7c2e7e2743d4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #7: c10d::ProcessGroupNCCL::initNCCLComm(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, c10::Device&, c10d::OpType, int, bool) + 0x81e (0x7c2e7e275bee in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #8: <unknown function> + 0x116444c (0x7c2e7e27c44c in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #9: c10d::ProcessGroupNCCL::allreduce_impl(at::Tensor&, char const*, c10d::AllreduceOptions const&) + 0xf2 (0x7c2e7e27cbe2 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #10: c10d::ProcessGroupNCCL::barrier(c10d::BarrierOptions const&) + 0x64a (0x7c2e7e28c3ea in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #11: <unknown function> + 0x69b786d (0x7c2ec110886d in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #12: <unknown function> + 0x69c1de7 (0x7c2ec1112de7 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #13: <unknown function> + 0x5ddf5d5 (0x7c2ec05305d5 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #14: <unknown function> + 0x69d7454 (0x7c2ec1128454 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #15: <unknown function> + 0x69d94e5 (0x7c2ec112a4e5 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #16: <unknown function> + 0xf3a91a (0x7c2ed0af591a in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_python.so)
+frame #17: <unknown function> + 0x40e440 (0x7c2ecffc9440 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_python.so)
+frame #18: /usr/bin/python3() [0x581e9f]
+frame #19: _PyObject_MakeTpCall + 0x13e (0x54903e in /usr/bin/python3)
+frame #20: _PyEval_EvalFrameDefault + 0xa89 (0x5d6f09 in /usr/bin/python3)
+frame #21: _PyObject_Call_Prepend + 0x18a (0x54a88a in /usr/bin/python3)
+frame #22: /usr/bin/python3() [0x59dddf]
+frame #23: /usr/bin/python3() [0x5998a3]
+frame #24: PyObject_Call + 0x9c (0x54b11c in /usr/bin/python3)
+frame #25: _PyEval_EvalFrameDefault + 0x4c3a (0x5db0ba in /usr/bin/python3)
+frame #26: _PyObject_Call_Prepend + 0x18a (0x54a88a in /usr/bin/python3)
+frame #27: /usr/bin/python3() [0x59dddf]
+frame #28: /usr/bin/python3() [0x5998a3]
+frame #29: _PyObject_MakeTpCall + 0x13e (0x54903e in /usr/bin/python3)
+frame #30: _PyEval_EvalFrameDefault + 0xa89 (0x5d6f09 in /usr/bin/python3)
+frame #31: PyEval_EvalCode + 0x15b (0x5d543b in /usr/bin/python3)
+frame #32: /usr/bin/python3() [0x5d322c]
+frame #33: /usr/bin/python3() [0x581d1d]
+frame #34: PyObject_Vectorcall + 0x35 (0x549975 in /usr/bin/python3)
+frame #35: _PyEval_EvalFrameDefault + 0xa89 (0x5d6f09 in /usr/bin/python3)
+frame #36: /usr/bin/python3() [0x6bcb52]
+frame #37: Py_RunMain + 0x232 (0x6bc782 in /usr/bin/python3)
+frame #38: Py_BytesMain + 0x2d (0x6bc3ed in /usr/bin/python3)
+frame #39: <unknown function> + 0x2a1ca (0x7c2f9c9bc1ca in /lib/x86_64-linux-gnu/libc.so.6)
+frame #40: __libc_start_main + 0x8b (0x7c2f9c9bc28b in /lib/x86_64-linux-gnu/libc.so.6)
+frame #41: _start + 0x25 (0x6576c5 in /usr/bin/python3)
+
+[rank1]:[W325 16:45:52.292722778 TCPStore.cpp:138] [c10d] recvValueWithTimeout failed on SocketImpl(fd=45, addr=[rdagent-cc7ft-worker-0]:58352, remote=[rdagent-cc7ft-worker-0]:42557): Failed to recv, got 0 bytes. Connection was likely closed. Did the remote server shutdown or crash?
+Exception raised from recvBytes at /pytorch/torch/csrc/distributed/c10d/Utils.hpp:682 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x9d (0x7a34a3972fdd in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #1: <unknown function> + 0x6a334ed (0x7a33c8d844ed in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #2: c10d::TCPStore::doWait(c10::ArrayRef<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::chrono::duration<long, std::ratio<1l, 1000l> >) + 0x16b (0x7a33c8d7e19b in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #3: c10d::TCPStore::doGet(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0x2a (0x7a33c8d7e62a in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #4: c10d::TCPStore::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0x112 (0x7a33c8d7e7c2 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #5: c10d::PrefixStore::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0x36e (0x7a33c8d172ce in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #6: c10d::ProcessGroupNCCL::broadcastUniqueNCCLID(ncclUniqueId*, bool, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int) + 0x7d4 (0x7a3385e743d4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #7: c10d::ProcessGroupNCCL::initNCCLComm(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, c10::Device&, c10d::OpType, int, bool) + 0x81e (0x7a3385e75bee in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #8: <unknown function> + 0x116444c (0x7a3385e7c44c in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #9: c10d::ProcessGroupNCCL::allreduce_impl(at::Tensor&, char const*, c10d::AllreduceOptions const&) + 0xf2 (0x7a3385e7cbe2 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #10: c10d::ProcessGroupNCCL::barrier(c10d::BarrierOptions const&) + 0x64a (0x7a3385e8c3ea in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #11: <unknown function> + 0x69b786d (0x7a33c8d0886d in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #12: <unknown function> + 0x69c1de7 (0x7a33c8d12de7 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #13: <unknown function> + 0x5ddf5d5 (0x7a33c81305d5 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #14: <unknown function> + 0x69d7454 (0x7a33c8d28454 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #15: <unknown function> + 0x69d94e5 (0x7a33c8d2a4e5 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #16: <unknown function> + 0xf3a91a (0x7a33d86f591a in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_python.so)
+frame #17: <unknown function> + 0x40e440 (0x7a33d7bc9440 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_python.so)
+frame #18: /usr/bin/python3() [0x581e9f]
+frame #19: _PyObject_MakeTpCall + 0x13e (0x54903e in /usr/bin/python3)
+frame #20: _PyEval_EvalFrameDefault + 0xa89 (0x5d6f09 in /usr/bin/python3)
+frame #21: _PyObject_Call_Prepend + 0x18a (0x54a88a in /usr/bin/python3)
+frame #22: /usr/bin/python3() [0x59dddf]
+frame #23: /usr/bin/python3() [0x5998a3]
+frame #24: PyObject_Call + 0x9c (0x54b11c in /usr/bin/python3)
+frame #25: _PyEval_EvalFrameDefault + 0x4c3a (0x5db0ba in /usr/bin/python3)
+frame #26: _PyObject_Call_Prepend + 0x18a (0x54a88a in /usr/bin/python3)
+frame #27: /usr/bin/python3() [0x59dddf]
+frame #28: /usr/bin/python3() [0x5998a3]
+frame #29: _PyObject_MakeTpCall + 0x13e (0x54903e in /usr/bin/python3)
+frame #30: _PyEval_EvalFrameDefault + 0xa89 (0x5d6f09 in /usr/bin/python3)
+frame #31: PyEval_EvalCode + 0x15b (0x5d543b in /usr/bin/python3)
+frame #32: /usr/bin/python3() [0x5d322c]
+frame #33: /usr/bin/python3() [0x581d1d]
+frame #34: PyObject_Vectorcall + 0x35 (0x549975 in /usr/bin/python3)
+frame #35: _PyEval_EvalFrameDefault + 0xa89 (0x5d6f09 in /usr/bin/python3)
+frame #36: /usr/bin/python3() [0x6bcb52]
+frame #37: Py_RunMain + 0x232 (0x6bc782 in /usr/bin/python3)
+frame #38: Py_BytesMain + 0x2d (0x6bc3ed in /usr/bin/python3)
+frame #39: <unknown function> + 0x2a1ca (0x7a34a46331ca in /lib/x86_64-linux-gnu/libc.so.6)
+frame #40: __libc_start_main + 0x8b (0x7a34a463328b in /lib/x86_64-linux-gnu/libc.so.6)
+frame #41: _start + 0x25 (0x6576c5 in /usr/bin/python3)
+
+[rank4]:[W325 16:45:52.301969952 TCPStore.cpp:125] [c10d] recvValue failed on SocketImpl(fd=45, addr=[rdagent-cc7ft-worker-0]:58384, remote=[rdagent-cc7ft-worker-0]:42557): Failed to recv, got 0 bytes. Connection was likely closed. Did the remote server shutdown or crash?
+Exception raised from recvBytes at /pytorch/torch/csrc/distributed/c10d/Utils.hpp:682 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x9d (0x70cf69f72fdd in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #1: <unknown function> + 0x6a3325d (0x70cec1b8425d in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #2: c10d::TCPStore::check(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&) + 0x273 (0x70cec1b821f3 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #3: c10d::ProcessGroupNCCL::HeartbeatMonitor::runLoop() + 0x44c (0x70ce7ec64eec in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #4: <unknown function> + 0xecdb4 (0x70cf5ca6edb4 in /lib/x86_64-linux-gnu/libstdc++.so.6)
+frame #5: <unknown function> + 0x9caa4 (0x70cf9d385aa4 in /lib/x86_64-linux-gnu/libc.so.6)
+frame #6: <unknown function> + 0x129c3c (0x70cf9d412c3c in /lib/x86_64-linux-gnu/libc.so.6)
+
+[rank3]:[W325 16:45:52.301993467 TCPStore.cpp:125] [c10d] recvValue failed on SocketImpl(fd=45, addr=[rdagent-cc7ft-worker-0]:58370, remote=[rdagent-cc7ft-worker-0]:42557): Failed to recv, got 0 bytes. Connection was likely closed. Did the remote server shutdown or crash?
+Exception raised from recvBytes at /pytorch/torch/csrc/distributed/c10d/Utils.hpp:682 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x9d (0x7c2f9bcddfdd in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #1: <unknown function> + 0x6a3325d (0x7c2ec118425d in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #2: c10d::TCPStore::check(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&) + 0x273 (0x7c2ec11821f3 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #3: c10d::ProcessGroupNCCL::HeartbeatMonitor::runLoop() + 0x44c (0x7c2e7e264eec in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #4: <unknown function> + 0xecdb4 (0x7c2f5c06edb4 in /lib/x86_64-linux-gnu/libstdc++.so.6)
+frame #5: <unknown function> + 0x9caa4 (0x7c2f9ca2eaa4 in /lib/x86_64-linux-gnu/libc.so.6)
+frame #6: <unknown function> + 0x129c3c (0x7c2f9cabbc3c in /lib/x86_64-linux-gnu/libc.so.6)
+
+[rank2]:[W325 16:45:52.301995703 TCPStore.cpp:125] [c10d] recvValue failed on SocketImpl(fd=45, addr=[rdagent-cc7ft-worker-0]:58392, remote=[rdagent-cc7ft-worker-0]:42557): Failed to recv, got 0 bytes. Connection was likely closed. Did the remote server shutdown or crash?
+Exception raised from recvBytes at /pytorch/torch/csrc/distributed/c10d/Utils.hpp:682 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x9d (0x7364b78ddfdd in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #1: <unknown function> + 0x6a3325d (0x7363dcd8425d in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #2: c10d::TCPStore::check(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&) + 0x273 (0x7363dcd821f3 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #3: c10d::ProcessGroupNCCL::HeartbeatMonitor::runLoop() + 0x44c (0x736399e64eec in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #4: <unknown function> + 0xecdb4 (0x736477c6edb4 in /lib/x86_64-linux-gnu/libstdc++.so.6)
+frame #5: <unknown function> + 0x9caa4 (0x7364b862caa4 in /lib/x86_64-linux-gnu/libc.so.6)
+frame #6: <unknown function> + 0x129c3c (0x7364b86b9c3c in /lib/x86_64-linux-gnu/libc.so.6)
+
+[rank4]:[W325 16:45:52.304025162 ProcessGroupNCCL.cpp:1802] [PG ID 0 PG GUID 0(default_pg) Rank 4] Failed to check the "should dump" flag on TCPStore, (maybe TCPStore server has shut down too early), with error: Failed to recv, got 0 bytes. Connection was likely closed. Did the remote server shutdown or crash?
+[rank3]:[W325 16:45:52.304041526 ProcessGroupNCCL.cpp:1802] [PG ID 0 PG GUID 0(default_pg) Rank 3] Failed to check the "should dump" flag on TCPStore, (maybe TCPStore server has shut down too early), with error: Failed to recv, got 0 bytes. Connection was likely closed. Did the remote server shutdown or crash?
+[rank2]:[W325 16:45:52.304050590 ProcessGroupNCCL.cpp:1802] [PG ID 0 PG GUID 0(default_pg) Rank 2] Failed to check the "should dump" flag on TCPStore, (maybe TCPStore server has shut down too early), with error: Failed to recv, got 0 bytes. Connection was likely closed. Did the remote server shutdown or crash?
+[rank3]: Traceback (most recent call last):
+[rank3]:   File "<frozen runpy>", line 198, in _run_module_as_main
+[rank3]:   File "<frozen runpy>", line 88, in _run_code
+[rank3]:   File "/root/RD-agent/src/training/trl_grpo_trainer.py", line 356, in <module>
+[rank3]:     train(args.config, args.data, args.vllm_port, args.vllm_mode)
+[rank3]:   File "/root/RD-agent/src/training/trl_grpo_trainer.py", line 330, in train
+[rank3]:     trainer = GRPOTrainer(
+[rank3]:               ^^^^^^^^^^^^
+[rank3]:   File "/usr/local/lib/python3.12/dist-packages/trl/trainer/grpo_trainer.py", line 709, in __init__
+[rank3]:     self.vllm_generation = VLLMGeneration(
+[rank3]:                            ^^^^^^^^^^^^^^^
+[rank3]:   File "/usr/local/lib/python3.12/dist-packages/trl/generation/vllm_generation.py", line 281, in __init__
+[rank3]:     self._init_vllm()
+[rank3]:   File "/usr/local/lib/python3.12/dist-packages/trl/generation/vllm_generation.py", line 366, in _init_vllm
+[rank3]:     accelerator.wait_for_everyone()
+[rank3]:   File "/usr/local/lib/python3.12/dist-packages/accelerate/accelerator.py", line 3256, in wait_for_everyone
+[rank3]:     wait_for_everyone()
+[rank3]:   File "/usr/local/lib/python3.12/dist-packages/accelerate/utils/other.py", line 320, in wait_for_everyone
+[rank3]:     PartialState().wait_for_everyone()
+[rank3]:   File "/usr/local/lib/python3.12/dist-packages/accelerate/state.py", line 412, in wait_for_everyone
+[rank3]:     torch.distributed.barrier(device_ids=[self.local_process_index])
+[rank3]:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/c10d_logger.py", line 83, in wrapper
+[rank3]:     return func(*args, **kwargs)
+[rank3]:            ^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/distributed_c10d.py", line 4969, in barrier
+[rank3]:     work = group.barrier(opts=opts)
+[rank3]:            ^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]: torch.distributed.DistBackendError: [3] is setting up NCCL communicator and retrieving ncclUniqueId from [0] via c10d key-value store by key '0', but store->get('0') got error: Failed to recv, got 0 bytes. Connection was likely closed. Did the remote server shutdown or crash?
+[rank3]: Exception raised from recvBytes at /pytorch/torch/csrc/distributed/c10d/Utils.hpp:682 (most recent call first):
+[rank3]: frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x9d (0x7c2f9bcddfdd in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+[rank3]: frame #1: <unknown function> + 0x6a334ed (0x7c2ec11844ed in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+[rank3]: frame #2: c10d::TCPStore::doWait(c10::ArrayRef<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::chrono::duration<long, std::ratio<1l, 1000l> >) + 0x16b (0x7c2ec117e19b in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+[rank3]: frame #3: c10d::TCPStore::doGet(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0x2a (0x7c2ec117e62a in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+[rank3]: frame #4: c10d::TCPStore::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0x112 (0x7c2ec117e7c2 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+[rank3]: frame #5: c10d::PrefixStore::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0x36e (0x7c2ec11172ce in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+[rank3]: frame #6: c10d::ProcessGroupNCCL::broadcastUniqueNCCLID(ncclUniqueId*, bool, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int) + 0x7d4 (0x7c2e7e2743d4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+[rank3]: frame #7: c10d::ProcessGroupNCCL::initNCCLComm(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, c10::Device&, c10d::OpType, int, bool) + 0x81e (0x7c2e7e275bee in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+[rank3]: frame #8: <unknown function> + 0x116444c (0x7c2e7e27c44c in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+[rank3]: frame #9: c10d::ProcessGroupNCCL::allreduce_impl(at::Tensor&, char const*, c10d::AllreduceOptions const&) + 0xf2 (0x7c2e7e27cbe2 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+[rank3]: frame #10: c10d::ProcessGroupNCCL::barrier(c10d::BarrierOptions const&) + 0x64a (0x7c2e7e28c3ea in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+[rank3]: frame #11: <unknown function> + 0x69b786d (0x7c2ec110886d in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+[rank3]: frame #12: <unknown function> + 0x69c1de7 (0x7c2ec1112de7 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+[rank3]: frame #13: <unknown function> + 0x5ddf5d5 (0x7c2ec05305d5 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+[rank3]: frame #14: <unknown function> + 0x69d7454 (0x7c2ec1128454 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+[rank3]: frame #15: <unknown function> + 0x69d94e5 (0x7c2ec112a4e5 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+[rank3]: frame #16: <unknown function> + 0xf3a91a (0x7c2ed0af591a in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_python.so)
+[rank3]: frame #17: <unknown function> + 0x40e440 (0x7c2ecffc9440 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_python.so)
+[rank3]: frame #18: /usr/bin/python3() [0x581e9f]
+[rank3]: frame #19: _PyObject_MakeTpCall + 0x13e (0x54903e in /usr/bin/python3)
+[rank3]: frame #20: _PyEval_EvalFrameDefault + 0xa89 (0x5d6f09 in /usr/bin/python3)
+[rank3]: frame #21: _PyObject_Call_Prepend + 0x18a (0x54a88a in /usr/bin/python3)
+[rank3]: frame #22: /usr/bin/python3() [0x59dddf]
+[rank3]: frame #23: /usr/bin/python3() [0x5998a3]
+[rank3]: frame #24: PyObject_Call + 0x9c (0x54b11c in /usr/bin/python3)
+[rank3]: frame #25: _PyEval_EvalFrameDefault + 0x4c3a (0x5db0ba in /usr/bin/python3)
+[rank3]: frame #26: _PyObject_Call_Prepend + 0x18a (0x54a88a in /usr/bin/python3)
+[rank3]: frame #27: /usr/bin/python3() [0x59dddf]
+[rank3]: frame #28: /usr/bin/python3() [0x5998a3]
+[rank3]: frame #29: _PyObject_MakeTpCall + 0x13e (0x54903e in /usr/bin/python3)
+[rank3]: frame #30: _PyEval_EvalFrameDefault + 0xa89 (0x5d6f09 in /usr/bin/python3)
+[rank3]: frame #31: PyEval_EvalCode + 0x15b (0x5d543b in /usr/bin/python3)
+[rank3]: frame #32: /usr/bin/python3() [0x5d322c]
+[rank3]: frame #33: /usr/bin/python3() [0x581d1d]
+[rank3]: frame #34: PyObject_Vectorcall + 0x35 (0x549975 in /usr/bin/python3)
+[rank3]: frame #35: _PyEval_EvalFrameDefault + 0xa89 (0x5d6f09 in /usr/bin/python3)
+[rank3]: frame #36: /usr/bin/python3() [0x6bcb52]
+[rank3]: frame #37: Py_RunMain + 0x232 (0x6bc782 in /usr/bin/python3)
+[rank3]: frame #38: Py_BytesMain + 0x2d (0x6bc3ed in /usr/bin/python3)
+[rank3]: frame #39: <unknown function> + 0x2a1ca (0x7c2f9c9bc1ca in /lib/x86_64-linux-gnu/libc.so.6)
+[rank3]: frame #40: __libc_start_main + 0x8b (0x7c2f9c9bc28b in /lib/x86_64-linux-gnu/libc.so.6)
+[rank3]: frame #41: _start + 0x25 (0x6576c5 in /usr/bin/python3)
+[rank3]: . This may indicate a possible application crash on rank 0 or a network set up issue.
+[rank4]: Traceback (most recent call last):
+[rank4]:   File "<frozen runpy>", line 198, in _run_module_as_main
+[rank4]:   File "<frozen runpy>", line 88, in _run_code
+[rank4]:   File "/root/RD-agent/src/training/trl_grpo_trainer.py", line 356, in <module>
+[rank4]:     train(args.config, args.data, args.vllm_port, args.vllm_mode)
+[rank4]:   File "/root/RD-agent/src/training/trl_grpo_trainer.py", line 330, in train
+[rank4]:     trainer = GRPOTrainer(
+[rank4]:               ^^^^^^^^^^^^
+[rank4]:   File "/usr/local/lib/python3.12/dist-packages/trl/trainer/grpo_trainer.py", line 709, in __init__
+[rank4]:     self.vllm_generation = VLLMGeneration(
+[rank4]:                            ^^^^^^^^^^^^^^^
+[rank4]:   File "/usr/local/lib/python3.12/dist-packages/trl/generation/vllm_generation.py", line 281, in __init__
+[rank4]:     self._init_vllm()
+[rank4]:   File "/usr/local/lib/python3.12/dist-packages/trl/generation/vllm_generation.py", line 366, in _init_vllm
+[rank4]:     accelerator.wait_for_everyone()
+[rank4]:   File "/usr/local/lib/python3.12/dist-packages/accelerate/accelerator.py", line 3256, in wait_for_everyone
+[rank4]:     wait_for_everyone()
+[rank4]:   File "/usr/local/lib/python3.12/dist-packages/accelerate/utils/other.py", line 320, in wait_for_everyone
+[rank4]:     PartialState().wait_for_everyone()
+[rank4]:   File "/usr/local/lib/python3.12/dist-packages/accelerate/state.py", line 412, in wait_for_everyone
+[rank4]:     torch.distributed.barrier(device_ids=[self.local_process_index])
+[rank4]:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/c10d_logger.py", line 83, in wrapper
+[rank4]:     return func(*args, **kwargs)
+[rank4]:            ^^^^^^^^^^^^^^^^^^^^^
+[rank4]:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/distributed_c10d.py", line 4969, in barrier
+[rank4]:     work = group.barrier(opts=opts)
+[rank4]:            ^^^^^^^^^^^^^^^^^^^^^^^^
+[rank4]: torch.distributed.DistBackendError: [4] is setting up NCCL communicator and retrieving ncclUniqueId from [0] via c10d key-value store by key '0', but store->get('0') got error: Failed to recv, got 0 bytes. Connection was likely closed. Did the remote server shutdown or crash?
+[rank4]: Exception raised from recvBytes at /pytorch/torch/csrc/distributed/c10d/Utils.hpp:682 (most recent call first):
+[rank4]: frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x9d (0x70cf69f72fdd in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+[rank4]: frame #1: <unknown function> + 0x6a334ed (0x70cec1b844ed in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+[rank4]: frame #2: c10d::TCPStore::doWait(c10::ArrayRef<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::chrono::duration<long, std::ratio<1l, 1000l> >) + 0x16b (0x70cec1b7e19b in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+[rank4]: frame #3: c10d::TCPStore::doGet(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0x2a (0x70cec1b7e62a in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+[rank4]: frame #4: c10d::TCPStore::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0x112 (0x70cec1b7e7c2 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+[rank4]: frame #5: c10d::PrefixStore::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0x36e (0x70cec1b172ce in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+[rank4]: frame #6: c10d::ProcessGroupNCCL::broadcastUniqueNCCLID(ncclUniqueId*, bool, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int) + 0x7d4 (0x70ce7ec743d4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+[rank4]: frame #7: c10d::ProcessGroupNCCL::initNCCLComm(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, c10::Device&, c10d::OpType, int, bool) + 0x81e (0x70ce7ec75bee in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+[rank4]: frame #8: <unknown function> + 0x116444c (0x70ce7ec7c44c in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+[rank4]: frame #9: c10d::ProcessGroupNCCL::allreduce_impl(at::Tensor&, char const*, c10d::AllreduceOptions const&) + 0xf2 (0x70ce7ec7cbe2 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+[rank4]: frame #10: c10d::ProcessGroupNCCL::barrier(c10d::BarrierOptions const&) + 0x64a (0x70ce7ec8c3ea in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+[rank4]: frame #11: <unknown function> + 0x69b786d (0x70cec1b0886d in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+[rank4]: frame #12: <unknown function> + 0x69c1de7 (0x70cec1b12de7 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+[rank4]: frame #13: <unknown function> + 0x5ddf5d5 (0x70cec0f305d5 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+[rank4]: frame #14: <unknown function> + 0x69d7454 (0x70cec1b28454 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+[rank4]: frame #15: <unknown function> + 0x69d94e5 (0x70cec1b2a4e5 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+[rank4]: frame #16: <unknown function> + 0xf3a91a (0x70ced14f591a in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_python.so)
+[rank4]: frame #17: <unknown function> + 0x40e440 (0x70ced09c9440 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_python.so)
+[rank4]: frame #18: /usr/bin/python3() [0x581e9f]
+[rank4]: frame #19: _PyObject_MakeTpCall + 0x13e (0x54903e in /usr/bin/python3)
+[rank4]: frame #20: _PyEval_EvalFrameDefault + 0xa89 (0x5d6f09 in /usr/bin/python3)
+[rank4]: frame #21: _PyObject_Call_Prepend + 0x18a (0x54a88a in /usr/bin/python3)
+[rank4]: frame #22: /usr/bin/python3() [0x59dddf]
+[rank4]: frame #23: /usr/bin/python3() [0x5998a3]
+[rank4]: frame #24: PyObject_Call + 0x9c (0x54b11c in /usr/bin/python3)
+[rank4]: frame #25: _PyEval_EvalFrameDefault + 0x4c3a (0x5db0ba in /usr/bin/python3)
+[rank4]: frame #26: _PyObject_Call_Prepend + 0x18a (0x54a88a in /usr/bin/python3)
+[rank4]: frame #27: /usr/bin/python3() [0x59dddf]
+[rank4]: frame #28: /usr/bin/python3() [0x5998a3]
+[rank4]: frame #29: _PyObject_MakeTpCall + 0x13e (0x54903e in /usr/bin/python3)
+[rank4]: frame #30: _PyEval_EvalFrameDefault + 0xa89 (0x5d6f09 in /usr/bin/python3)
+[rank4]: frame #31: PyEval_EvalCode + 0x15b (0x5d543b in /usr/bin/python3)
+[rank4]: frame #32: /usr/bin/python3() [0x5d322c]
+[rank4]: frame #33: /usr/bin/python3() [0x581d1d]
+[rank4]: frame #34: PyObject_Vectorcall + 0x35 (0x549975 in /usr/bin/python3)
+[rank4]: frame #35: _PyEval_EvalFrameDefault + 0xa89 (0x5d6f09 in /usr/bin/python3)
+[rank4]: frame #36: /usr/bin/python3() [0x6bcb52]
+[rank4]: frame #37: Py_RunMain + 0x232 (0x6bc782 in /usr/bin/python3)
+[rank4]: frame #38: Py_BytesMain + 0x2d (0x6bc3ed in /usr/bin/python3)
+[rank4]: frame #39: <unknown function> + 0x2a1ca (0x70cf9d3131ca in /lib/x86_64-linux-gnu/libc.so.6)
+[rank4]: frame #40: __libc_start_main + 0x8b (0x70cf9d31328b in /lib/x86_64-linux-gnu/libc.so.6)
+[rank4]: frame #41: _start + 0x25 (0x6576c5 in /usr/bin/python3)
+[rank4]: . This may indicate a possible application crash on rank 0 or a network set up issue.
+[rank2]: Traceback (most recent call last):
+[rank2]:   File "<frozen runpy>", line 198, in _run_module_as_main
+[rank2]:   File "<frozen runpy>", line 88, in _run_code
+[rank2]:   File "/root/RD-agent/src/training/trl_grpo_trainer.py", line 356, in <module>
+[rank2]:     train(args.config, args.data, args.vllm_port, args.vllm_mode)
+[rank2]:   File "/root/RD-agent/src/training/trl_grpo_trainer.py", line 330, in train
+[rank2]:     trainer = GRPOTrainer(
+[rank2]:               ^^^^^^^^^^^^
+[rank2]:   File "/usr/local/lib/python3.12/dist-packages/trl/trainer/grpo_trainer.py", line 709, in __init__
+[rank2]:     self.vllm_generation = VLLMGeneration(
+[rank2]:                            ^^^^^^^^^^^^^^^
+[rank2]:   File "/usr/local/lib/python3.12/dist-packages/trl/generation/vllm_generation.py", line 281, in __init__
+[rank2]:     self._init_vllm()
+[rank2]:   File "/usr/local/lib/python3.12/dist-packages/trl/generation/vllm_generation.py", line 366, in _init_vllm
+[rank2]:     accelerator.wait_for_everyone()
+[rank2]:   File "/usr/local/lib/python3.12/dist-packages/accelerate/accelerator.py", line 3256, in wait_for_everyone
+[rank2]:     wait_for_everyone()
+[rank2]:   File "/usr/local/lib/python3.12/dist-packages/accelerate/utils/other.py", line 320, in wait_for_everyone
+[rank2]:     PartialState().wait_for_everyone()
+[rank2]:   File "/usr/local/lib/python3.12/dist-packages/accelerate/state.py", line 412, in wait_for_everyone
+[rank2]:     torch.distributed.barrier(device_ids=[self.local_process_index])
+[rank2]:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/c10d_logger.py", line 83, in wrapper
+[rank2]:     return func(*args, **kwargs)
+[rank2]:            ^^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/distributed_c10d.py", line 4969, in barrier
+[rank2]:     work = group.barrier(opts=opts)
+[rank2]:            ^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]: torch.distributed.DistBackendError: [2] is setting up NCCL communicator and retrieving ncclUniqueId from [0] via c10d key-value store by key '0', but store->get('0') got error: Failed to recv, got 0 bytes. Connection was likely closed. Did the remote server shutdown or crash?
+[rank2]: Exception raised from recvBytes at /pytorch/torch/csrc/distributed/c10d/Utils.hpp:682 (most recent call first):
+[rank2]: frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x9d (0x7364b78ddfdd in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+[rank2]: frame #1: <unknown function> + 0x6a334ed (0x7363dcd844ed in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+[rank2]: frame #2: c10d::TCPStore::doWait(c10::ArrayRef<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::chrono::duration<long, std::ratio<1l, 1000l> >) + 0x16b (0x7363dcd7e19b in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+[rank2]: frame #3: c10d::TCPStore::doGet(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0x2a (0x7363dcd7e62a in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+[rank2]: frame #4: c10d::TCPStore::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0x112 (0x7363dcd7e7c2 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+[rank2]: frame #5: c10d::PrefixStore::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0x36e (0x7363dcd172ce in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+[rank2]: frame #6: c10d::ProcessGroupNCCL::broadcastUniqueNCCLID(ncclUniqueId*, bool, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int) + 0x7d4 (0x736399e743d4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+[rank2]: frame #7: c10d::ProcessGroupNCCL::initNCCLComm(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, c10::Device&, c10d::OpType, int, bool) + 0x81e (0x736399e75bee in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+[rank2]: frame #8: <unknown function> + 0x116444c (0x736399e7c44c in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+[rank2]: frame #9: c10d::ProcessGroupNCCL::allreduce_impl(at::Tensor&, char const*, c10d::AllreduceOptions const&) + 0xf2 (0x736399e7cbe2 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+[rank2]: frame #10: c10d::ProcessGroupNCCL::barrier(c10d::BarrierOptions const&) + 0x64a (0x736399e8c3ea in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+[rank2]: frame #11: <unknown function> + 0x69b786d (0x7363dcd0886d in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+[rank2]: frame #12: <unknown function> + 0x69c1de7 (0x7363dcd12de7 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+[rank2]: frame #13: <unknown function> + 0x5ddf5d5 (0x7363dc1305d5 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+[rank2]: frame #14: <unknown function> + 0x69d7454 (0x7363dcd28454 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+[rank2]: frame #15: <unknown function> + 0x69d94e5 (0x7363dcd2a4e5 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+[rank2]: frame #16: <unknown function> + 0xf3a91a (0x7363ec6f591a in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_python.so)
+[rank2]: frame #17: <unknown function> + 0x40e440 (0x7363ebbc9440 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_python.so)
+[rank2]: frame #18: /usr/bin/python3() [0x581e9f]
+[rank2]: frame #19: _PyObject_MakeTpCall + 0x13e (0x54903e in /usr/bin/python3)
+[rank2]: frame #20: _PyEval_EvalFrameDefault + 0xa89 (0x5d6f09 in /usr/bin/python3)
+[rank2]: frame #21: _PyObject_Call_Prepend + 0x18a (0x54a88a in /usr/bin/python3)
+[rank2]: frame #22: /usr/bin/python3() [0x59dddf]
+[rank2]: frame #23: /usr/bin/python3() [0x5998a3]
+[rank2]: frame #24: PyObject_Call + 0x9c (0x54b11c in /usr/bin/python3)
+[rank2]: frame #25: _PyEval_EvalFrameDefault + 0x4c3a (0x5db0ba in /usr/bin/python3)
+[rank2]: frame #26: _PyObject_Call_Prepend + 0x18a (0x54a88a in /usr/bin/python3)
+[rank2]: frame #27: /usr/bin/python3() [0x59dddf]
+[rank2]: frame #28: /usr/bin/python3() [0x5998a3]
+[rank2]: frame #29: _PyObject_MakeTpCall + 0x13e (0x54903e in /usr/bin/python3)
+[rank2]: frame #30: _PyEval_EvalFrameDefault + 0xa89 (0x5d6f09 in /usr/bin/python3)
+[rank2]: frame #31: PyEval_EvalCode + 0x15b (0x5d543b in /usr/bin/python3)
+[rank2]: frame #32: /usr/bin/python3() [0x5d322c]
+[rank2]: frame #33: /usr/bin/python3() [0x581d1d]
+[rank2]: frame #34: PyObject_Vectorcall + 0x35 (0x549975 in /usr/bin/python3)
+[rank2]: frame #35: _PyEval_EvalFrameDefault + 0xa89 (0x5d6f09 in /usr/bin/python3)
+[rank2]: frame #36: /usr/bin/python3() [0x6bcb52]
+[rank2]: frame #37: Py_RunMain + 0x232 (0x6bc782 in /usr/bin/python3)
+[rank2]: frame #38: Py_BytesMain + 0x2d (0x6bc3ed in /usr/bin/python3)
+[rank2]: frame #39: <unknown function> + 0x2a1ca (0x7364b85ba1ca in /lib/x86_64-linux-gnu/libc.so.6)
+[rank2]: frame #40: __libc_start_main + 0x8b (0x7364b85ba28b in /lib/x86_64-linux-gnu/libc.so.6)
+[rank2]: frame #41: _start + 0x25 (0x6576c5 in /usr/bin/python3)
+[rank2]: . This may indicate a possible application crash on rank 0 or a network set up issue.
+[rank1]:[W325 16:45:52.302480901 TCPStore.cpp:125] [c10d] recvValue failed on SocketImpl(fd=45, addr=[rdagent-cc7ft-worker-0]:58352, remote=[rdagent-cc7ft-worker-0]:42557): Failed to recv, got 0 bytes. Connection was likely closed. Did the remote server shutdown or crash?
+Exception raised from recvBytes at /pytorch/torch/csrc/distributed/c10d/Utils.hpp:682 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x9d (0x7a34a3972fdd in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #1: <unknown function> + 0x6a3325d (0x7a33c8d8425d in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #2: c10d::TCPStore::check(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&) + 0x273 (0x7a33c8d821f3 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #3: c10d::ProcessGroupNCCL::HeartbeatMonitor::runLoop() + 0x44c (0x7a3385e64eec in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #4: <unknown function> + 0xecdb4 (0x7a3463c6edb4 in /lib/x86_64-linux-gnu/libstdc++.so.6)
+frame #5: <unknown function> + 0x9caa4 (0x7a34a46a5aa4 in /lib/x86_64-linux-gnu/libc.so.6)
+frame #6: <unknown function> + 0x129c3c (0x7a34a4732c3c in /lib/x86_64-linux-gnu/libc.so.6)
+
+[rank1]:[W325 16:45:52.304529665 ProcessGroupNCCL.cpp:1802] [PG ID 0 PG GUID 0(default_pg) Rank 1] Failed to check the "should dump" flag on TCPStore, (maybe TCPStore server has shut down too early), with error: Failed to recv, got 0 bytes. Connection was likely closed. Did the remote server shutdown or crash?
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "<frozen runpy>", line 198, in _run_module_as_main
+[rank1]:   File "<frozen runpy>", line 88, in _run_code
+[rank1]:   File "/root/RD-agent/src/training/trl_grpo_trainer.py", line 356, in <module>
+[rank1]:     train(args.config, args.data, args.vllm_port, args.vllm_mode)
+[rank1]:   File "/root/RD-agent/src/training/trl_grpo_trainer.py", line 330, in train
+[rank1]:     trainer = GRPOTrainer(
+[rank1]:               ^^^^^^^^^^^^
+[rank1]:   File "/usr/local/lib/python3.12/dist-packages/trl/trainer/grpo_trainer.py", line 709, in __init__
+[rank1]:     self.vllm_generation = VLLMGeneration(
+[rank1]:                            ^^^^^^^^^^^^^^^
+[rank1]:   File "/usr/local/lib/python3.12/dist-packages/trl/generation/vllm_generation.py", line 281, in __init__
+[rank1]:     self._init_vllm()
+[rank1]:   File "/usr/local/lib/python3.12/dist-packages/trl/generation/vllm_generation.py", line 366, in _init_vllm
+[rank1]:     accelerator.wait_for_everyone()
+[rank1]:   File "/usr/local/lib/python3.12/dist-packages/accelerate/accelerator.py", line 3256, in wait_for_everyone
+[rank1]:     wait_for_everyone()
+[rank1]:   File "/usr/local/lib/python3.12/dist-packages/accelerate/utils/other.py", line 320, in wait_for_everyone
+[rank1]:     PartialState().wait_for_everyone()
+[rank1]:   File "/usr/local/lib/python3.12/dist-packages/accelerate/state.py", line 412, in wait_for_everyone
+[rank1]:     torch.distributed.barrier(device_ids=[self.local_process_index])
+[rank1]:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/c10d_logger.py", line 83, in wrapper
+[rank1]:     return func(*args, **kwargs)
+[rank1]:            ^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/distributed_c10d.py", line 4969, in barrier
+[rank1]:     work = group.barrier(opts=opts)
+[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]: torch.distributed.DistBackendError: [1] is setting up NCCL communicator and retrieving ncclUniqueId from [0] via c10d key-value store by key '0', but store->get('0') got error: Failed to recv, got 0 bytes. Connection was likely closed. Did the remote server shutdown or crash?
+[rank1]: Exception raised from recvBytes at /pytorch/torch/csrc/distributed/c10d/Utils.hpp:682 (most recent call first):
+[rank1]: frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x9d (0x7a34a3972fdd in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+[rank1]: frame #1: <unknown function> + 0x6a334ed (0x7a33c8d844ed in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+[rank1]: frame #2: c10d::TCPStore::doWait(c10::ArrayRef<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::chrono::duration<long, std::ratio<1l, 1000l> >) + 0x16b (0x7a33c8d7e19b in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+[rank1]: frame #3: c10d::TCPStore::doGet(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0x2a (0x7a33c8d7e62a in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+[rank1]: frame #4: c10d::TCPStore::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0x112 (0x7a33c8d7e7c2 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+[rank1]: frame #5: c10d::PrefixStore::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0x36e (0x7a33c8d172ce in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+[rank1]: frame #6: c10d::ProcessGroupNCCL::broadcastUniqueNCCLID(ncclUniqueId*, bool, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int) + 0x7d4 (0x7a3385e743d4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+[rank1]: frame #7: c10d::ProcessGroupNCCL::initNCCLComm(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, c10::Device&, c10d::OpType, int, bool) + 0x81e (0x7a3385e75bee in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+[rank1]: frame #8: <unknown function> + 0x116444c (0x7a3385e7c44c in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+[rank1]: frame #9: c10d::ProcessGroupNCCL::allreduce_impl(at::Tensor&, char const*, c10d::AllreduceOptions const&) + 0xf2 (0x7a3385e7cbe2 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+[rank1]: frame #10: c10d::ProcessGroupNCCL::barrier(c10d::BarrierOptions const&) + 0x64a (0x7a3385e8c3ea in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+[rank1]: frame #11: <unknown function> + 0x69b786d (0x7a33c8d0886d in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+[rank1]: frame #12: <unknown function> + 0x69c1de7 (0x7a33c8d12de7 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+[rank1]: frame #13: <unknown function> + 0x5ddf5d5 (0x7a33c81305d5 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+[rank1]: frame #14: <unknown function> + 0x69d7454 (0x7a33c8d28454 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+[rank1]: frame #15: <unknown function> + 0x69d94e5 (0x7a33c8d2a4e5 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+[rank1]: frame #16: <unknown function> + 0xf3a91a (0x7a33d86f591a in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_python.so)
+[rank1]: frame #17: <unknown function> + 0x40e440 (0x7a33d7bc9440 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_python.so)
+[rank1]: frame #18: /usr/bin/python3() [0x581e9f]
+[rank1]: frame #19: _PyObject_MakeTpCall + 0x13e (0x54903e in /usr/bin/python3)
+[rank1]: frame #20: _PyEval_EvalFrameDefault + 0xa89 (0x5d6f09 in /usr/bin/python3)
+[rank1]: frame #21: _PyObject_Call_Prepend + 0x18a (0x54a88a in /usr/bin/python3)
+[rank1]: frame #22: /usr/bin/python3() [0x59dddf]
+[rank1]: frame #23: /usr/bin/python3() [0x5998a3]
+[rank1]: frame #24: PyObject_Call + 0x9c (0x54b11c in /usr/bin/python3)
+[rank1]: frame #25: _PyEval_EvalFrameDefault + 0x4c3a (0x5db0ba in /usr/bin/python3)
+[rank1]: frame #26: _PyObject_Call_Prepend + 0x18a (0x54a88a in /usr/bin/python3)
+[rank1]: frame #27: /usr/bin/python3() [0x59dddf]
+[rank1]: frame #28: /usr/bin/python3() [0x5998a3]
+[rank1]: frame #29: _PyObject_MakeTpCall + 0x13e (0x54903e in /usr/bin/python3)
+[rank1]: frame #30: _PyEval_EvalFrameDefault + 0xa89 (0x5d6f09 in /usr/bin/python3)
+[rank1]: frame #31: PyEval_EvalCode + 0x15b (0x5d543b in /usr/bin/python3)
+[rank1]: frame #32: /usr/bin/python3() [0x5d322c]
+[rank1]: frame #33: /usr/bin/python3() [0x581d1d]
+[rank1]: frame #34: PyObject_Vectorcall + 0x35 (0x549975 in /usr/bin/python3)
+[rank1]: frame #35: _PyEval_EvalFrameDefault + 0xa89 (0x5d6f09 in /usr/bin/python3)
+[rank1]: frame #36: /usr/bin/python3() [0x6bcb52]
+[rank1]: frame #37: Py_RunMain + 0x232 (0x6bc782 in /usr/bin/python3)
+[rank1]: frame #38: Py_BytesMain + 0x2d (0x6bc3ed in /usr/bin/python3)
+[rank1]: frame #39: <unknown function> + 0x2a1ca (0x7a34a46331ca in /lib/x86_64-linux-gnu/libc.so.6)
+[rank1]: frame #40: __libc_start_main + 0x8b (0x7a34a463328b in /lib/x86_64-linux-gnu/libc.so.6)
+[rank1]: frame #41: _start + 0x25 (0x6576c5 in /usr/bin/python3)
+[rank1]: . This may indicate a possible application crash on rank 0 or a network set up issue.
+[rank0]:[W325 16:45:53.199310349 TCPStore.cpp:125] [c10d] recvValue failed on SocketImpl(fd=45, addr=[rdagent-cc7ft-worker-0]:58358, remote=[rdagent-cc7ft-worker-0]:42557): Failed to recv, got 0 bytes. Connection was likely closed. Did the remote server shutdown or crash?
+Exception raised from recvBytes at /pytorch/torch/csrc/distributed/c10d/Utils.hpp:682 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x9d (0x7f9cdb772fdd in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #1: <unknown function> + 0x6a3325d (0x7f9c00b8425d in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #2: c10d::TCPStore::check(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&) + 0x273 (0x7f9c00b821f3 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #3: c10d::ProcessGroupNCCL::HeartbeatMonitor::runLoop() + 0x44c (0x7f9bbdc64eec in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #4: <unknown function> + 0xecdb4 (0x7f9c9ba6edb4 in /lib/x86_64-linux-gnu/libstdc++.so.6)
+frame #5: <unknown function> + 0x9caa4 (0x7f9cdc4caaa4 in /lib/x86_64-linux-gnu/libc.so.6)
+frame #6: <unknown function> + 0x129c3c (0x7f9cdc557c3c in /lib/x86_64-linux-gnu/libc.so.6)
+
+[rank0]:[W325 16:45:53.201514334 ProcessGroupNCCL.cpp:1802] [PG ID 0 PG GUID 0 Rank 0] Failed to check the "should dump" flag on TCPStore, (maybe TCPStore server has shut down too early), with error: Failed to recv, got 0 bytes. Connection was likely closed. Did the remote server shutdown or crash?
+[rank0]:[W325 16:45:54.201628763 TCPStore.cpp:106] [c10d] sendBytes failed on SocketImpl(fd=45, addr=[rdagent-cc7ft-worker-0]:58358, remote=[rdagent-cc7ft-worker-0]:42557): Broken pipe
+Exception raised from sendBytes at /pytorch/torch/csrc/distributed/c10d/Utils.hpp:653 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x9d (0x7f9cdb772fdd in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #1: <unknown function> + 0x6a326d1 (0x7f9c00b836d1 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #2: c10d::TCPStore::check(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&) + 0x24d (0x7f9c00b821cd in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #3: c10d::ProcessGroupNCCL::HeartbeatMonitor::runLoop() + 0x44c (0x7f9bbdc64eec in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #4: <unknown function> + 0xecdb4 (0x7f9c9ba6edb4 in /lib/x86_64-linux-gnu/libstdc++.so.6)
+frame #5: <unknown function> + 0x9caa4 (0x7f9cdc4caaa4 in /lib/x86_64-linux-gnu/libc.so.6)
+frame #6: <unknown function> + 0x129c3c (0x7f9cdc557c3c in /lib/x86_64-linux-gnu/libc.so.6)
+
+[rank0]:[W325 16:45:54.203667493 ProcessGroupNCCL.cpp:1802] [PG ID 0 PG GUID 0 Rank 0] Failed to check the "should dump" flag on TCPStore, (maybe TCPStore server has shut down too early), with error: Broken pipe
+[rank0]:[W325 16:45:55.203810409 TCPStore.cpp:106] [c10d] sendBytes failed on SocketImpl(fd=45, addr=[rdagent-cc7ft-worker-0]:58358, remote=[rdagent-cc7ft-worker-0]:42557): Broken pipe
+Exception raised from sendBytes at /pytorch/torch/csrc/distributed/c10d/Utils.hpp:653 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x9d (0x7f9cdb772fdd in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #1: <unknown function> + 0x6a326d1 (0x7f9c00b836d1 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #2: c10d::TCPStore::check(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&) + 0x24d (0x7f9c00b821cd in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #3: c10d::ProcessGroupNCCL::HeartbeatMonitor::runLoop() + 0x44c (0x7f9bbdc64eec in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #4: <unknown function> + 0xecdb4 (0x7f9c9ba6edb4 in /lib/x86_64-linux-gnu/libstdc++.so.6)
+frame #5: <unknown function> + 0x9caa4 (0x7f9cdc4caaa4 in /lib/x86_64-linux-gnu/libc.so.6)
+frame #6: <unknown function> + 0x129c3c (0x7f9cdc557c3c in /lib/x86_64-linux-gnu/libc.so.6)
+
+[rank0]:[W325 16:45:55.205960714 ProcessGroupNCCL.cpp:1802] [PG ID 0 PG GUID 0 Rank 0] Failed to check the "should dump" flag on TCPStore, (maybe TCPStore server has shut down too early), with error: Broken pipe
+[rank0]:[W325 16:45:56.206078592 TCPStore.cpp:106] [c10d] sendBytes failed on SocketImpl(fd=45, addr=[rdagent-cc7ft-worker-0]:58358, remote=[rdagent-cc7ft-worker-0]:42557): Broken pipe
+Exception raised from sendBytes at /pytorch/torch/csrc/distributed/c10d/Utils.hpp:653 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x9d (0x7f9cdb772fdd in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #1: <unknown function> + 0x6a326d1 (0x7f9c00b836d1 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #2: c10d::TCPStore::check(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&) + 0x24d (0x7f9c00b821cd in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #3: c10d::ProcessGroupNCCL::HeartbeatMonitor::runLoop() + 0x44c (0x7f9bbdc64eec in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #4: <unknown function> + 0xecdb4 (0x7f9c9ba6edb4 in /lib/x86_64-linux-gnu/libstdc++.so.6)
+frame #5: <unknown function> + 0x9caa4 (0x7f9cdc4caaa4 in /lib/x86_64-linux-gnu/libc.so.6)
+frame #6: <unknown function> + 0x129c3c (0x7f9cdc557c3c in /lib/x86_64-linux-gnu/libc.so.6)
+
+[rank0]:[W325 16:45:56.208150709 ProcessGroupNCCL.cpp:1802] [PG ID 0 PG GUID 0 Rank 0] Failed to check the "should dump" flag on TCPStore, (maybe TCPStore server has shut down too early), with error: Broken pipe
+[rank0]:[W325 16:45:57.208270707 TCPStore.cpp:106] [c10d] sendBytes failed on SocketImpl(fd=45, addr=[rdagent-cc7ft-worker-0]:58358, remote=[rdagent-cc7ft-worker-0]:42557): Broken pipe
+Exception raised from sendBytes at /pytorch/torch/csrc/distributed/c10d/Utils.hpp:653 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x9d (0x7f9cdb772fdd in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #1: <unknown function> + 0x6a326d1 (0x7f9c00b836d1 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #2: c10d::TCPStore::check(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&) + 0x24d (0x7f9c00b821cd in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #3: c10d::ProcessGroupNCCL::HeartbeatMonitor::runLoop() + 0x44c (0x7f9bbdc64eec in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #4: <unknown function> + 0xecdb4 (0x7f9c9ba6edb4 in /lib/x86_64-linux-gnu/libstdc++.so.6)
+frame #5: <unknown function> + 0x9caa4 (0x7f9cdc4caaa4 in /lib/x86_64-linux-gnu/libc.so.6)
+frame #6: <unknown function> + 0x129c3c (0x7f9cdc557c3c in /lib/x86_64-linux-gnu/libc.so.6)
+
+[rank0]:[W325 16:45:57.210358017 ProcessGroupNCCL.cpp:1802] [PG ID 0 PG GUID 0 Rank 0] Failed to check the "should dump" flag on TCPStore, (maybe TCPStore server has shut down too early), with error: Broken pipe
+[rank0]:[W325 16:45:58.210461194 TCPStore.cpp:106] [c10d] sendBytes failed on SocketImpl(fd=45, addr=[rdagent-cc7ft-worker-0]:58358, remote=[rdagent-cc7ft-worker-0]:42557): Broken pipe
+Exception raised from sendBytes at /pytorch/torch/csrc/distributed/c10d/Utils.hpp:653 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x9d (0x7f9cdb772fdd in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #1: <unknown function> + 0x6a326d1 (0x7f9c00b836d1 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #2: c10d::TCPStore::check(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&) + 0x24d (0x7f9c00b821cd in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #3: c10d::ProcessGroupNCCL::HeartbeatMonitor::runLoop() + 0x44c (0x7f9bbdc64eec in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #4: <unknown function> + 0xecdb4 (0x7f9c9ba6edb4 in /lib/x86_64-linux-gnu/libstdc++.so.6)
+frame #5: <unknown function> + 0x9caa4 (0x7f9cdc4caaa4 in /lib/x86_64-linux-gnu/libc.so.6)
+frame #6: <unknown function> + 0x129c3c (0x7f9cdc557c3c in /lib/x86_64-linux-gnu/libc.so.6)
+
+[rank0]:[W325 16:45:58.212457112 ProcessGroupNCCL.cpp:1802] [PG ID 0 PG GUID 0 Rank 0] Failed to check the "should dump" flag on TCPStore, (maybe TCPStore server has shut down too early), with error: Broken pipe
+[rank0]:[W325 16:45:59.212594261 TCPStore.cpp:106] [c10d] sendBytes failed on SocketImpl(fd=45, addr=[rdagent-cc7ft-worker-0]:58358, remote=[rdagent-cc7ft-worker-0]:42557): Broken pipe
+Exception raised from sendBytes at /pytorch/torch/csrc/distributed/c10d/Utils.hpp:653 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x9d (0x7f9cdb772fdd in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #1: <unknown function> + 0x6a326d1 (0x7f9c00b836d1 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #2: c10d::TCPStore::check(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&) + 0x24d (0x7f9c00b821cd in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #3: c10d::ProcessGroupNCCL::HeartbeatMonitor::runLoop() + 0x44c (0x7f9bbdc64eec in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #4: <unknown function> + 0xecdb4 (0x7f9c9ba6edb4 in /lib/x86_64-linux-gnu/libstdc++.so.6)
+frame #5: <unknown function> + 0x9caa4 (0x7f9cdc4caaa4 in /lib/x86_64-linux-gnu/libc.so.6)
+frame #6: <unknown function> + 0x129c3c (0x7f9cdc557c3c in /lib/x86_64-linux-gnu/libc.so.6)
+
+[rank0]:[W325 16:45:59.214723279 ProcessGroupNCCL.cpp:1802] [PG ID 0 PG GUID 0 Rank 0] Failed to check the "should dump" flag on TCPStore, (maybe TCPStore server has shut down too early), with error: Broken pipe
+[rank0]:[W325 16:46:00.214842502 TCPStore.cpp:106] [c10d] sendBytes failed on SocketImpl(fd=45, addr=[rdagent-cc7ft-worker-0]:58358, remote=[rdagent-cc7ft-worker-0]:42557): Broken pipe
+Exception raised from sendBytes at /pytorch/torch/csrc/distributed/c10d/Utils.hpp:653 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x9d (0x7f9cdb772fdd in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #1: <unknown function> + 0x6a326d1 (0x7f9c00b836d1 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #2: c10d::TCPStore::check(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&) + 0x24d (0x7f9c00b821cd in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #3: c10d::ProcessGroupNCCL::HeartbeatMonitor::runLoop() + 0x44c (0x7f9bbdc64eec in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #4: <unknown function> + 0xecdb4 (0x7f9c9ba6edb4 in /lib/x86_64-linux-gnu/libstdc++.so.6)
+frame #5: <unknown function> + 0x9caa4 (0x7f9cdc4caaa4 in /lib/x86_64-linux-gnu/libc.so.6)
+frame #6: <unknown function> + 0x129c3c (0x7f9cdc557c3c in /lib/x86_64-linux-gnu/libc.so.6)
+
+[rank0]:[W325 16:46:00.216888450 ProcessGroupNCCL.cpp:1802] [PG ID 0 PG GUID 0 Rank 0] Failed to check the "should dump" flag on TCPStore, (maybe TCPStore server has shut down too early), with error: Broken pipe
+[rank0]:[W325 16:46:01.217039304 TCPStore.cpp:106] [c10d] sendBytes failed on SocketImpl(fd=45, addr=[rdagent-cc7ft-worker-0]:58358, remote=[rdagent-cc7ft-worker-0]:42557): Broken pipe
+Exception raised from sendBytes at /pytorch/torch/csrc/distributed/c10d/Utils.hpp:653 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x9d (0x7f9cdb772fdd in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #1: <unknown function> + 0x6a326d1 (0x7f9c00b836d1 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #2: c10d::TCPStore::check(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&) + 0x24d (0x7f9c00b821cd in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #3: c10d::ProcessGroupNCCL::HeartbeatMonitor::runLoop() + 0x44c (0x7f9bbdc64eec in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #4: <unknown function> + 0xecdb4 (0x7f9c9ba6edb4 in /lib/x86_64-linux-gnu/libstdc++.so.6)
+frame #5: <unknown function> + 0x9caa4 (0x7f9cdc4caaa4 in /lib/x86_64-linux-gnu/libc.so.6)
+frame #6: <unknown function> + 0x129c3c (0x7f9cdc557c3c in /lib/x86_64-linux-gnu/libc.so.6)
+
+[rank0]:[W325 16:46:01.219205509 ProcessGroupNCCL.cpp:1802] [PG ID 0 PG GUID 0 Rank 0] Failed to check the "should dump" flag on TCPStore, (maybe TCPStore server has shut down too early), with error: Broken pipe
+[rank0]:[W325 16:46:02.219355227 TCPStore.cpp:106] [c10d] sendBytes failed on SocketImpl(fd=45, addr=[rdagent-cc7ft-worker-0]:58358, remote=[rdagent-cc7ft-worker-0]:42557): Broken pipe
+Exception raised from sendBytes at /pytorch/torch/csrc/distributed/c10d/Utils.hpp:653 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x9d (0x7f9cdb772fdd in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #1: <unknown function> + 0x6a326d1 (0x7f9c00b836d1 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #2: c10d::TCPStore::check(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&) + 0x24d (0x7f9c00b821cd in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #3: c10d::ProcessGroupNCCL::HeartbeatMonitor::runLoop() + 0x44c (0x7f9bbdc64eec in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #4: <unknown function> + 0xecdb4 (0x7f9c9ba6edb4 in /lib/x86_64-linux-gnu/libstdc++.so.6)
+frame #5: <unknown function> + 0x9caa4 (0x7f9cdc4caaa4 in /lib/x86_64-linux-gnu/libc.so.6)
+frame #6: <unknown function> + 0x129c3c (0x7f9cdc557c3c in /lib/x86_64-linux-gnu/libc.so.6)
+
+[rank0]:[W325 16:46:02.221514073 ProcessGroupNCCL.cpp:1802] [PG ID 0 PG GUID 0 Rank 0] Failed to check the "should dump" flag on TCPStore, (maybe TCPStore server has shut down too early), with error: Broken pipe
+[rank0]:[W325 16:46:03.221651344 TCPStore.cpp:106] [c10d] sendBytes failed on SocketImpl(fd=45, addr=[rdagent-cc7ft-worker-0]:58358, remote=[rdagent-cc7ft-worker-0]:42557): Broken pipe
+Exception raised from sendBytes at /pytorch/torch/csrc/distributed/c10d/Utils.hpp:653 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x9d (0x7f9cdb772fdd in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #1: <unknown function> + 0x6a326d1 (0x7f9c00b836d1 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #2: c10d::TCPStore::check(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&) + 0x24d (0x7f9c00b821cd in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #3: c10d::ProcessGroupNCCL::HeartbeatMonitor::runLoop() + 0x44c (0x7f9bbdc64eec in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #4: <unknown function> + 0xecdb4 (0x7f9c9ba6edb4 in /lib/x86_64-linux-gnu/libstdc++.so.6)
+frame #5: <unknown function> + 0x9caa4 (0x7f9cdc4caaa4 in /lib/x86_64-linux-gnu/libc.so.6)
+frame #6: <unknown function> + 0x129c3c (0x7f9cdc557c3c in /lib/x86_64-linux-gnu/libc.so.6)
+
+[rank0]:[W325 16:46:03.223781170 ProcessGroupNCCL.cpp:1802] [PG ID 0 PG GUID 0 Rank 0] Failed to check the "should dump" flag on TCPStore, (maybe TCPStore server has shut down too early), with error: Broken pipe
+[rank0]:[W325 16:46:04.223939649 TCPStore.cpp:106] [c10d] sendBytes failed on SocketImpl(fd=45, addr=[rdagent-cc7ft-worker-0]:58358, remote=[rdagent-cc7ft-worker-0]:42557): Broken pipe
+Exception raised from sendBytes at /pytorch/torch/csrc/distributed/c10d/Utils.hpp:653 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x9d (0x7f9cdb772fdd in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #1: <unknown function> + 0x6a326d1 (0x7f9c00b836d1 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #2: c10d::TCPStore::check(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&) + 0x24d (0x7f9c00b821cd in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #3: c10d::ProcessGroupNCCL::HeartbeatMonitor::runLoop() + 0x44c (0x7f9bbdc64eec in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #4: <unknown function> + 0xecdb4 (0x7f9c9ba6edb4 in /lib/x86_64-linux-gnu/libstdc++.so.6)
+frame #5: <unknown function> + 0x9caa4 (0x7f9cdc4caaa4 in /lib/x86_64-linux-gnu/libc.so.6)
+frame #6: <unknown function> + 0x129c3c (0x7f9cdc557c3c in /lib/x86_64-linux-gnu/libc.so.6)
+
+[rank0]:[W325 16:46:04.226122501 ProcessGroupNCCL.cpp:1802] [PG ID 0 PG GUID 0 Rank 0] Failed to check the "should dump" flag on TCPStore, (maybe TCPStore server has shut down too early), with error: Broken pipe
+[rank0]:[W325 16:46:05.226263000 TCPStore.cpp:106] [c10d] sendBytes failed on SocketImpl(fd=45, addr=[rdagent-cc7ft-worker-0]:58358, remote=[rdagent-cc7ft-worker-0]:42557): Broken pipe
+Exception raised from sendBytes at /pytorch/torch/csrc/distributed/c10d/Utils.hpp:653 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x9d (0x7f9cdb772fdd in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #1: <unknown function> + 0x6a326d1 (0x7f9c00b836d1 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #2: c10d::TCPStore::check(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&) + 0x24d (0x7f9c00b821cd in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #3: c10d::ProcessGroupNCCL::HeartbeatMonitor::runLoop() + 0x44c (0x7f9bbdc64eec in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #4: <unknown function> + 0xecdb4 (0x7f9c9ba6edb4 in /lib/x86_64-linux-gnu/libstdc++.so.6)
+frame #5: <unknown function> + 0x9caa4 (0x7f9cdc4caaa4 in /lib/x86_64-linux-gnu/libc.so.6)
+frame #6: <unknown function> + 0x129c3c (0x7f9cdc557c3c in /lib/x86_64-linux-gnu/libc.so.6)
+
+[rank0]:[W325 16:46:05.228406214 ProcessGroupNCCL.cpp:1802] [PG ID 0 PG GUID 0 Rank 0] Failed to check the "should dump" flag on TCPStore, (maybe TCPStore server has shut down too early), with error: Broken pipe
+[rank0]:[W325 16:46:06.228545809 TCPStore.cpp:106] [c10d] sendBytes failed on SocketImpl(fd=45, addr=[rdagent-cc7ft-worker-0]:58358, remote=[rdagent-cc7ft-worker-0]:42557): Broken pipe
+Exception raised from sendBytes at /pytorch/torch/csrc/distributed/c10d/Utils.hpp:653 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x9d (0x7f9cdb772fdd in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #1: <unknown function> + 0x6a326d1 (0x7f9c00b836d1 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #2: c10d::TCPStore::check(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&) + 0x24d (0x7f9c00b821cd in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #3: c10d::ProcessGroupNCCL::HeartbeatMonitor::runLoop() + 0x44c (0x7f9bbdc64eec in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #4: <unknown function> + 0xecdb4 (0x7f9c9ba6edb4 in /lib/x86_64-linux-gnu/libstdc++.so.6)
+frame #5: <unknown function> + 0x9caa4 (0x7f9cdc4caaa4 in /lib/x86_64-linux-gnu/libc.so.6)
+frame #6: <unknown function> + 0x129c3c (0x7f9cdc557c3c in /lib/x86_64-linux-gnu/libc.so.6)
+
+[rank0]:[W325 16:46:06.230692719 ProcessGroupNCCL.cpp:1802] [PG ID 0 PG GUID 0 Rank 0] Failed to check the "should dump" flag on TCPStore, (maybe TCPStore server has shut down too early), with error: Broken pipe
+[rank0]:[W325 16:46:07.230811033 TCPStore.cpp:106] [c10d] sendBytes failed on SocketImpl(fd=45, addr=[rdagent-cc7ft-worker-0]:58358, remote=[rdagent-cc7ft-worker-0]:42557): Broken pipe
+Exception raised from sendBytes at /pytorch/torch/csrc/distributed/c10d/Utils.hpp:653 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x9d (0x7f9cdb772fdd in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #1: <unknown function> + 0x6a326d1 (0x7f9c00b836d1 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #2: c10d::TCPStore::check(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&) + 0x24d (0x7f9c00b821cd in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #3: c10d::ProcessGroupNCCL::HeartbeatMonitor::runLoop() + 0x44c (0x7f9bbdc64eec in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #4: <unknown function> + 0xecdb4 (0x7f9c9ba6edb4 in /lib/x86_64-linux-gnu/libstdc++.so.6)
+frame #5: <unknown function> + 0x9caa4 (0x7f9cdc4caaa4 in /lib/x86_64-linux-gnu/libc.so.6)
+frame #6: <unknown function> + 0x129c3c (0x7f9cdc557c3c in /lib/x86_64-linux-gnu/libc.so.6)
+
+[rank0]:[W325 16:46:07.232910470 ProcessGroupNCCL.cpp:1802] [PG ID 0 PG GUID 0 Rank 0] Failed to check the "should dump" flag on TCPStore, (maybe TCPStore server has shut down too early), with error: Broken pipe
+[rank0]:[W325 16:46:08.233065136 TCPStore.cpp:106] [c10d] sendBytes failed on SocketImpl(fd=45, addr=[rdagent-cc7ft-worker-0]:58358, remote=[rdagent-cc7ft-worker-0]:42557): Broken pipe
+Exception raised from sendBytes at /pytorch/torch/csrc/distributed/c10d/Utils.hpp:653 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x9d (0x7f9cdb772fdd in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #1: <unknown function> + 0x6a326d1 (0x7f9c00b836d1 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #2: c10d::TCPStore::check(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&) + 0x24d (0x7f9c00b821cd in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #3: c10d::ProcessGroupNCCL::HeartbeatMonitor::runLoop() + 0x44c (0x7f9bbdc64eec in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #4: <unknown function> + 0xecdb4 (0x7f9c9ba6edb4 in /lib/x86_64-linux-gnu/libstdc++.so.6)
+frame #5: <unknown function> + 0x9caa4 (0x7f9cdc4caaa4 in /lib/x86_64-linux-gnu/libc.so.6)
+frame #6: <unknown function> + 0x129c3c (0x7f9cdc557c3c in /lib/x86_64-linux-gnu/libc.so.6)
+
+[rank0]:[W325 16:46:08.235234941 ProcessGroupNCCL.cpp:1802] [PG ID 0 PG GUID 0 Rank 0] Failed to check the "should dump" flag on TCPStore, (maybe TCPStore server has shut down too early), with error: Broken pipe
+[rank0]:[W325 16:46:09.235378551 TCPStore.cpp:106] [c10d] sendBytes failed on SocketImpl(fd=45, addr=[rdagent-cc7ft-worker-0]:58358, remote=[rdagent-cc7ft-worker-0]:42557): Broken pipe
+Exception raised from sendBytes at /pytorch/torch/csrc/distributed/c10d/Utils.hpp:653 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x9d (0x7f9cdb772fdd in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #1: <unknown function> + 0x6a326d1 (0x7f9c00b836d1 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #2: c10d::TCPStore::check(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&) + 0x24d (0x7f9c00b821cd in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #3: c10d::ProcessGroupNCCL::HeartbeatMonitor::runLoop() + 0x44c (0x7f9bbdc64eec in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #4: <unknown function> + 0xecdb4 (0x7f9c9ba6edb4 in /lib/x86_64-linux-gnu/libstdc++.so.6)
+frame #5: <unknown function> + 0x9caa4 (0x7f9cdc4caaa4 in /lib/x86_64-linux-gnu/libc.so.6)
+frame #6: <unknown function> + 0x129c3c (0x7f9cdc557c3c in /lib/x86_64-linux-gnu/libc.so.6)
+
+[rank0]:[W325 16:46:09.237515648 ProcessGroupNCCL.cpp:1802] [PG ID 0 PG GUID 0 Rank 0] Failed to check the "should dump" flag on TCPStore, (maybe TCPStore server has shut down too early), with error: Broken pipe

@@ -1,0 +1,133 @@
+============================================
+[1.5B_R5_v2] 2-GPU Training
+  GPU 2: train | GPU 3: vLLM (port 8003)
+  Model: Qwen/Qwen2.5-Coder-1.5B | Data: data/sweet_spot_1.5B.json
+============================================
+[1.5B_R5_v2] Starting trl vllm-serve on GPU 3...
+/usr/local/lib/python3.12/dist-packages/trl/generation/__init__.py:22: UserWarning: TRL currently supports vLLM versions: 0.10.2, 0.11.0, 0.11.1, 0.11.2, 0.12.0. You have version 0.18.0 installed. We recommend installing a supported version to avoid compatibility issues.
+  if is_vllm_available():
+/usr/local/lib/python3.12/dist-packages/trl/generation/vllm_client.py:39: UserWarning: TRL currently supports vLLM versions: 0.10.2, 0.11.0, 0.11.1, 0.11.2, 0.12.0. You have version 0.18.0 installed. We recommend installing a supported version to avoid compatibility issues.
+  if is_vllm_available():
+/usr/local/lib/python3.12/dist-packages/trl/generation/vllm_generation.py:37: UserWarning: TRL currently supports vLLM versions: 0.10.2, 0.11.0, 0.11.1, 0.11.2, 0.12.0. You have version 0.18.0 installed. We recommend installing a supported version to avoid compatibility issues.
+  if is_vllm_available():
+/usr/local/lib/python3.12/dist-packages/trl/scripts/vllm_serve.py:59: UserWarning: TRL currently supports vLLM versions: 0.10.2, 0.11.0, 0.11.1, 0.11.2, 0.12.0. You have version 0.18.0 installed. We recommend installing a supported version to avoid compatibility issues.
+  if is_vllm_available():
+/usr/local/lib/python3.12/dist-packages/trl/scripts/vllm_serve.py:431: UserWarning: TRL currently supports vLLM versions: 0.10.2, 0.11.0, 0.11.1, 0.11.2, 0.12.0. You have version 0.18.0 installed. We recommend installing a supported version to avoid compatibility issues.
+  if not is_vllm_available():
+INFO:     Started server process [924100]
+INFO:     Waiting for application startup.
+/usr/local/lib/python3.12/dist-packages/trl/generation/__init__.py:22: UserWarning: TRL currently supports vLLM versions: 0.10.2, 0.11.0, 0.11.1, 0.11.2, 0.12.0. You have version 0.18.0 installed. We recommend installing a supported version to avoid compatibility issues.
+  if is_vllm_available():
+/usr/local/lib/python3.12/dist-packages/trl/generation/vllm_client.py:39: UserWarning: TRL currently supports vLLM versions: 0.10.2, 0.11.0, 0.11.1, 0.11.2, 0.12.0. You have version 0.18.0 installed. We recommend installing a supported version to avoid compatibility issues.
+  if is_vllm_available():
+/usr/local/lib/python3.12/dist-packages/trl/generation/vllm_generation.py:37: UserWarning: TRL currently supports vLLM versions: 0.10.2, 0.11.0, 0.11.1, 0.11.2, 0.12.0. You have version 0.18.0 installed. We recommend installing a supported version to avoid compatibility issues.
+  if is_vllm_available():
+/usr/local/lib/python3.12/dist-packages/trl/scripts/vllm_serve.py:59: UserWarning: TRL currently supports vLLM versions: 0.10.2, 0.11.0, 0.11.1, 0.11.2, 0.12.0. You have version 0.18.0 installed. We recommend installing a supported version to avoid compatibility issues.
+  if is_vllm_available():
+(EngineCore pid=925115) ERROR 03-25 08:40:32 [core.py:1099] EngineCore failed to start.
+(EngineCore pid=925115) ERROR 03-25 08:40:32 [core.py:1099] Traceback (most recent call last):
+(EngineCore pid=925115) ERROR 03-25 08:40:32 [core.py:1099]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core.py", line 1073, in run_engine_core
+(EngineCore pid=925115) ERROR 03-25 08:40:32 [core.py:1099]     engine_core = EngineCoreProc(*args, engine_index=dp_rank, **kwargs)
+(EngineCore pid=925115) ERROR 03-25 08:40:32 [core.py:1099]                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=925115) ERROR 03-25 08:40:32 [core.py:1099]   File "/usr/local/lib/python3.12/dist-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=925115) ERROR 03-25 08:40:32 [core.py:1099]     return func(*args, **kwargs)
+(EngineCore pid=925115) ERROR 03-25 08:40:32 [core.py:1099]            ^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=925115) ERROR 03-25 08:40:32 [core.py:1099]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core.py", line 839, in __init__
+(EngineCore pid=925115) ERROR 03-25 08:40:32 [core.py:1099]     super().__init__(
+(EngineCore pid=925115) ERROR 03-25 08:40:32 [core.py:1099]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core.py", line 112, in __init__
+(EngineCore pid=925115) ERROR 03-25 08:40:32 [core.py:1099]     self.model_executor = executor_class(vllm_config)
+(EngineCore pid=925115) ERROR 03-25 08:40:32 [core.py:1099]                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=925115) ERROR 03-25 08:40:32 [core.py:1099]   File "/usr/local/lib/python3.12/dist-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=925115) ERROR 03-25 08:40:32 [core.py:1099]     return func(*args, **kwargs)
+(EngineCore pid=925115) ERROR 03-25 08:40:32 [core.py:1099]            ^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=925115) ERROR 03-25 08:40:32 [core.py:1099]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/executor/abstract.py", line 103, in __init__
+(EngineCore pid=925115) ERROR 03-25 08:40:32 [core.py:1099]     self._init_executor()
+(EngineCore pid=925115) ERROR 03-25 08:40:32 [core.py:1099]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/executor/uniproc_executor.py", line 49, in _init_executor
+(EngineCore pid=925115) ERROR 03-25 08:40:32 [core.py:1099]     self.driver_worker.init_device()
+(EngineCore pid=925115) ERROR 03-25 08:40:32 [core.py:1099]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/worker/worker_base.py", line 312, in init_device
+(EngineCore pid=925115) ERROR 03-25 08:40:32 [core.py:1099]     self.worker.init_device()  # type: ignore
+(EngineCore pid=925115) ERROR 03-25 08:40:32 [core.py:1099]     ^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=925115) ERROR 03-25 08:40:32 [core.py:1099]   File "/usr/local/lib/python3.12/dist-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=925115) ERROR 03-25 08:40:32 [core.py:1099]     return func(*args, **kwargs)
+(EngineCore pid=925115) ERROR 03-25 08:40:32 [core.py:1099]            ^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=925115) ERROR 03-25 08:40:32 [core.py:1099]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu_worker.py", line 283, in init_device
+(EngineCore pid=925115) ERROR 03-25 08:40:32 [core.py:1099]     self.requested_memory = request_memory(init_snapshot, self.cache_config)
+(EngineCore pid=925115) ERROR 03-25 08:40:32 [core.py:1099]                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=925115) ERROR 03-25 08:40:32 [core.py:1099]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/worker/utils.py", line 413, in request_memory
+(EngineCore pid=925115) ERROR 03-25 08:40:32 [core.py:1099]     raise ValueError(
+(EngineCore pid=925115) ERROR 03-25 08:40:32 [core.py:1099] ValueError: Free memory on device cuda:0 (23.58/178.35 GiB) on startup is less than desired GPU memory utilization (0.85, 151.6 GiB). Decrease GPU memory utilization or reduce GPU memory used by other processes.
+(EngineCore pid=925115) Process EngineCore:
+(EngineCore pid=925115) Traceback (most recent call last):
+(EngineCore pid=925115)   File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+(EngineCore pid=925115)     self.run()
+(EngineCore pid=925115)   File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+(EngineCore pid=925115)     self._target(*self._args, **self._kwargs)
+(EngineCore pid=925115)   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core.py", line 1103, in run_engine_core
+(EngineCore pid=925115)     raise e
+(EngineCore pid=925115)   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core.py", line 1073, in run_engine_core
+(EngineCore pid=925115)     engine_core = EngineCoreProc(*args, engine_index=dp_rank, **kwargs)
+(EngineCore pid=925115)                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=925115)   File "/usr/local/lib/python3.12/dist-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=925115)     return func(*args, **kwargs)
+(EngineCore pid=925115)            ^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=925115)   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core.py", line 839, in __init__
+(EngineCore pid=925115)     super().__init__(
+(EngineCore pid=925115)   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core.py", line 112, in __init__
+(EngineCore pid=925115)     self.model_executor = executor_class(vllm_config)
+(EngineCore pid=925115)                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=925115)   File "/usr/local/lib/python3.12/dist-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=925115)     return func(*args, **kwargs)
+(EngineCore pid=925115)            ^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=925115)   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/executor/abstract.py", line 103, in __init__
+(EngineCore pid=925115)     self._init_executor()
+(EngineCore pid=925115)   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/executor/uniproc_executor.py", line 49, in _init_executor
+(EngineCore pid=925115)     self.driver_worker.init_device()
+(EngineCore pid=925115)   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/worker/worker_base.py", line 312, in init_device
+(EngineCore pid=925115)     self.worker.init_device()  # type: ignore
+(EngineCore pid=925115)     ^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=925115)   File "/usr/local/lib/python3.12/dist-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=925115)     return func(*args, **kwargs)
+(EngineCore pid=925115)            ^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=925115)   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu_worker.py", line 283, in init_device
+(EngineCore pid=925115)     self.requested_memory = request_memory(init_snapshot, self.cache_config)
+(EngineCore pid=925115)                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=925115)   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/worker/utils.py", line 413, in request_memory
+(EngineCore pid=925115)     raise ValueError(
+(EngineCore pid=925115) ValueError: Free memory on device cuda:0 (23.58/178.35 GiB) on startup is less than desired GPU memory utilization (0.85, 151.6 GiB). Decrease GPU memory utilization or reduce GPU memory used by other processes.
+[rank0]:[W325 08:40:32.117598570 ProcessGroupNCCL.cpp:1553] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+Process Process-1:
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/usr/local/lib/python3.12/dist-packages/trl/scripts/vllm_serve.py", line 352, in llm_worker
+    llm = LLM(
+          ^^^^
+  File "/usr/local/lib/python3.12/dist-packages/vllm/entrypoints/llm.py", line 382, in __init__
+    self.llm_engine = LLMEngine.from_engine_args(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/llm_engine.py", line 177, in from_engine_args
+    return cls(
+           ^^^^
+  File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/llm_engine.py", line 111, in __init__
+    self.engine_core = EngineCoreClient.make_client(
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core_client.py", line 99, in make_client
+    return SyncMPClient(vllm_config, executor_class, log_stats)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core_client.py", line 747, in __init__
+    super().__init__(
+  File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core_client.py", line 583, in __init__
+    with launch_core_engines(
+  File "/usr/lib/python3.12/contextlib.py", line 144, in __exit__
+    next(self.gen)
+  File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/utils.py", line 972, in launch_core_engines
+    wait_for_engine_startup(
+  File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/utils.py", line 1031, in wait_for_engine_startup
+    raise RuntimeError(
+RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+  ERROR: vLLM server failed
