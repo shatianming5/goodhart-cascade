@@ -1,0 +1,38 @@
+experiment_name: 7B_Ranti_v2
+description: "Theory-predicted worst: heavy comment weight (Cov<0), low test weight"
+model:
+  name: Qwen/Qwen2.5-Coder-7B
+  trust_remote_code: true
+reward:
+  test: 0.4
+  comment: 0.4
+  pylint: 0.1
+  complexity: 0.1
+training:
+  total_steps: 1000
+  batch_size: 4
+  gradient_accumulation_steps: 4
+  rollouts_per_prompt: 8
+  lr: 5.0e-6
+  kl_coeff: 0.01
+  warmup_steps: 50
+  max_grad_norm: 1.0
+  clip_range: 0.2
+  gamma: 1.0
+  generation_max_length: 1024
+checkpointing:
+  save_every: 100
+  output_dir: results/7B_Ranti_v2
+vllm:
+  tensor_parallel_size: 1
+  gpu_memory_utilization: 0.85
+  max_model_len: 4096
+lora:
+  enabled: true
+  rank: 64
+  alpha: 128
+  target_modules: ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"]
+  dropout: 0.0
+logging:
+  log_all_dims: true
+data_path: data/sweet_spot_7B.json

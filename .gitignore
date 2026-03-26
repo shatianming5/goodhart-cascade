@@ -50,3 +50,21 @@ Thumbs.db
 
 # HF cache
 .cache/
+
+# Large parquet data
+data/*.parquet
+
+# vLLM server logs
+**/vllm_server.log
+
+# Eval verbose logs
+**/eval.log
+
+# Old outputs
+outputs/
+
+# Model final dirs (uploaded to HF)
+results/*/final/
+
+# Training run logs (keep training.log, skip train.log)  
+**/train.log

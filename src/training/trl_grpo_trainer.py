@@ -46,7 +46,7 @@ def load_sweet_spot_data(data_path: str) -> Dataset:
             test_cases = json.loads(test_cases)
 
         records.append({
-            "prompt": [{"role": "user", "content": prompt_text}],
+            "prompt": prompt_text,
             "test_cases": json.dumps(test_cases),
         })
 

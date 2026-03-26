@@ -1,0 +1,17 @@
+{
+  "model_path": "Qwen/Qwen2.5-Coder-1.5B",
+  "pass_at_1": 0.11,
+  "pass_at_k": 0.19,
+  "ece": 0.04375000000000001,
+  "n_problems": 100,
+  "pylint": 6.3294,
+  "complexity": 21.58,
+  "comment_pct": 44.43335388255672,
+  "duplication_pct": 2.160009140891494,
+  "type_hint_pct": 3.4999999999999996,
+  "avg_loc": 53.26,
+  "n_samples": 50,
+  "step": 0,
+  "checkpoint": "base",
+  "experiment": "base"
+}
