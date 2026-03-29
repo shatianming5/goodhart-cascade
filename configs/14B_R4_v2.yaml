@@ -1,0 +1,36 @@
+experiment_name: 14B_R4_v2
+description: 14B full finetune R4
+model:
+  name: Qwen/Qwen2.5-Coder-14B
+  trust_remote_code: true
+reward:
+  test: 0.5
+  pylint: 0.2
+  complexity: 0.15
+  comment: 0.15
+training:
+  total_steps: 1000
+  batch_size: 2
+  gradient_accumulation_steps: 8
+  rollouts_per_prompt: 8
+  lr: 5.0e-06
+  kl_coeff: 0.01
+  warmup_steps: 50
+  max_grad_norm: 1.0
+  clip_range: 0.2
+  gamma: 1.0
+  generation_max_length: 1024
+checkpointing:
+  save_every: 100
+  output_dir: results/14B_R4_v2
+vllm:
+  tensor_parallel_size: 1
+  gpu_memory_utilization: 0.85
+  max_model_len: 4096
+evaluation:
+  mbpp_size: 100
+  classeval_size: 50
+  eval_every: 100
+logging:
+  log_all_dims: true
+data_path: data/sweet_spot_14B.json

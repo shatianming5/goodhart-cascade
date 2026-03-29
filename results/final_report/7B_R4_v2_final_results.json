@@ -1,0 +1,20 @@
+{
+  "model_path": "results/tmp_ev_7B_R4_v2_final/checkpoint-1000",
+  "pass_at_1": 0.11,
+  "pass_at_k": 0.18,
+  "ece": 0.027500000000000004,
+  "n_problems": 100,
+  "pylint": 6.6774000000000004,
+  "complexity": 27.5,
+  "comment_pct": 34.468864355290805,
+  "duplication_pct": 1.4337681181664013,
+  "type_hint_pct": 3.833333333333333,
+  "avg_loc": 53.7,
+  "n_samples": 50,
+  "avg_func_length": 9.03695238095238,
+  "magic_numbers": 1.38,
+  "nesting_depth": 3.4,
+  "dead_code_pct": 0.0,
+  "naming_length": 5.383805822295702,
+  "label": "7B_R4_v2_final"
+}

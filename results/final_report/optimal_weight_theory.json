@@ -1,0 +1,21 @@
+{
+  "best_rho": {
+    "pylint": 0.8999999999999997,
+    "complexity": 0.2999999999999998,
+    "comment": -0.24999999999999933,
+    "duplication": 0.8999999999999997
+  },
+  "best_r2": 0.9980772112895165,
+  "best_scale": 1.246345035626611,
+  "priority_order": [
+    "pylint",
+    "duplication",
+    "complexity",
+    "comment"
+  ],
+  "optimal_config": {
+    "test": 0.5,
+    "pylint": 0.25,
+    "complexity": 0.25
+  }
+}

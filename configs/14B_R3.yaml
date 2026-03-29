@@ -1,0 +1,40 @@
+experiment_name: 14B_R3
+description: "14B LoRA test + pylint + complexity"
+
+model:
+  name: Qwen/Qwen2.5-Coder-14B
+  trust_remote_code: true
+  use_lora: true
+  lora_rank: 128
+  lora_alpha: 256
+  lora_target_modules: ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"]
+
+reward:
+  test: 0.6
+  pylint: 0.2
+  complexity: 0.2
+
+training:
+  total_steps: 1000
+  batch_size: 16
+  rollouts_per_prompt: 8
+  lr: 5.0e-7
+  kl_coeff: 0.03
+  warmup_steps: 100
+  max_grad_norm: 1.0
+  clip_range: 0.2
+  gamma: 1.0
+  generation_max_length: 2048
+  temperature: 0.7
+
+checkpointing:
+  save_every: 100
+  output_dir: results/14B_R3
+
+vllm:
+  tensor_parallel_size: 1
+  gpu_memory_utilization: 0.85
+  max_model_len: 4096
+
+logging:
+  log_all_dims: true

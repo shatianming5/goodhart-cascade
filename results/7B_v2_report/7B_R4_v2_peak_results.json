@@ -1,0 +1,20 @@
+{
+  "model_path": "results/tmp_ev_7B_R4_v2_peak/checkpoint-300",
+  "pass_at_1": 0.11,
+  "pass_at_k": 0.18,
+  "ece": 0.025000000000000005,
+  "n_problems": 100,
+  "pylint": 6.6558,
+  "complexity": 27.16,
+  "comment_pct": 33.31860433820566,
+  "duplication_pct": 1.3879731287623895,
+  "type_hint_pct": 3.833333333333333,
+  "avg_loc": 52.92,
+  "n_samples": 50,
+  "avg_func_length": 9.327285714285715,
+  "magic_numbers": 1.38,
+  "nesting_depth": 3.4,
+  "dead_code_pct": 0.0,
+  "naming_length": 5.3980356521702335,
+  "label": "7B_R4_v2_peak"
+}

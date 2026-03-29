@@ -1,0 +1,16 @@
+{
+  "label": "7B_R5_v2",
+  "pass_at_1": 0.57,
+  "pass_at_k": 0.845,
+  "n_eval": 200,
+  "pylint": 7.7236,
+  "complexity": 10.055,
+  "comment_pct": 23.071332170342135,
+  "duplication_pct": 0.08888888888888888,
+  "type_hint_pct": 0.5,
+  "avg_func_length": 1.5804761904761904,
+  "magic_numbers": 0.295,
+  "nesting_depth": 2.25,
+  "dead_code_pct": 0.0,
+  "naming_length": 3.7391018258338544
+}

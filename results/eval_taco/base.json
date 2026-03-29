@@ -1,0 +1,16 @@
+{
+  "label": "base",
+  "pass_at_1": 0.545,
+  "pass_at_k": 0.83,
+  "n_eval": 200,
+  "pylint": 6.607500000000001,
+  "complexity": 9.38,
+  "comment_pct": 0.3723370429252782,
+  "duplication_pct": 0.15462164750957855,
+  "type_hint_pct": 0.5,
+  "avg_func_length": 6.04547619047619,
+  "magic_numbers": 0.31,
+  "nesting_depth": 2.555,
+  "dead_code_pct": 0.0,
+  "naming_length": 3.634000825269646
+}

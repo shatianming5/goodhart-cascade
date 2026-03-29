@@ -1,0 +1,68 @@
+{
+  "base": {
+    "script_rate": 0.288,
+    "multi_func_rate": 0.121,
+    "single_func_rate": 0.591,
+    "template_comment_rate": 0.6197916666666666,
+    "avg_lines": 15.015,
+    "avg_funcs": 0.94,
+    "avg_nesting": 2.495,
+    "total_comments": 192,
+    "comments_per_code": 0.192
+  },
+  "R1": {
+    "script_rate": 0.426,
+    "multi_func_rate": 0.103,
+    "single_func_rate": 0.471,
+    "template_comment_rate": 0.5348837209302325,
+    "avg_lines": 13.737,
+    "avg_funcs": 0.787,
+    "avg_nesting": 2.423,
+    "total_comments": 86,
+    "comments_per_code": 0.086
+  },
+  "R2": {
+    "script_rate": 0.76,
+    "multi_func_rate": 0.052,
+    "single_func_rate": 0.188,
+    "template_comment_rate": 0.59375,
+    "avg_lines": 12.839,
+    "avg_funcs": 0.401,
+    "avg_nesting": 2.337,
+    "total_comments": 32,
+    "comments_per_code": 0.032
+  },
+  "R3": {
+    "script_rate": 0.778,
+    "multi_func_rate": 0.046,
+    "single_func_rate": 0.176,
+    "template_comment_rate": 0.5454545454545454,
+    "avg_lines": 11.223,
+    "avg_funcs": 0.357,
+    "avg_nesting": 2.11,
+    "total_comments": 22,
+    "comments_per_code": 0.022
+  },
+  "R4": {
+    "script_rate": 0.815,
+    "multi_func_rate": 0.033,
+    "single_func_rate": 0.152,
+    "template_comment_rate": 0.7073446327683616,
+    "avg_lines": 18.838,
+    "avg_funcs": 0.294,
+    "avg_nesting": 2.142,
+    "total_comments": 4425,
+    "comments_per_code": 4.425
+  },
+  "R5": {
+    "script_rate": 0.812,
+    "multi_func_rate": 0.034,
+    "single_func_rate": 0.154,
+    "template_comment_rate": 0.7347750434998758,
+    "avg_lines": 18.057,
+    "avg_funcs": 0.305,
+    "avg_nesting": 2.118,
+    "total_comments": 4023,
+    "comments_per_code": 4.023
+  }
+}
