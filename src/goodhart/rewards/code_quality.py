@@ -114,3 +114,31 @@ def compute_duplication(code: str) -> float:
 
     duplicated = sum(count - 1 for count in seen.values() if count > 1)
     return duplicated / len(lines)
+
+
+def compute_comment_ratio(code: str) -> float:
+    """Compute comment density score normalized to [0, 1].
+
+    Measures the ratio of comment lines to total code lines.
+    Maps: 0% comments -> 0.0, 15%+ comments -> 1.0 (linear).
+    """
+    if not code or not code.strip():
+        return 0.0
+
+    lines = code.splitlines()
+    total = 0
+    comments = 0
+
+    for line in lines:
+        stripped = line.strip()
+        if not stripped:
+            continue
+        total += 1
+        if stripped.startswith('#'):
+            comments += 1
+
+    if total == 0:
+        return 0.0
+
+    ratio = comments / total
+    return min(1.0, ratio / 0.15)
